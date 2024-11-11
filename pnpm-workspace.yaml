@@ -1,0 +1,19 @@
+packages:
+  - "apps/*"
+  - "packages/*"
+catalog:
+  next: 15.0.2
+  typescript: 5.6.3
+  react: "19.0.0-rc-02c0e824-20241028"
+  react-dom: "19.0.0-rc-02c0e824-20241028"
+  sass: 1.80.6
+  clsx: 2.1.1
+  tailwindcss: 3.4.14
+  tailwind-merge: 2.5.2
+  '@biomejs/biome': "1.9.4"
+  '@types/node': 22.9.0
+  '@types/react': 18.3.12
+  '@types/react-dom': 18.3.1
+  class-variance-authority: 0.7.0
+  autoprefixer: 10.4.20
+  postcss: 8.4.47

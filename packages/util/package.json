@@ -1,0 +1,19 @@
+{
+  "name": "@repo/util",
+  "version": "0.0.0",
+  "private": true,
+  "exports": {
+    "./tailwind": "./src/tailwind.ts"
+  },
+  "scripts": {
+    "format-and-lint": "biome check .",
+    "generate:component": "turbo gen react-component"
+  },
+  "dependencies": {
+    "clsx": "catalog:",
+    "tailwind-merge": "catalog:"
+  },
+  "devDependencies": {
+    "@repo/typescript-config": "workspace:*"
+  }
+}
