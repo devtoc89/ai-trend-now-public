@@ -1,0 +1,39 @@
+{
+  "name": "ai-trend-news-manager",
+  "version": "0.1.0",
+  "private": true,
+  "imports": {
+    "#*": ["./src/*", "./src/*.ts", "./src/*.tsx", "./src/**/*", "./src/**/*.ts", "./src/**/*.tsx"]
+  },
+  "scripts": {
+    "dev": "next dev --turbopack",
+    "build": "next build",
+    "start": "next start",
+    "lint": "next lint",
+    "test": "jest"
+  },
+  "dependencies": {
+    "@repo/ui": "workspace:*",
+    "next": "catalog:",
+    "react": "catalog:",
+    "react-dom": "catalog:",
+    "uuid": "catalog:"
+  },
+  "devDependencies": {
+    "@testing-library/dom": "catalog:",
+    "@testing-library/jest-dom": "catalog:",
+    "@testing-library/react": "catalog:",
+    "@types/node": "catalog:",
+    "@types/react": "catalog:",
+    "@types/react-dom": "catalog:",
+    "jest": "catalog:",
+    "jest-environment-jsdom": "catalog:",
+    "postcss": "catalog:",
+    "tailwindcss": "catalog:",
+    "ts-node": "catalog:",
+    "typescript": "catalog:",
+    "@repo/tailwind-config": "workspace:*",
+    "@repo/typescript-config": "workspace:*",
+    "@biomejs/biome": "catalog:"
+  }
+}
