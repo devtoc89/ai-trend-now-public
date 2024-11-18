@@ -2,10 +2,10 @@ packages:
   - "apps/*"
   - "packages/*"
 catalog:
-  next: 15.0.2
+  next: 15.0.3
   typescript: 5.6.3
-  react: "19.0.0-rc-02c0e824-20241028"
-  react-dom: "19.0.0-rc-02c0e824-20241028"
+  react: "19.0.0-rc-66855b96-20241106"
+  react-dom: "19.0.0-rc-66855b96-20241106"
   sass: 1.80.6
   clsx: 2.1.1
   tailwindcss: 3.4.14
@@ -17,3 +17,10 @@ catalog:
   class-variance-authority: 0.7.0
   autoprefixer: 10.4.20
   postcss: 8.4.47
+  uuid: 11.0.3
+  ts-node: 10.9.2
+  "@testing-library/dom": "10.4.0"
+  "@testing-library/jest-dom": "6.6.3"
+  "@testing-library/react": "16.0.1"
+  "jest": "29.7.0"
+  "jest-environment-jsdom": "29.7.0"
