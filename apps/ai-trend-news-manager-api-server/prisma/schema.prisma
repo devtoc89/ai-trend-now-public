@@ -1,0 +1,83 @@
+generator client {
+  provider        = "prisma-client-js"
+  previewFeatures = ["postgresqlExtensions"]
+}
+
+datasource db {
+  provider   = "postgresql"
+  url        = env("DATABASE_URL")
+  directUrl  = env("DIRECT_URL")
+  extensions = [pgcrypto]
+}
+
+model PostMeta {
+  id        String   @id @default(cuid()) @db.Char(25)
+  postId    String   @db.Char(25)
+  metadata  Json?
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  postBase PostBase @relation(fields: [postId], references: [id], onDelete: Cascade)
+
+  @@index([postId])
+}
+
+model PostDetail {
+  id        String   @id @db.Char(25)
+  postId    String   @db.Char(25)
+  title     String   @db.VarChar(200)
+  content   String   @db.VarChar(1000)
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  postBase PostBase @relation(fields: [postId], references: [id], onDelete: Cascade)
+
+  @@index([postId])
+}
+
+model PostBase {
+  id        String   @id @db.Char(25)
+  isDeleted Boolean  @default(false)
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  postDetail PostDetail[]
+  postMeta   PostMeta[]
+}
+
+model OriginalPostSource {
+  id        String   @id @db.Char(25)
+  postId    String   @db.VarChar(200)
+  category  String   @db.VarChar(50)
+  url       String   @db.VarChar(200)
+  title     String   @db.VarChar(200)
+  content   String
+  metadata  Json?
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  originalPostBase OriginalPostBase @relation(fields: [postId], references: [id], onDelete: Cascade)
+
+  @@index([postId])
+}
+
+model OriginalPostBase {
+  id        String   @id @db.VarChar(200)
+  vendor    String   @db.VarChar(200)
+  crawlId   String   @db.VarChar(200)
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  crawlBase          CrawlBase            @relation(fields: [crawlId], references: [id], onDelete: Cascade)
+  originalPostSource OriginalPostSource[]
+}
+
+model CrawlBase {
+  id        String   @id @db.VarChar(200)
+  crawlTime Int
+  status    String   @db.VarChar(50)
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  originalPostBase OriginalPostBase[]
+}
