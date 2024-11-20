@@ -5,7 +5,7 @@
     "outDir": "./dist",
     "rootDir": ".",
     "baseUrl": ".",
-    "typeRoots": ["node_modules/@types"]
+    "typeRoots": ["node_modules/@types", "node_modules/@repo/types"]
   },
   "include": ["src/**/*.ts", "tests/**/*.ts"],
   "exclude": ["node_modules", "dist"]
