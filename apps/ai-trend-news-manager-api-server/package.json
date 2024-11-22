@@ -5,8 +5,12 @@
     "test": "test"
   },
   "imports": {
-    "#*": ["./src/*"],
-    "#*.ts": ["./src/*.ts"]
+    "#*": [
+      "./src/*"
+    ],
+    "#*.ts": [
+      "./src/*.ts"
+    ]
   },
   "scripts": {
     "dev": "ts-node-dev --respawn src/app/index.ts",
@@ -20,6 +24,7 @@
     "@fastify/type-provider-typebox": "^5.0.1",
     "@paralleldrive/cuid2": "^2.2.2",
     "@prisma/client": "5.22.0",
+    "es-toolkit": "^1.27.0",
     "fast-xml-parser": "^4.5.0",
     "fastify": "^5.1.0",
     "fastify-cli": "^7.0.1",

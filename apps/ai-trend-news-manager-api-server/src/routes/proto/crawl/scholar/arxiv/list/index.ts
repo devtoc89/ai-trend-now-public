@@ -1,6 +1,5 @@
-import type { CrawlArxivSearchParamsDTO } from "@repo/types/dto/crawl/arxiv/index.dto";
-import type { FastifyInstance, FastifyPluginOptions, FastifyReply, FastifyRequest } from "fastify";
-import { crawlArxivAndPersist } from "#layer/crawl/arxiv/arxiv.service.ts";
+import type { FastifyInstance, FastifyPluginOptions, FastifyRequest } from "fastify";
+import { crawlArxivAndPersist } from "#layer/domain/crawl/arxiv/arxiv.service.ts";
 
 interface getQueryStringQuery {
   ping: string;
@@ -23,7 +22,7 @@ const postSchema = {
       description: "Successful response",
       type: "object",
       properties: {
-        message: { type: "object" },
+        message: { type: "string" },
       },
       required: ["message"],
     },
@@ -31,7 +30,7 @@ const postSchema = {
       description: "Default response",
       type: "object",
       properties: {
-        message: { type: "object" },
+        message: { type: "string" },
       },
     },
   },
@@ -62,7 +61,12 @@ async function arxivListRoutes(fastify: FastifyInstance, _: FastifyPluginOptions
     async (req: FastifyRequest<{ Querystring: getQueryStringQuery }>, _reply) => {
       const { from, to } = req.body as ArxivListRoutesParams;
       return {
-        message: crawlArxivAndPersist({ from: from ?? new Date().toISOString(), to: to ?? new Date().toISOString() }),
+        message: JSON.stringify(
+          await crawlArxivAndPersist({
+            from: from ?? new Date().toISOString(),
+            to: to ?? new Date().toISOString(),
+          }),
+        ),
       }; // 사용자 목록을 반환
     },
   );

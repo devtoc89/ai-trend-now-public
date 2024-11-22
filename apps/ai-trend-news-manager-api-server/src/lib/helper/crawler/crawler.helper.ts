@@ -1,14 +1,12 @@
 import type { Prisma, PrismaClient } from "@prisma/client";
-import { CrawlStatus } from "#enums/crawlStatus.enum.ts";
-import { handleServiceError } from "#layer/global/error/error.handler.ts";
-import { getPrismaClient } from "#lib/prisma/prisma.instance.ts";
-import { getElapsedTime } from "#utils/date/date.util.ts";
+import { handleServiceError } from "#lib/handler/error/error.handler.ts";
+import { getPrismaClient } from "#lib/instance/prisma/prisma.instance.ts";
+import { getElapsedTime } from "#lib/utils/date/date.util.ts";
+import { CrawlStatus } from "#types/enums/crawlStatus.enum.ts";
 
 type Params = {
   crawlId: string;
   startTime: Date;
-  error: Error;
-  context: string;
 };
 
 /**
@@ -25,7 +23,7 @@ type Params = {
  *   - error: The error that occurred.
  *   - context: The context in which the error occurred.
  */
-export async function handleCrawlError({ crawlId, startTime, error, context }: Params): Promise<void> {
+export async function handleCrawlError({ crawlId, startTime }: Params): Promise<void> {
   const prisma = getPrismaClient();
   await prisma.crawlBase.update({
     where: { id: crawlId },
@@ -34,7 +32,6 @@ export async function handleCrawlError({ crawlId, startTime, error, context }: P
       status: CrawlStatus.FAILED,
     },
   });
-  void handleServiceError(error, context);
 }
 
 /**

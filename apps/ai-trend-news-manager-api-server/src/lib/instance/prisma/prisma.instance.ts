@@ -1,5 +1,5 @@
+import { logger } from "#lib/instance/logger/pino.instance.ts";
 import { PrismaClient } from "@prisma/client";
-import { logger } from "#lib/logger/pino.instance.ts";
 
 let globalPrisma = makePrismaClient();
 

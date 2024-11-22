@@ -1,4 +1,4 @@
-import { crawlArxiv } from "#layer/crawl/arxiv/arxiv.service.ts";
+import { crawlArxiv } from "#layer/domain/crawl/arxiv/arxiv.service.ts";
 
 test("arxiv parser test", async () => {
   const response = await crawlArxiv({ from: "20241101", to: "20241120" });

@@ -1,4 +1,4 @@
-import type { CrawlArxivParsedDTO, CrawlArxivSearchParamsDTO } from "@repo/types/dto/crawl/arxiv/index.dto.ts";
+import type { CrawlArxivSearchParamsDTO } from "@repo/types/dto/crawl/arxiv/index.dto.ts";
 
 // TODO: 크롤러와 관련된 코드는 별도 package분리가 나을지 고려 필요.
 // TODO: 필요에 따라 조회 조건 고도화 필요.
