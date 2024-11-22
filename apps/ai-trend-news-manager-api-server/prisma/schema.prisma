@@ -46,30 +46,44 @@ model PostBase {
 }
 
 model OriginalPostSource {
-  id        String   @id @db.Char(25)
-  postId    String   @db.VarChar(200)
-  category  String   @db.VarChar(50)
-  url       String   @db.VarChar(200)
-  title     String   @db.VarChar(200)
-  content   String
-  metadata  Json?
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
+  id           String   @id @db.Char(25)
+  postId       String   @unique @db.VarChar(200)
+  url          String   @db.VarChar(200)
+  title        String   @db.VarChar(200)
+  content      String
+  orgCreatedAt DateTime
+  orgUpdatedAt DateTime
+  createdAt    DateTime @default(now())
+  updatedAt    DateTime @updatedAt
 
   originalPostBase OriginalPostBase @relation(fields: [postId], references: [id], onDelete: Cascade)
 
   @@index([postId])
 }
 
+model OriginalPostMeta {
+  id               String           @id @db.Char(25)
+  postId           String           @unique @db.VarChar(200)
+  source           String           @db.VarChar(250)
+  category         String           @db.VarChar(50)
+  etc              Json?
+  createdAt        DateTime         @default(now())
+  updatedAt        DateTime         @updatedAt
+  originalPostBase OriginalPostBase @relation(fields: [postId], references: [id], onDelete: Cascade)
+}
+
 model OriginalPostBase {
   id        String   @id @db.VarChar(200)
-  vendor    String   @db.VarChar(200)
   crawlId   String   @db.VarChar(200)
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
 
-  crawlBase          CrawlBase            @relation(fields: [crawlId], references: [id], onDelete: Cascade)
-  originalPostSource OriginalPostSource[]
+  crawlBase CrawlBase @relation(fields: [crawlId], references: [id], onDelete: Cascade)
+
+  originalPostSource OriginalPostSource?
+  originalPostMeta   OriginalPostMeta?
+
+  @@index(fields: [createdAt(sort: Desc)])
 }
 
 model CrawlBase {
