@@ -83,7 +83,7 @@ let server: FastifyInstance;
  * @returns {Promise<void>} A promise that resolves when the server is ready.
  */
 async function InitiateServer(server: FastifyInstance): Promise<void> {
-  if (process.env.NODE_ENV === "development") {
+  if (process.env.NODE_ENV !== "production") {
     await registerSwagger(server);
     await registerSwaggerUi(server);
   }
