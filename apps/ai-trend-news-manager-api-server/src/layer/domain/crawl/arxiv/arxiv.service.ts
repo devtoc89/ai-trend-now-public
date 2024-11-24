@@ -1,5 +1,5 @@
 import { createId } from "@paralleldrive/cuid2";
-import type { Prisma } from "@prisma/client";
+import type { PrismaClient } from "@prisma/client";
 import type {
   CrawlArxivParsedDTO,
   CrawlArxivParsedEntryDTO,
@@ -37,12 +37,6 @@ export async function fetchAndParseArxivData(
   });
 }
 
-// const fetchAndParseArxivData = serviceWrapper("fetchAndParseArxivData", async);
-
-// type CrawlArxivAndPersistResponse = CrawlBase & {
-//   originalPostBase: Array<OriginalPostBase & { originalPostSource: Array<OriginalPostSource> }>;
-// };
-
 /**
  * Crawl arxiv and persist crawled data to database.
  *
@@ -55,7 +49,7 @@ export async function crawlArxivAndPersist(searchParam: CrawlArxivSearchParamsDT
   const startTime = new Date();
 
   return await serviceWrapper(
-    "crawlArxivAndPersist",
+    crawlArxivAndPersist.name,
     async () => {
       const pCrawlBase = prisma.crawlBase.create({
         data: { id: crawlId, crawlTime: 0, createdAt: startTime.toISOString(), status: CrawlStatus.IN_PROGRESS },
@@ -91,12 +85,8 @@ export async function crawlArxivAndPersist(searchParam: CrawlArxivSearchParamsDT
       });
 
       const missingEntries = getMissingItems(entries, existingRecords);
-      for (const entries of esToolkit.chunk(missingEntries, 50)) {
-        await prisma.$transaction(async (tx) => {
-          await Promise.all(entries.map((entry) => createPostWithSource(tx, entry, crawlId)));
-          await crawlComplete(tx, crawlId, startTime);
-        });
-      }
+      await createManyPostWithSource(prisma, missingEntries, crawlId);
+      await crawlComplete(prisma, crawlId, startTime, missingEntries.length);
 
       return "completed";
     },
@@ -112,34 +102,38 @@ export async function crawlArxivAndPersist(searchParam: CrawlArxivSearchParamsDT
 const etcKey: Array<keyof CrawlArxivParsedEntryDTO> = ["author", "arxiv:primary_category", "arxiv:comment"];
 
 /**
- * Creates a post with its associated source in the database.
- *
- * @param tx - The Prisma transaction client used for database operations.
- * @param entry - The parsed entry data from Arxiv containing post details.
- * @param crawlId - The ID of the crawl session associated with this post creation.
- * @returns The created post record.
+ * Creates multiple posts with their sources and meta in a single transaction.
+ * @param prisma The Prisma client instance.
+ * @param entries The list of parsed arxiv entries.
+ * @param crawlId The crawl ID.
  */
-async function createPostWithSource(tx: Prisma.TransactionClient, entry: CrawlArxivParsedEntryDTO, crawlId: string) {
+async function createManyPostWithSource(prisma: PrismaClient, entries: CrawlArxivParsedEntryDTO[], crawlId: string) {
   const createdAt = getCurrentTimeISOString();
-  const post = await tx.originalPostBase.create({
-    data: {
-      id: entry.id,
-      crawlId,
-      createdAt,
-      originalPostSource: {
-        create: {
+
+  await prisma.$transaction(async (tx) => {
+    // 1 base
+    await tx.originalPostBase.createMany({
+      data: entries.map((entry) => ({ id: entry.id, crawlId, createdAt })),
+    });
+    await Promise.all([
+      // 2. source
+      tx.originalPostSource.createMany({
+        data: entries.map((entry) => ({
           id: createId(),
+          postId: entry.id,
           url: entry.id,
           title: entry.title,
           content: entry.summary,
           orgCreatedAt: entry.published,
           orgUpdatedAt: entry.updated,
           createdAt,
-        },
-      },
-      originalPostMeta: {
-        create: {
+        })),
+      }),
+      // 3. meta
+      tx.originalPostMeta.createMany({
+        data: entries.map((entry) => ({
           id: createId(),
+          postId: entry.id,
           source: "arxiv",
           category: "paper",
           etc: JSON.stringify(
@@ -150,9 +144,16 @@ async function createPostWithSource(tx: Prisma.TransactionClient, entry: CrawlAr
             }, {}),
           ),
           createdAt,
-        },
-      },
-    },
+        })),
+      }),
+      // 4. status
+      await tx.originalPostStatus.createMany({
+        data: entries.map((entry) => ({
+          id: createId(),
+          postId: entry.id,
+          createdAt,
+        })),
+      }),
+    ]);
   });
-  return post;
 }
