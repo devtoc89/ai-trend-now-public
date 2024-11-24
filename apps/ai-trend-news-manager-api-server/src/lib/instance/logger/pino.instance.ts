@@ -3,7 +3,7 @@ import pretty from "pino-pretty";
 
 const instance = {
   logger: pino(
-    process.env.NODE_ENV === "development"
+    process.env.NODE_ENV !== "production"
       ? pretty({
           translateTime: "SYS:standard",
           ignore: "pid,hostname",
