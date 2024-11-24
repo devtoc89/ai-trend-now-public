@@ -41,8 +41,13 @@ export async function handleCrawlError({ crawlId, startTime }: Params): Promise<
  * @param crawlId - The ID of the crawl session to update.
  * @param startTime - The date and time when the crawl session started.
  */
-export async function crawlComplete(tx: Prisma.TransactionClient | PrismaClient, crawlId: string, startTime: Date) {
-  await await crawlStatusUpdate(tx, crawlId, startTime, CrawlStatus.COMPLETED);
+export async function crawlComplete(
+  tx: Prisma.TransactionClient | PrismaClient,
+  crawlId: string,
+  startTime: Date,
+  count = 0,
+) {
+  await await crawlStatusUpdate(tx, crawlId, startTime, CrawlStatus.COMPLETED, count);
 }
 /**
  * Updates the status and crawl time of a crawl session to FAILED.
@@ -67,12 +72,14 @@ export async function crawlStatusUpdate(
   crawlId: string,
   startTime: Date,
   status: CrawlStatus,
+  count?: number,
 ) {
   await tx.crawlBase.update({
     where: { id: crawlId },
     data: {
       crawlTime: getElapsedTime(startTime),
       status,
+      count,
     },
   });
 }
