@@ -45,16 +45,52 @@ model PostBase {
   postMeta   PostMeta[]
 }
 
+model OriginalPostAndAiPostRelation {
+  id               String           @id @db.Char(25)
+  aiPostId         String           @db.VarChar(25)
+  postId           String           @db.VarChar(200)
+  createdAt        DateTime         @default(now())
+  updatedAt        DateTime         @updatedAt
+  originalPostBase OriginalPostBase @relation(fields: [postId], references: [id], onDelete: Cascade)
+  aiPost           AiPost           @relation(fields: [aiPostId], references: [id], onDelete: Cascade)
+
+  @@unique([aiPostId, postId])
+}
+
+model AiPost {
+  id        String   @id @db.Char(25)
+  title     String   @db.VarChar(200)
+  content   String
+  insights  String
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  originalPostAndAiPostRelation OriginalPostAndAiPostRelation[]
+}
+
+model OriginalPostStatus {
+  id          String    @id @db.Char(25)
+  postId      String    @unique @db.VarChar(200)
+  selectedFlg Boolean   @default(false) @db.Boolean
+  selectedAt  DateTime?
+  deletedFlg  Boolean   @default(false) @db.Boolean
+  DeletedAt   DateTime?
+  createdAt   DateTime  @default(now())
+  updatedAt   DateTime  @updatedAt
+
+  originalPostBase OriginalPostBase @relation(fields: [postId], references: [id], onDelete: Cascade)
+}
+
 model OriginalPostSource {
-  id           String   @id @db.Char(25)
-  postId       String   @unique @db.VarChar(200)
-  url          String   @db.VarChar(200)
-  title        String   @db.VarChar(200)
+  id           String    @id @db.Char(25)
+  postId       String    @unique @db.VarChar(200)
+  url          String    @db.VarChar(200)
+  title        String    @db.VarChar(200)
   content      String
-  orgCreatedAt DateTime
-  orgUpdatedAt DateTime
-  createdAt    DateTime @default(now())
-  updatedAt    DateTime @updatedAt
+  orgCreatedAt DateTime?
+  orgUpdatedAt DateTime?
+  createdAt    DateTime  @default(now())
+  updatedAt    DateTime  @updatedAt
 
   originalPostBase OriginalPostBase @relation(fields: [postId], references: [id], onDelete: Cascade)
 
@@ -62,13 +98,14 @@ model OriginalPostSource {
 }
 
 model OriginalPostMeta {
-  id               String           @id @db.Char(25)
-  postId           String           @unique @db.VarChar(200)
-  source           String           @db.VarChar(250)
-  category         String           @db.VarChar(50)
-  etc              Json?
-  createdAt        DateTime         @default(now())
-  updatedAt        DateTime         @updatedAt
+  id        String   @id @db.Char(25)
+  postId    String   @unique @db.VarChar(200)
+  source    String   @db.VarChar(250)
+  category  String   @db.VarChar(50)
+  etc       Json?
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
   originalPostBase OriginalPostBase @relation(fields: [postId], references: [id], onDelete: Cascade)
 }
 
@@ -80,8 +117,10 @@ model OriginalPostBase {
 
   crawlBase CrawlBase @relation(fields: [crawlId], references: [id], onDelete: Cascade)
 
-  originalPostSource OriginalPostSource?
-  originalPostMeta   OriginalPostMeta?
+  originalPostSource            OriginalPostSource?
+  originalPostMeta              OriginalPostMeta?
+  originalPostStatus            OriginalPostStatus?
+  originalPostAndAiPostRelation OriginalPostAndAiPostRelation[]
 
   @@index(fields: [createdAt(sort: Desc)])
 }
@@ -89,6 +128,7 @@ model OriginalPostBase {
 model CrawlBase {
   id        String   @id @db.VarChar(200)
   crawlTime Int
+  count     Int      @default(0)
   status    String   @db.VarChar(50)
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
