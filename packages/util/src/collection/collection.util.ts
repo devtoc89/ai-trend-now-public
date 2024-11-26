@@ -67,3 +67,15 @@ export function getMissingItems<T1 extends { id: string }, T2 extends { id: stri
   }
   return missingItems;
 }
+
+//  isher-Yates Shuffle Algorithm
+export function shuffleArray<T>(array: Array<T>) {
+  const newArray = [...array];
+  for (let i = array.length - 1; i > 0; i--) {
+    const randomIndex = Math.floor(Math.random() * (i + 1));
+    const temp = newArray[i];
+    newArray[i] = newArray[randomIndex] as T;
+    newArray[randomIndex] = temp as T;
+  }
+  return newArray;
+}
