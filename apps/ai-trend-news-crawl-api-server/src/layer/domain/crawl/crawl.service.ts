@@ -35,9 +35,13 @@ async function createManyOriginalPostWithSource(
         // 2. source
         tx.originalPostSource.createMany({
           data: resultList.map((entry) => ({
-            ...entry,
             id: createId(),
             postId: entry.id,
+            title: entry.title,
+            content: entry.content,
+            url: entry.url,
+            orgCreatedAt: entry.orgCreatedAt,
+            orgUpdatedAt: entry.orgUpdatedAt,
             createdAt,
           })),
         }),
@@ -46,9 +50,10 @@ async function createManyOriginalPostWithSource(
           data: resultList.map((entry) => ({
             id: createId(),
             postId: entry.id,
+            category: meta.category,
+            source: meta.source,
             etc: entry.etc,
             createdAt,
-            ...meta,
           })),
         }),
         // 4. status
