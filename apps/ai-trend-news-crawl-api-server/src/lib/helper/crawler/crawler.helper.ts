@@ -1,7 +1,7 @@
 import { getPrismaClient } from "#lib/instance/prisma/prisma.instance.ts";
 import { CrawlStatus } from "#types/enums/crawlStatus.enum.ts";
 import type { Prisma, PrismaClient } from "@prisma/client";
-import { getElapsedTime } from "@repo/util/date/date.util.js";
+import { getElapsedTime } from "@repo/util/date/date.util.ts";
 
 type Params = {
   crawlId: string;

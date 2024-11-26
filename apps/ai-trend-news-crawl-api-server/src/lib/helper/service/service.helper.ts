@@ -29,11 +29,7 @@ export async function serviceWrapper<T = undefined>(
   } catch (err: unknown) {
     const error = err as Error;
     void handleServiceError(error, callName);
-
-    console.error(`Error in ${callName}: ${error.message}`);
-    if (failCallback) {
-      failCallback(error, callName);
-    }
+    await failCallback?.(error, callName);
     return { success: false, error: error.message };
   }
 }
