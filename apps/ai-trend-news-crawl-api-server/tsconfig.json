@@ -4,8 +4,7 @@
   "compilerOptions": {
     "outDir": "./dist",
     "rootDir": ".",
-    "baseUrl": ".",
-    "typeRoots": ["node_modules/@types", "node_modules/@repo/types"]
+    "baseUrl": "."
   },
   "include": ["src/**/*.ts", "tests/**/*.ts"],
   "exclude": ["node_modules", "dist"]
