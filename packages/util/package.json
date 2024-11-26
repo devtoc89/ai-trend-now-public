@@ -3,6 +3,11 @@
   "version": "0.0.0",
   "private": true,
   "exports": {
+    "./style/*.ts": "./src/style/*.ts",
+    "./collection/*.ts": "./src/collection/*.ts",
+    "./date/*.ts": "./src/date/*.ts",
+    "./property/*.ts": "./src/property/*.ts",
+    "./parser/*.ts": "./src/parser/*.ts",
     "./style/*": "./src/style/*",
     "./collection/*": "./src/collection/*",
     "./date/*": "./src/date/*",
@@ -14,6 +19,7 @@
     "generate:component": "turbo gen react-component"
   },
   "dependencies": {
+    "dayjs": "^1.11.13",
     "json5": "^2.2.3",
     "clsx": "catalog:",
     "tailwind-merge": "catalog:"
