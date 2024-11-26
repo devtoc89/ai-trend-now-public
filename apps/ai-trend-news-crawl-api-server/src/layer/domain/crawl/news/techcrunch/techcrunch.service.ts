@@ -3,19 +3,19 @@ import { fetchTechCrunchItem, fetchTechCrunchList } from "#layer/domain/crawl/ne
 import { parseTechcrunchDetail, parseTechcrunchList } from "#layer/domain/crawl/news/techcrunch/techcrunch.parser.ts";
 import { serviceWrapper } from "#lib/helper/service/service.helper.ts";
 import { getPrismaClient } from "#lib/instance/prisma/prisma.instance.ts";
-import type { ResponseType } from "#types/response/response.type.ts";
 import type {
   CrawlCommonParamsDTO,
   CrawlCommonResponseDTO,
   CreateManyOriginalPostListItemDTO,
 } from "@repo/types/dto/crawl/common/common.crawl.dto.ts";
+import type { ResponseTypeDTO } from "@repo/types/dto/response/response.dto.ts";
 
 type TechCrunchListItem = {
   title: string;
   url: string;
 };
 
-async function fetchAndParseTechCrunch(): Promise<ResponseType<CreateManyOriginalPostListItemDTO[]>> {
+async function fetchAndParseTechCrunch(): Promise<ResponseTypeDTO<CreateManyOriginalPostListItemDTO[]>> {
   const prisma = getPrismaClient();
   return await serviceWrapper(fetchAndParseTechCrunch.name, async () => {
     const res = await fetchAndParseTechCrunchListData();
@@ -68,7 +68,9 @@ async function fetchAndParseTechCrunchItemData(listItem: TechCrunchListItem) {
  * @param searchParam Search parameter for crawling arxiv.
  * @returns Promise that resolves to a success response with crawled data if successful, or an error response on failure.
  */
-export async function getTechCrunchCrawlData(_: CrawlCommonParamsDTO): Promise<ResponseType<CrawlCommonResponseDTO>> {
+export async function getTechCrunchCrawlData(
+  _: CrawlCommonParamsDTO,
+): Promise<ResponseTypeDTO<CrawlCommonResponseDTO>> {
   return await serviceWrapper(getTechCrunchCrawlData.name, async () => {
     const listResponse = await fetchAndParseTechCrunch();
 

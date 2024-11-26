@@ -3,7 +3,6 @@ import { fetchArxiv } from "#layer/domain/crawl/scholar/arxiv/arxiv.client.ts";
 import { arxivClientResponseParser } from "#layer/domain/crawl/scholar/arxiv/arxiv.parser.ts";
 import { serviceWrapper } from "#lib/helper/service/service.helper.ts";
 import { getPrismaClient } from "#lib/instance/prisma/prisma.instance.ts";
-import type { ResponseType } from "#types/response/response.type.ts";
 import type {
   CrawlArxivParsedDTO,
   CrawlArxivParsedEntryDTO,
@@ -14,6 +13,7 @@ import type {
   CrawlCommonResponseDTO,
   CreateManyOriginalPostListItemDTO,
 } from "@repo/types/dto/crawl/common/common.crawl.dto.ts";
+import type { ResponseTypeDTO } from "@repo/types/dto/response/response.dto.ts";
 
 const etcKey: Array<keyof CrawlArxivParsedEntryDTO> = ["author", "arxiv:primary_category", "arxiv:comment"];
 
@@ -26,7 +26,7 @@ const etcKey: Array<keyof CrawlArxivParsedEntryDTO> = ["author", "arxiv:primary_
  */
 export async function fetchAndParseArxivData(
   searchParam: CrawlArxivSearchParamsDTO,
-): Promise<ResponseType<CrawlArxivParsedDTO>> {
+): Promise<ResponseTypeDTO<CrawlArxivParsedDTO>> {
   return await serviceWrapper(fetchAndParseArxivData.name, async () => {
     const response = await fetchArxiv(searchParam);
     if (!response) throw new Error("No response from API");
@@ -42,7 +42,7 @@ export async function fetchAndParseArxivData(
  */
 export async function getArxivCrawlData(
   searchParam: CrawlCommonParamsDTO,
-): Promise<ResponseType<CrawlCommonResponseDTO>> {
+): Promise<ResponseTypeDTO<CrawlCommonResponseDTO>> {
   const prisma = getPrismaClient();
   return await serviceWrapper(getArxivCrawlData.name, async () => {
     const arxivData = await fetchAndParseArxivData(searchParam);

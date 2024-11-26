@@ -1,8 +1,8 @@
 import { handleServiceError } from "#lib/handler/error/error.handler.ts";
-import type { ResponseType } from "#types/response/response.type.ts";
+import type { ResponseTypeDTO } from "@repo/types/dto/response/response.dto.ts";
 
 /**
- * Wraps a service call in a try/catch block and returns a `ResponseType`.
+ * Wraps a service call in a try/catch block and returns a `ResponseTypeDTO`.
  *
  * If the service call is successful, the response will have `success` set to `true` and
  * `data` set to the result of the call.
@@ -15,14 +15,14 @@ import type { ResponseType } from "#types/response/response.type.ts";
  * @param callback The service call to wrap.
  * @param failCallback An optional callback to call if the service call fails.
  *
- * @returns A `ResponseType` containing the result of the service call.
+ * @returns A `ResponseTypeDTO` containing the result of the service call.
  */
 
 export async function serviceWrapper<T = undefined>(
   callName: string,
   callback: () => Promise<T>,
   failCallback?: (error: Error, callName: string) => Promise<void>,
-): Promise<ResponseType<T>> {
+): Promise<ResponseTypeDTO<T>> {
   try {
     const data = await callback();
     return { success: true, data };

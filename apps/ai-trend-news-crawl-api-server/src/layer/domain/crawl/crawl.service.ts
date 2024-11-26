@@ -4,7 +4,6 @@ import { crawlComplete, handleCrawlError } from "#lib/helper/crawler/crawler.hel
 import { serviceWrapper } from "#lib/helper/service/service.helper.ts";
 import { getPrismaClient } from "#lib/instance/prisma/prisma.instance.ts";
 import { CrawlStatus } from "#types/enums/crawlStatus.enum.ts";
-import type { ResponseType } from "#types/response/response.type.ts";
 import { createId } from "@paralleldrive/cuid2";
 import type { PrismaClient } from "@prisma/client";
 import type {
@@ -13,6 +12,7 @@ import type {
   CreateManyOriginalPostListItemDTO,
   CreateOriginalPostCommonMetaDTO,
 } from "@repo/types/dto/crawl/common/common.crawl.dto.ts";
+import type { ResponseTypeDTO } from "@repo/types/dto/response/response.dto.ts";
 import { getCurrentTimeISOString } from "@repo/util/date/date.util.ts";
 import { isKeyOf } from "@repo/util/property/object.util.ts";
 
@@ -71,7 +71,7 @@ async function createManyOriginalPostWithSource(
 
 async function crawlResultPersist(
   prisma: PrismaClient,
-  pCrawlResult: Promise<ResponseType<CrawlCommonResponseDTO>>,
+  pCrawlResult: Promise<ResponseTypeDTO<CrawlCommonResponseDTO>>,
   crawlId: string,
 ) {
   return await serviceWrapper(crawlResultPersist.name, async () => {
@@ -89,7 +89,7 @@ async function crawlResultPersist(
  * @param searchParam Search parameter for crawling arxiv.
  * @returns Promise that resolves to a success response with crawled data if successful, or an error response on failure.
  */
-async function crawlResultListPersist(pCrawlResultList: Promise<ResponseType<CrawlCommonResponseDTO>>[]) {
+async function crawlResultListPersist(pCrawlResultList: Promise<ResponseTypeDTO<CrawlCommonResponseDTO>>[]) {
   const crawlId = createId();
   const prisma = getPrismaClient();
   const startTime = new Date();
@@ -129,7 +129,7 @@ const crawlFnMap = {
   techcrunch: [getTechCrunchCrawlData],
 };
 
-export async function crawlAndPersist(searchParam: CrawlCommonParamsDTO): Promise<ResponseType<string>> {
+export async function crawlAndPersist(searchParam: CrawlCommonParamsDTO): Promise<ResponseTypeDTO<string>> {
   return await serviceWrapper(crawlAndPersist.name, async () => {
     if (isKeyOf(searchParam.source, crawlFnMap)) {
       const crawlFns = crawlFnMap[searchParam.source];
