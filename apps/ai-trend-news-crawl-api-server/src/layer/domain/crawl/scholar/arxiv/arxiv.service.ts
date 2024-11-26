@@ -13,7 +13,7 @@ import type {
   CrawlCommonParamsDTO,
   CrawlCommonResponseDTO,
   CreateManyOriginalPostListItemDTO,
-} from "@repo/types/dto/crawl/common/common.crawl.dto";
+} from "@repo/types/dto/crawl/common/common.crawl.dto.ts";
 
 const etcKey: Array<keyof CrawlArxivParsedEntryDTO> = ["author", "arxiv:primary_category", "arxiv:comment"];
 

@@ -8,7 +8,7 @@ import type {
   CrawlCommonParamsDTO,
   CrawlCommonResponseDTO,
   CreateManyOriginalPostListItemDTO,
-} from "@repo/types/dto/crawl/common/common.crawl.dto";
+} from "@repo/types/dto/crawl/common/common.crawl.dto.ts";
 
 type TechCrunchListItem = {
   title: string;
