@@ -28,7 +28,7 @@ export function getMissingStrings(targets: string[], compares: string[]): string
 /**
  * Compares two arrays of objects, each containing an `id` property, and returns an array
  * of objects from the `targets` array whose IDs are not present in the `compares` array.
- * targets and compares must be sorted(ascending) and unique.
+ * targets and compares must be sorted(descending) and unique.
  *
  * @template T1 - Type of objects in the `targets` array, must contain an `id` property.
  * @template T2 - Type of objects in the `compares` array, must contain an `id` property.
@@ -55,16 +55,16 @@ export function getMissingItems<T1 extends { id: string }, T2 extends { id: stri
   while (i < targets.length) {
     const v1 = targets[i]?.id as string;
     const v2 = compares[j]?.id as string | undefined;
-    if (!v2 || v1 < v2) {
+    if (!v2 || v1 > v2) {
       targets[i] && missingItems.push(targets[i] as T1);
       i++;
-    } else if (v1 > v2) {
+    } else if (v1 < v2) {
       j++;
     } else {
       i++;
       j++;
     }
   }
-
+  console.log(targets, compares, missingItems);
   return missingItems;
 }
