@@ -65,6 +65,5 @@ export function getMissingItems<T1 extends { id: string }, T2 extends { id: stri
       j++;
     }
   }
-  console.log(targets, compares, missingItems);
   return missingItems;
 }
