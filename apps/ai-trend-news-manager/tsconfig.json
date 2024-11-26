@@ -1,11 +1,16 @@
 {
   "extends": "@repo/typescript-config/nextjs.json",
   "compilerOptions": {
+    // "strict": false,
+    "noUnusedLocals": true,
+    "noUnusedParameters": true,
     "plugins": [
       {
         "name": "next"
       }
-    ]
+    ],
+    "allowImportingTsExtensions": true,
+    "noEmit": true
   },
   "include": [
     "next-env.d.ts",
@@ -16,6 +21,6 @@
     "jest.config.ts",
     "jest.setup.ts",
     "tailwind.config.ts"
-  ],
+, "src/lib/utils/parser/ai-json.parser.ts.old"  ],
   "exclude": ["node_modules"]
 }

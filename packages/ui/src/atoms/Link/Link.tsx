@@ -1,11 +1,10 @@
-import { cn } from "@repo/util/tailwind";
+import { cn } from "@repo/util/style/tailwind.util.ts";
 import { type VariantProps, cva } from "class-variance-authority";
-import type { ButtonHTMLAttributes } from "react";
+import type { LinkHTMLAttributes } from "react";
 
 const variant = {
-  more: "bg-transparent hover:underline text-black-800",
-  register: "bg-black hover:bg-gray-800 text-white",
-  cancel: "bg-transparent border border-gray-300 hover:bg-gray-300 hover:text-white text-gray-500",
+  snb: "flex items-center gap-2 px-3 py-2 text-gray-600 hover:text-gray-900",
+  snbSelected: "flex items-center gap-2 rounded-lg bg-gray-100 px-3 py-2 text-gray-900",
 } as const;
 
 const shape = {
@@ -35,7 +34,7 @@ const variants = {
 } as const;
 
 const defaultVariants = {
-  variant: "more",
+  variant: "snb",
   shape: "square",
   size: "small",
   weight: "normal",
@@ -48,16 +47,16 @@ const ClassVariantAttributes = {
 
 const ClassVariants = cva("", ClassVariantAttributes);
 
-export interface ButtonProps extends ButtonHTMLAttributes<HTMLButtonElement>, VariantProps<typeof ClassVariants> {
+export interface LinkProps extends LinkHTMLAttributes<HTMLAnchorElement>, VariantProps<typeof ClassVariants> {
   children?: React.ReactNode;
 }
 
-export default function Button({ variant, shape, size, weight, children, ...props }: ButtonProps) {
+export default function Link({ variant, shape, size, weight, children, ...props }: LinkProps) {
   return (
-    <button className={cn(ClassVariants({ variant, shape, size, weight }))} {...props}>
+    <a className={cn(ClassVariants({ variant, shape, size, weight }))} {...props}>
       {children}
-    </button>
+    </a>
   );
 }
 
-export { defaultVariants as ButtonDefaultVariants, variants as ButtonVariants };
+export { defaultVariants as LinkDefaultVariants, variants as LinkVariants };

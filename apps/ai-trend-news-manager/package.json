@@ -1,25 +1,47 @@
 {
-  "name": "ai-trend-news-manager",
+  "name": "manager",
   "version": "0.1.0",
   "private": true,
   "imports": {
-    "#*": ["./src/*", "./src/*.ts", "./src/*.tsx", "./src/**/*", "./src/**/*.ts", "./src/**/*.tsx"]
+    "#*": "./src/*",
+    "#*.ts": "./src/*.ts",
+    "#*.tsx": "./src/*.tsx"
   },
   "scripts": {
     "dev": "next dev --turbopack",
+    "debug": "cross-env NODE_OPTIONS='--inspect' next dev",
     "build": "next build",
     "start": "next start",
     "lint": "next lint",
     "test": "jest"
   },
   "dependencies": {
+    "@langchain/community": "^0.3.14",
+    "@langchain/core": "^0.3.18",
+    "@langchain/google-genai": "^0.1.4",
+    "@langchain/langgraph": "^0.2.20",
+    "@paralleldrive/cuid2": "^2.2.2",
+    "@prisma/client": "5.22.0",
     "@repo/ui": "workspace:*",
+    "@repo/util": "workspace:*",
+    "@tanstack/react-query": "^5.61.3",
+    "cross-env": "^7.0.3",
+    "es-toolkit": "^1.27.0",
+    "langchain": "^0.3.5",
+    "lucide-react": "^0.460.0",
     "next": "catalog:",
+    "pino": "^9.5.0",
     "react": "catalog:",
     "react-dom": "catalog:",
+    "react-intersection-observer": "^9.13.1",
+    "react-toastify": "^10.0.6",
     "uuid": "catalog:"
   },
   "devDependencies": {
+    "@biomejs/biome": "catalog:",
+    "@repo/tailwind-config": "workspace:*",
+    "@repo/types": "workspace:*",
+    "@repo/typescript-config": "workspace:*",
     "@testing-library/dom": "catalog:",
     "@testing-library/jest-dom": "catalog:",
     "@testing-library/react": "catalog:",
@@ -28,12 +50,11 @@
     "@types/react-dom": "catalog:",
     "jest": "catalog:",
     "jest-environment-jsdom": "catalog:",
+    "pino-pretty": "^13.0.0",
     "postcss": "catalog:",
+    "prisma": "^5.22.0",
     "tailwindcss": "catalog:",
     "ts-node": "catalog:",
-    "typescript": "catalog:",
-    "@repo/tailwind-config": "workspace:*",
-    "@repo/typescript-config": "workspace:*",
-    "@biomejs/biome": "catalog:"
+    "typescript": "catalog:"
   }
 }

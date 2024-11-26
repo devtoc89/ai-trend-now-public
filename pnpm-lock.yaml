@@ -18,6 +18,9 @@ catalogs:
     '@testing-library/react':
       specifier: 16.0.1
       version: 16.0.1
+    '@types/jest':
+      specifier: 29.5.14
+      version: 29.5.14
     '@types/node':
       specifier: 22.9.0
       version: 22.9.0
@@ -60,9 +63,15 @@ catalogs:
     tailwindcss:
       specifier: 3.4.14
       version: 3.4.14
+    ts-jest:
+      specifier: 29.2.5
+      version: 29.2.5
     ts-node:
       specifier: 10.9.2
       version: 10.9.2
+    ts-node-dev:
+      specifier: 2.0.0
+      version: 2.0.0
     typescript:
       specifier: 5.6.3
       version: 5.6.3
@@ -88,7 +97,7 @@ importers:
     dependencies:
       langchain:
         specifier: ^0.3.5
-        version: 0.3.5(@langchain/core@0.3.18(openai@4.72.0(zod@3.23.8)))(@langchain/groq@0.1.2(@langchain/core@0.3.18(openai@4.72.0(zod@3.23.8))))(axios@1.7.4)(cheerio@1.0.0)(handlebars@4.7.8)(openai@4.72.0(zod@3.23.8))
+        version: 0.3.5(@langchain/core@0.3.18(openai@4.72.0(zod@3.23.8)))(@langchain/google-genai@0.1.4(@langchain/core@0.3.18(openai@4.72.0(zod@3.23.8)))(zod@3.23.8))(@langchain/groq@0.1.2(@langchain/core@0.3.18(openai@4.72.0(zod@3.23.8))))(axios@1.7.8)(cheerio@1.0.0)(handlebars@4.7.8)(openai@4.72.0(zod@3.23.8))
     devDependencies:
       '@biomejs/biome':
         specifier: 'catalog:'
@@ -103,20 +112,150 @@ importers:
         specifier: 'catalog:'
         version: 5.6.3
 
+  apps/ai-trend-news-crawl-api-server:
+    dependencies:
+      '@fastify/autoload':
+        specifier: ^6.0.0
+        version: 6.0.2
+      '@fastify/sensible':
+        specifier: ^6.0.0
+        version: 6.0.1
+      '@fastify/type-provider-typebox':
+        specifier: ^5.0.1
+        version: 5.0.1(@sinclair/typebox@0.27.8)
+      '@paralleldrive/cuid2':
+        specifier: ^2.2.2
+        version: 2.2.2
+      '@prisma/client':
+        specifier: 5.22.0
+        version: 5.22.0(prisma@5.22.0)
+      '@repo/util':
+        specifier: workspace:*
+        version: link:../../packages/util
+      axios:
+        specifier: ^1.7.8
+        version: 1.7.8
+      cheerio:
+        specifier: ^1.0.0
+        version: 1.0.0
+      fast-xml-parser:
+        specifier: ^4.5.0
+        version: 4.5.0
+      fastify:
+        specifier: ^5.1.0
+        version: 5.1.0
+      fastify-cli:
+        specifier: ^7.0.1
+        version: 7.0.1
+      fastify-plugin:
+        specifier: ^5.0.0
+        version: 5.0.1
+      pino:
+        specifier: ^9.5.0
+        version: 9.5.0
+      pino-pretty:
+        specifier: ^13.0.0
+        version: 13.0.0
+    devDependencies:
+      '@fastify/swagger':
+        specifier: ^9.3.0
+        version: 9.3.0
+      '@fastify/swagger-ui':
+        specifier: ^5.1.0
+        version: 5.1.0
+      '@repo/types':
+        specifier: workspace:*
+        version: link:../../packages/types
+      '@repo/typescript-config':
+        specifier: workspace:*
+        version: link:../../packages/typescript-config
+      '@types/jest':
+        specifier: 'catalog:'
+        version: 29.5.14
+      '@types/node':
+        specifier: 'catalog:'
+        version: 22.9.0
+      dotenv:
+        specifier: ^16.4.5
+        version: 16.4.5
+      jest:
+        specifier: 'catalog:'
+        version: 29.7.0(@types/node@22.9.0)(ts-node@10.9.2(@types/node@22.9.0)(typescript@5.6.3))
+      prisma:
+        specifier: ^5.22.0
+        version: 5.22.0
+      ts-jest:
+        specifier: 'catalog:'
+        version: 29.2.5(@babel/core@7.26.0)(@jest/transform@29.7.0)(@jest/types@29.6.3)(babel-jest@29.7.0(@babel/core@7.26.0))(jest@29.7.0(@types/node@22.9.0)(ts-node@10.9.2(@types/node@22.9.0)(typescript@5.6.3)))(typescript@5.6.3)
+      ts-node:
+        specifier: 'catalog:'
+        version: 10.9.2(@types/node@22.9.0)(typescript@5.6.3)
+      ts-node-dev:
+        specifier: 'catalog:'
+        version: 2.0.0(@types/node@22.9.0)(typescript@5.6.3)
+      typescript:
+        specifier: 'catalog:'
+        version: 5.6.3
+
   apps/ai-trend-news-manager:
     dependencies:
+      '@langchain/community':
+        specifier: ^0.3.14
+        version: 0.3.14(@ibm-cloud/watsonx-ai@1.1.3)(@langchain/core@0.3.18(openai@4.72.0(zod@3.23.8)))(@langchain/google-genai@0.1.4(@langchain/core@0.3.18(openai@4.72.0(zod@3.23.8)))(zod@3.23.8))(@langchain/groq@0.1.2(@langchain/core@0.3.18(openai@4.72.0(zod@3.23.8))))(@supabase/supabase-js@2.46.1)(axios@1.7.4)(cheerio@1.0.0)(handlebars@4.7.8)(ibm-cloud-sdk-core@5.1.0)(ignore@5.3.2)(jsdom@20.0.3)(jsonwebtoken@9.0.2)(lodash@4.17.21)(openai@4.72.0(zod@3.23.8))(ws@8.18.0)
+      '@langchain/core':
+        specifier: ^0.3.18
+        version: 0.3.18(openai@4.72.0(zod@3.23.8))
+      '@langchain/google-genai':
+        specifier: ^0.1.4
+        version: 0.1.4(@langchain/core@0.3.18(openai@4.72.0(zod@3.23.8)))(zod@3.23.8)
+      '@langchain/langgraph':
+        specifier: ^0.2.20
+        version: 0.2.20(@langchain/core@0.3.18(openai@4.72.0(zod@3.23.8)))
+      '@paralleldrive/cuid2':
+        specifier: ^2.2.2
+        version: 2.2.2
+      '@prisma/client':
+        specifier: 5.22.0
+        version: 5.22.0(prisma@5.22.0)
       '@repo/ui':
         specifier: workspace:*
         version: link:../../packages/ui
+      '@repo/util':
+        specifier: workspace:*
+        version: link:../../packages/util
+      '@tanstack/react-query':
+        specifier: ^5.61.3
+        version: 5.61.3(react@19.0.0-rc-66855b96-20241106)
+      cross-env:
+        specifier: ^7.0.3
+        version: 7.0.3
+      es-toolkit:
+        specifier: ^1.27.0
+        version: 1.27.0
+      langchain:
+        specifier: ^0.3.5
+        version: 0.3.5(@langchain/core@0.3.18(openai@4.72.0(zod@3.23.8)))(@langchain/google-genai@0.1.4(@langchain/core@0.3.18(openai@4.72.0(zod@3.23.8)))(zod@3.23.8))(@langchain/groq@0.1.2(@langchain/core@0.3.18(openai@4.72.0(zod@3.23.8))))(axios@1.7.4)(cheerio@1.0.0)(handlebars@4.7.8)(openai@4.72.0(zod@3.23.8))
+      lucide-react:
+        specifier: ^0.460.0
+        version: 0.460.0(react@19.0.0-rc-66855b96-20241106)
       next:
         specifier: 'catalog:'
         version: 15.0.3(@babel/core@7.26.0)(react-dom@19.0.0-rc-66855b96-20241106(react@19.0.0-rc-66855b96-20241106))(react@19.0.0-rc-66855b96-20241106)
+      pino:
+        specifier: ^9.5.0
+        version: 9.5.0
       react:
         specifier: 'catalog:'
         version: 19.0.0-rc-66855b96-20241106
       react-dom:
         specifier: 'catalog:'
         version: 19.0.0-rc-66855b96-20241106(react@19.0.0-rc-66855b96-20241106)
+      react-intersection-observer:
+        specifier: ^9.13.1
+        version: 9.13.1(react-dom@19.0.0-rc-66855b96-20241106(react@19.0.0-rc-66855b96-20241106))(react@19.0.0-rc-66855b96-20241106)
+      react-toastify:
+        specifier: ^10.0.6
+        version: 10.0.6(react-dom@19.0.0-rc-66855b96-20241106(react@19.0.0-rc-66855b96-20241106))(react@19.0.0-rc-66855b96-20241106)
       uuid:
         specifier: 'catalog:'
         version: 11.0.3
@@ -127,6 +266,9 @@ importers:
       '@repo/tailwind-config':
         specifier: workspace:*
         version: link:../../packages/tailwind-config
+      '@repo/types':
+        specifier: workspace:*
+        version: link:../../packages/types
       '@repo/typescript-config':
         specifier: workspace:*
         version: link:../../packages/typescript-config
@@ -154,73 +296,21 @@ importers:
       jest-environment-jsdom:
         specifier: 'catalog:'
         version: 29.7.0
+      pino-pretty:
+        specifier: ^13.0.0
+        version: 13.0.0
       postcss:
         specifier: 'catalog:'
         version: 8.4.47
+      prisma:
+        specifier: ^5.22.0
+        version: 5.22.0
       tailwindcss:
         specifier: 'catalog:'
         version: 3.4.14(ts-node@10.9.2(@types/node@22.9.0)(typescript@5.6.3))
       ts-node:
         specifier: 'catalog:'
         version: 10.9.2(@types/node@22.9.0)(typescript@5.6.3)
-      typescript:
-        specifier: 'catalog:'
-        version: 5.6.3
-
-  apps/ai-trend-news-manager-api-server:
-    dependencies:
-      '@fastify/autoload':
-        specifier: ^6.0.0
-        version: 6.0.2
-      '@fastify/sensible':
-        specifier: ^6.0.0
-        version: 6.0.1
-      '@fastify/type-provider-typebox':
-        specifier: ^5.0.1
-        version: 5.0.1(@sinclair/typebox@0.27.8)
-      '@repo/typescript-config':
-        specifier: workspace:*
-        version: link:../../packages/typescript-config
-      '@types/jest':
-        specifier: ^29.5.14
-        version: 29.5.14
-      fastify:
-        specifier: ^5.1.0
-        version: 5.1.0
-      fastify-cli:
-        specifier: ^7.0.1
-        version: 7.0.1
-      fastify-plugin:
-        specifier: ^5.0.0
-        version: 5.0.1
-      jest:
-        specifier: ^29.7.0
-        version: 29.7.0(@types/node@22.9.0)(ts-node@10.9.2(@types/node@22.9.0)(typescript@5.6.3))
-      pino:
-        specifier: ^9.5.0
-        version: 9.5.0
-      pino-pretty:
-        specifier: ^13.0.0
-        version: 13.0.0
-      ts-jest:
-        specifier: ^29.2.5
-        version: 29.2.5(@babel/core@7.26.0)(@jest/transform@29.7.0)(@jest/types@29.6.3)(babel-jest@29.7.0(@babel/core@7.26.0))(jest@29.7.0(@types/node@22.9.0)(ts-node@10.9.2(@types/node@22.9.0)(typescript@5.6.3)))(typescript@5.6.3)
-    devDependencies:
-      '@fastify/swagger':
-        specifier: ^9.3.0
-        version: 9.3.0
-      '@fastify/swagger-ui':
-        specifier: ^5.1.0
-        version: 5.1.0
-      '@types/node':
-        specifier: 'catalog:'
-        version: 22.9.0
-      ts-node:
-        specifier: 'catalog:'
-        version: 10.9.2(@types/node@22.9.0)(typescript@5.6.3)
-      ts-node-dev:
-        specifier: ^2.0.0
-        version: 2.0.0(@types/node@22.9.0)(typescript@5.6.3)
       typescript:
         specifier: 'catalog:'
         version: 5.6.3
@@ -232,7 +322,7 @@ importers:
         version: 0.21.0
       '@langchain/community':
         specifier: ^0.3.14
-        version: 0.3.14(@ibm-cloud/watsonx-ai@1.1.3)(@langchain/core@0.3.18(openai@4.72.0(zod@3.23.8)))(@langchain/groq@0.1.2(@langchain/core@0.3.18(openai@4.72.0(zod@3.23.8))))(@supabase/supabase-js@2.46.1)(axios@1.7.4)(cheerio@1.0.0)(handlebars@4.7.8)(ibm-cloud-sdk-core@5.1.0)(ignore@5.3.2)(jsdom@20.0.3)(jsonwebtoken@9.0.2)(lodash@4.17.21)(openai@4.72.0(zod@3.23.8))(ws@8.18.0)
+        version: 0.3.14(@ibm-cloud/watsonx-ai@1.1.3)(@langchain/core@0.3.18(openai@4.72.0(zod@3.23.8)))(@langchain/google-genai@0.1.4(@langchain/core@0.3.18(openai@4.72.0(zod@3.23.8)))(zod@3.23.8))(@langchain/groq@0.1.2(@langchain/core@0.3.18(openai@4.72.0(zod@3.23.8))))(@supabase/supabase-js@2.46.1)(axios@1.7.8)(cheerio@1.0.0)(handlebars@4.7.8)(ibm-cloud-sdk-core@5.1.0)(ignore@5.3.2)(jsdom@20.0.3)(jsonwebtoken@9.0.2)(lodash@4.17.21)(openai@4.72.0(zod@3.23.8))(ws@8.18.0)
       '@langchain/core':
         specifier: ^0.3.18
         version: 0.3.18(openai@4.72.0(zod@3.23.8))
@@ -265,7 +355,7 @@ importers:
         version: 4.5.0
       langchain:
         specifier: ^0.3.5
-        version: 0.3.5(@langchain/core@0.3.18(openai@4.72.0(zod@3.23.8)))(@langchain/groq@0.1.2(@langchain/core@0.3.18(openai@4.72.0(zod@3.23.8))))(axios@1.7.4)(cheerio@1.0.0)(handlebars@4.7.8)(openai@4.72.0(zod@3.23.8))
+        version: 0.3.5(@langchain/core@0.3.18(openai@4.72.0(zod@3.23.8)))(@langchain/google-genai@0.1.4(@langchain/core@0.3.18(openai@4.72.0(zod@3.23.8)))(zod@3.23.8))(@langchain/groq@0.1.2(@langchain/core@0.3.18(openai@4.72.0(zod@3.23.8))))(axios@1.7.8)(cheerio@1.0.0)(handlebars@4.7.8)(openai@4.72.0(zod@3.23.8))
       next:
         specifier: 'catalog:'
         version: 15.0.3(@babel/core@7.26.0)(react-dom@19.0.0-rc-66855b96-20241106(react@19.0.0-rc-66855b96-20241106))(react@19.0.0-rc-66855b96-20241106)
@@ -429,7 +519,11 @@ importers:
         specifier: 'catalog:'
         version: 3.4.14(ts-node@10.9.2(@types/node@22.9.0)(typescript@5.6.3))
 
-  packages/type: {}
+  packages/types:
+    devDependencies:
+      '@repo/typescript-config':
+        specifier: workspace:*
+        version: link:../typescript-config
 
   packages/typescript-config: {}
 
@@ -444,9 +538,21 @@ importers:
       '@repo/util':
         specifier: workspace:*
         version: link:../util
+      es-toolkit:
+        specifier: ^1.27.0
+        version: 1.27.0
+      lucide-react:
+        specifier: ^0.460.0
+        version: 0.460.0(react@19.0.0-rc-66855b96-20241106)
+      next:
+        specifier: 'catalog:'
+        version: 15.0.3(@babel/core@7.26.0)(react-dom@19.0.0-rc-66855b96-20241106(react@19.0.0-rc-66855b96-20241106))(react@19.0.0-rc-66855b96-20241106)
       react:
         specifier: 'catalog:'
         version: 19.0.0-rc-66855b96-20241106
+      react-intersection-observer:
+        specifier: ^9.13.1
+        version: 9.13.1(react-dom@19.0.0-rc-66855b96-20241106(react@19.0.0-rc-66855b96-20241106))(react@19.0.0-rc-66855b96-20241106)
     devDependencies:
       '@biomejs/biome':
         specifier: 'catalog:'
@@ -490,6 +596,12 @@ importers:
       clsx:
         specifier: 'catalog:'
         version: 2.1.1
+      dayjs:
+        specifier: ^1.11.13
+        version: 1.11.13
+      json5:
+        specifier: ^2.2.3
+        version: 2.2.3
       tailwind-merge:
         specifier: 'catalog:'
         version: 2.5.2
@@ -2176,6 +2288,12 @@ packages:
     resolution: {integrity: sha512-IEZCrFs1Xd0J2FTH1D3Lnm3/Yk2r8LSpwDeLYwcCom3rNAK5k4mKQ2rwIpNq3YuqBdrTNMKRO+PopjkP1SB17A==}
     engines: {node: '>=18'}
 
+  '@langchain/google-genai@0.1.4':
+    resolution: {integrity: sha512-b8qrqnHYbNseaAikrWyxuDTww6CUIse82F5/BmF2GtWVR25yJrNUWETfTp7o7iIMxhFR0PuQag4gEZOL74F5Tw==}
+    engines: {node: '>=18'}
+    peerDependencies:
+      '@langchain/core': '>=0.3.17 <0.4.0'
+
   '@langchain/groq@0.1.2':
     resolution: {integrity: sha512-bgQ9yGoNHOwG6LG2ngGvSNxF/1U1c1u3vKmFWmzecFIcBoQQOJY0jb0MrL3g1uTife0Sr3zxkWKXQg2aK/U4Sg==}
     engines: {node: '>=18'}
@@ -2270,6 +2388,10 @@ packages:
     cpu: [x64]
     os: [win32]
 
+  '@noble/hashes@1.5.0':
+    resolution: {integrity: sha512-1j6kQFb7QRru7eKN3ZDvRcP13rugwdxZqCjbiAVZfIJwgj2A65UmT4TgARXGlXgnRkORLTDTrO19ZErt7+QXgA==}
+    engines: {node: ^14.21.3 || >=16}
+
   '@nodelib/fs.scandir@2.1.5':
     resolution: {integrity: sha512-vq24Bq3ym5HEQm2NKCr3yXDwjc7vTsEThRDnkp2DK9p1uqLR+DHurm/NOTo0KG7HYHU7eppKZj3MyqYuMBf62g==}
     engines: {node: '>= 8'}
@@ -2281,6 +2403,9 @@ packages:
   '@nodelib/fs.walk@1.2.8':
     resolution: {integrity: sha512-oGB+UxlgWcgQkgwo8GcEGwemoTFt3FIO9ababBmaGwXIoBKZ+GTy0pP185beGg7Llih/NSHSV2XAs1lnznocSg==}
     engines: {node: '>= 8'}
+
+  '@paralleldrive/cuid2@2.2.2':
+    resolution: {integrity: sha512-ZOBkgDwEdoYVlSeRbYYXs0S9MejQofiVYoTbKzy/6GQa39/q5tQU2IX46+shYnUkpEl3wc+J6wRlar7r2EK2xA==}
 
   '@pkgjs/parseargs@0.11.0':
     resolution: {integrity: sha512-+1VkjdD0QBLPodGrJUeqarH8VAIvQODIbwh9XpP5Syisf7YoQgsJKPNFoqqLQlu+VQ/tVSshMR6loPMn8U+dPg==}
@@ -2311,6 +2436,30 @@ packages:
         optional: true
       webpack-plugin-serve:
         optional: true
+
+  '@prisma/client@5.22.0':
+    resolution: {integrity: sha512-M0SVXfyHnQREBKxCgyo7sffrKttwE6R8PMq330MIUF0pTwjUhLbW84pFDlf06B27XyCR++VtjugEnIHdr07SVA==}
+    engines: {node: '>=16.13'}
+    peerDependencies:
+      prisma: '*'
+    peerDependenciesMeta:
+      prisma:
+        optional: true
+
+  '@prisma/debug@5.22.0':
+    resolution: {integrity: sha512-AUt44v3YJeggO2ZU5BkXI7M4hu9BF2zzH2iF2V5pyXT/lRTyWiElZ7It+bRH1EshoMRxHgpYg4VB6rCM+mG5jQ==}
+
+  '@prisma/engines-version@5.22.0-44.605197351a3c8bdd595af2d2a9bc3025bca48ea2':
+    resolution: {integrity: sha512-2PTmxFR2yHW/eB3uqWtcgRcgAbG1rwG9ZriSvQw+nnb7c4uCr3RAcGMb6/zfE88SKlC1Nj2ziUvc96Z379mHgQ==}
+
+  '@prisma/engines@5.22.0':
+    resolution: {integrity: sha512-UNjfslWhAt06kVL3CjkuYpHAWSO6L4kDCVPegV6itt7nD1kSJavd3vhgAEhjglLJJKEdJ7oIqDJ+yHk6qO8gPA==}
+
+  '@prisma/fetch-engine@5.22.0':
+    resolution: {integrity: sha512-bkrD/Mc2fSvkQBV5EpoFcZ87AvOgDxbG99488a5cexp5Ccny+UM6MAe/UFkUC0wLYD9+9befNOqGiIJhhq+HbA==}
+
+  '@prisma/get-platform@5.22.0':
+    resolution: {integrity: sha512-pHhpQdr1UPFpt+zFfnPazhulaZYCUqeIcPpJViYoq9R+D/yw4fjE+CtnsnKzPYm0ddUbeXUzjGVGIRVgPDCk4Q==}
 
   '@sinclair/typebox@0.27.8':
     resolution: {integrity: sha512-+Fj43pSMwJs4KRrH/938Uf+uAELIgVBmQzg/q1YG10djyfA3TnrU8N8XzqCh/okZdszqBQTZf96idMfE5lnwTA==}
@@ -2550,6 +2699,14 @@ packages:
 
   '@swc/helpers@0.5.13':
     resolution: {integrity: sha512-UoKGxQ3r5kYI9dALKJapMmuK+1zWM/H17Z1+iwnNmzcJRnfFuevZs375TA5rW31pu4BS4NoSy1fRsexDXfWn5w==}
+
+  '@tanstack/query-core@5.60.6':
+    resolution: {integrity: sha512-tI+k0KyCo1EBJ54vxK1kY24LWj673ujTydCZmzEZKAew4NqZzTaVQJEuaG1qKj2M03kUHN46rchLRd+TxVq/zQ==}
+
+  '@tanstack/react-query@5.61.3':
+    resolution: {integrity: sha512-c3Oz9KaCBapGkRewu7AJLhxE9BVqpMcHsd3KtFxSd7FSCu2qGwqfIN37zbSGoyk6Ix9LGZBNHQDPI6GpWABnmA==}
+    peerDependencies:
+      react: ^18 || ^19
 
   '@testing-library/dom@10.4.0':
     resolution: {integrity: sha512-pemlzrSESWbdAloYml3bAJMEfNh1Z7EduzqPKprCH5S341frlpYnUEW0H72dLxa6IsYr+mPno20GiSm+h9dEdQ==}
@@ -3018,6 +3175,9 @@ packages:
 
   axios@1.7.4:
     resolution: {integrity: sha512-DukmaFRnY6AzAALSH4J2M3k6PkaC+MfaAGdEERRWcC9q3/TWQwLpHR8ZRLKTdQ3aBDL64EdluRDjJqKw+BPZEw==}
+
+  axios@1.7.8:
+    resolution: {integrity: sha512-Uu0wb7KNqK2t5K+YQyVCLM76prD5sRFjKHbJYCP1J7JFGEQ6nN7HWn9+04LAeiJ3ji54lgS/gZCH1oxyrf1SPw==}
 
   babel-jest@29.7.0:
     resolution: {integrity: sha512-BrvGY3xZSwEcCzKvKsCi2GgHqDqsYkOP4/by5xCgIwGXQxIEh+8ew3gmrE1y7XRR6LHZIj6yLYnUi/mm2KXKBg==}
@@ -3512,6 +3672,9 @@ packages:
   dateformat@4.6.3:
     resolution: {integrity: sha512-2P0p0pFGzHS5EMnhdxQi7aJN+iMheud0UhG4dlE1DLAlvL8JHjJJTX/CSm4JXwV0Ka5nGk3zC5mcb5bUQUxxMA==}
 
+  dayjs@1.11.13:
+    resolution: {integrity: sha512-oaMBel6gjolK862uaPQOVTA7q3TZhuSvuMQAAglQDOWYO9A91IrAOUJEyKVlqJlHE0vq5p5UXxzdPfMH/x6xNg==}
+
   debug@4.3.7:
     resolution: {integrity: sha512-Er2nc/H7RrMXZBFCEim6TCmMk02Z8vLC2Rbi1KEBggpo0fS6l0S1nnapwmIi3yW/+GOJap1Krg4w0Hg80oCqgQ==}
     engines: {node: '>=6.0'}
@@ -3747,6 +3910,9 @@ packages:
 
   es-module-lexer@1.5.4:
     resolution: {integrity: sha512-MVNK56NiMrOwitFB7cqDwq0CQutbw+0BvLshJSse0MUNU+y1FC3bUS/AQg7oUng+/wKrrki7JfmwtVHkVfPLlw==}
+
+  es-toolkit@1.27.0:
+    resolution: {integrity: sha512-ETSFA+ZJArcuSCpzD2TjAy6UHpx4E4uqFsoDg9F/nTLogrLmVVZQ+zNxco5h7cWnA1nNak07IXsLcaSMih+ZPQ==}
 
   esbuild-register@3.6.0:
     resolution: {integrity: sha512-H2/S7Pm8a9CL1uhp9OvjwrBh5Pvx0H8qVOxNu8Wed9Y7qv56MPtq+GGM8RJpq6glYJn9Wspr8uw7l55uyinNeg==}
@@ -4730,6 +4896,14 @@ packages:
       openai:
         optional: true
 
+  langsmith@0.2.7:
+    resolution: {integrity: sha512-9LFOp30cQ9K/7rzMt4USBI0SEKKhsH4l42ZERBPXOmDXnR5gYpsGFw8SZR0A6YLnc6vvoEmtr/XKel0Odq2UWw==}
+    peerDependencies:
+      openai: '*'
+    peerDependenciesMeta:
+      openai:
+        optional: true
+
   leven@3.1.0:
     resolution: {integrity: sha512-qsda+H8jTaUaN/x5vzW2rzc+8Rw4TAQ/4KjB46IwK5VH+IlVeeeje/EoZRpiXvIqjFgK84QffqPztGI3VBLG1A==}
     engines: {node: '>=6'}
@@ -4846,6 +5020,11 @@ packages:
   lru-cache@7.18.3:
     resolution: {integrity: sha512-jumlc0BIUrS3qJGgIkWZsyfAM7NCWiBcCDhnd+3NNM5KbBmLTgHVfWBcg6W+rLUsIpzpERPsvwUP7CckAQSOoA==}
     engines: {node: '>=12'}
+
+  lucide-react@0.460.0:
+    resolution: {integrity: sha512-BVtq/DykVeIvRTJvRAgCsOwaGL8Un3Bxh8MbDxMhEWlZay3T4IpEKDEpwt5KZ0KJMHzgm6jrltxlT5eXOWXDHg==}
+    peerDependencies:
+      react: ^16.5.1 || ^17.0.0 || ^18.0.0 || ^19.0.0-rc
 
   lz-string@1.5.0:
     resolution: {integrity: sha512-h5bgJWpxJNswbU7qCrV0tIKQCaS3blPDrqKWx+QxzuzL1zGUzij9XCWLrSLsJPu5t+eWA/ycetzYAO5IOMcWAQ==}
@@ -5451,6 +5630,11 @@ packages:
     resolution: {integrity: sha512-Pdlw/oPxN+aXdmM9R00JVC9WVFoCLTKJvDVLgmJ+qAffBMxsV85l/Lu7sNx4zSzPyoL2euImuEwHhOXdEgNFZQ==}
     engines: {node: ^14.15.0 || ^16.10.0 || >=18.0.0}
 
+  prisma@5.22.0:
+    resolution: {integrity: sha512-vtpjW3XuYCSnMsNVBjLMNkTj6OZbudcPPTPYHqX0CJfpcdWciI1dM8uHETwmDxxiqEwCIE6WvXucWUetJgfu/A==}
+    engines: {node: '>=16.13'}
+    hasBin: true
+
   proc-log@5.0.0:
     resolution: {integrity: sha512-Azwzvl90HaF0aCz1JrDdXQykFakSSNPaPoiZ9fm5qJIMHioDZEi7OAdRwSm6rSoPtY3Qutnm3L7ogmg3dc+wbQ==}
     engines: {node: ^18.17.0 || >=20.5.0}
@@ -5552,6 +5736,15 @@ packages:
     peerDependencies:
       react: 19.0.0-rc-66855b96-20241106
 
+  react-intersection-observer@9.13.1:
+    resolution: {integrity: sha512-tSzDaTy0qwNPLJHg8XZhlyHTgGW6drFKTtvjdL+p6um12rcnp8Z5XstE+QNBJ7c64n5o0Lj4ilUleA41bmDoMw==}
+    peerDependencies:
+      react: ^15.0.0 || ^16.0.0 || ^17.0.0 || ^18.0.0 || ^19.0.0
+      react-dom: ^15.0.0 || ^16.0.0 || ^17.0.0 || ^18.0.0 || ^19.0.0
+    peerDependenciesMeta:
+      react-dom:
+        optional: true
+
   react-is@17.0.2:
     resolution: {integrity: sha512-w2GsyukL62IJnlaff/nRegPQR94C/XXamvMWmSHRJ4y7Ts/4ocGRmTHvOs8PSE6pB3dWOrD/nueuU5sduBsQ4w==}
 
@@ -5561,6 +5754,12 @@ packages:
   react-refresh@0.14.2:
     resolution: {integrity: sha512-jCvmsr+1IUSMUyzOkRcvnVbX3ZYC6g9TDrDbFuFmRDq7PD4yaGbLKNQL6k2jnArV8hjYxh7hVhAZB6s9HDGpZA==}
     engines: {node: '>=0.10.0'}
+
+  react-toastify@10.0.6:
+    resolution: {integrity: sha512-yYjp+omCDf9lhZcrZHKbSq7YMuK0zcYkDFTzfRFgTXkTFHZ1ToxwAonzA4JI5CxA91JpjFLmwEsZEgfYfOqI1A==}
+    peerDependencies:
+      react: '>=18'
+      react-dom: '>=18'
 
   react@18.3.1:
     resolution: {integrity: sha512-wS+hAgJShR0KhEvPJArfuPVN1+Hz1t0Y6n5jLrGQbkb4urgPE/0Rve+1kMB1v/oWgHgm4WIcV+i7F2pTVj+2iQ==}
@@ -8088,7 +8287,7 @@ snapshots:
       '@jridgewell/resolve-uri': 3.1.2
       '@jridgewell/sourcemap-codec': 1.5.0
 
-  '@langchain/community@0.3.14(@ibm-cloud/watsonx-ai@1.1.3)(@langchain/core@0.3.18(openai@4.72.0(zod@3.23.8)))(@langchain/groq@0.1.2(@langchain/core@0.3.18(openai@4.72.0(zod@3.23.8))))(@supabase/supabase-js@2.46.1)(axios@1.7.4)(cheerio@1.0.0)(handlebars@4.7.8)(ibm-cloud-sdk-core@5.1.0)(ignore@5.3.2)(jsdom@20.0.3)(jsonwebtoken@9.0.2)(lodash@4.17.21)(openai@4.72.0(zod@3.23.8))(ws@8.18.0)':
+  '@langchain/community@0.3.14(@ibm-cloud/watsonx-ai@1.1.3)(@langchain/core@0.3.18(openai@4.72.0(zod@3.23.8)))(@langchain/google-genai@0.1.4(@langchain/core@0.3.18(openai@4.72.0(zod@3.23.8)))(zod@3.23.8))(@langchain/groq@0.1.2(@langchain/core@0.3.18(openai@4.72.0(zod@3.23.8))))(@supabase/supabase-js@2.46.1)(axios@1.7.4)(cheerio@1.0.0)(handlebars@4.7.8)(ibm-cloud-sdk-core@5.1.0)(ignore@5.3.2)(jsdom@20.0.3)(jsonwebtoken@9.0.2)(lodash@4.17.21)(openai@4.72.0(zod@3.23.8))(ws@8.18.0)':
     dependencies:
       '@ibm-cloud/watsonx-ai': 1.1.3
       '@langchain/core': 0.3.18(openai@4.72.0(zod@3.23.8))
@@ -8098,8 +8297,46 @@ snapshots:
       flat: 5.0.2
       ibm-cloud-sdk-core: 5.1.0
       js-yaml: 4.1.0
-      langchain: 0.3.5(@langchain/core@0.3.18(openai@4.72.0(zod@3.23.8)))(@langchain/groq@0.1.2(@langchain/core@0.3.18(openai@4.72.0(zod@3.23.8))))(axios@1.7.4)(cheerio@1.0.0)(handlebars@4.7.8)(openai@4.72.0(zod@3.23.8))
-      langsmith: 0.2.5(openai@4.72.0(zod@3.23.8))
+      langchain: 0.3.5(@langchain/core@0.3.18(openai@4.72.0(zod@3.23.8)))(@langchain/google-genai@0.1.4(@langchain/core@0.3.18(openai@4.72.0(zod@3.23.8)))(zod@3.23.8))(@langchain/groq@0.1.2(@langchain/core@0.3.18(openai@4.72.0(zod@3.23.8))))(axios@1.7.4)(cheerio@1.0.0)(handlebars@4.7.8)(openai@4.72.0(zod@3.23.8))
+      langsmith: 0.2.7(openai@4.72.0(zod@3.23.8))
+      uuid: 10.0.0
+      zod: 3.23.8
+      zod-to-json-schema: 3.23.5(zod@3.23.8)
+    optionalDependencies:
+      '@supabase/supabase-js': 2.46.1
+      cheerio: 1.0.0
+      ignore: 5.3.2
+      jsdom: 20.0.3
+      jsonwebtoken: 9.0.2
+      lodash: 4.17.21
+      ws: 8.18.0
+    transitivePeerDependencies:
+      - '@langchain/anthropic'
+      - '@langchain/aws'
+      - '@langchain/cohere'
+      - '@langchain/google-genai'
+      - '@langchain/google-vertexai'
+      - '@langchain/groq'
+      - '@langchain/mistralai'
+      - '@langchain/ollama'
+      - axios
+      - encoding
+      - handlebars
+      - openai
+      - peggy
+
+  '@langchain/community@0.3.14(@ibm-cloud/watsonx-ai@1.1.3)(@langchain/core@0.3.18(openai@4.72.0(zod@3.23.8)))(@langchain/google-genai@0.1.4(@langchain/core@0.3.18(openai@4.72.0(zod@3.23.8)))(zod@3.23.8))(@langchain/groq@0.1.2(@langchain/core@0.3.18(openai@4.72.0(zod@3.23.8))))(@supabase/supabase-js@2.46.1)(axios@1.7.8)(cheerio@1.0.0)(handlebars@4.7.8)(ibm-cloud-sdk-core@5.1.0)(ignore@5.3.2)(jsdom@20.0.3)(jsonwebtoken@9.0.2)(lodash@4.17.21)(openai@4.72.0(zod@3.23.8))(ws@8.18.0)':
+    dependencies:
+      '@ibm-cloud/watsonx-ai': 1.1.3
+      '@langchain/core': 0.3.18(openai@4.72.0(zod@3.23.8))
+      '@langchain/openai': 0.3.13(@langchain/core@0.3.18(openai@4.72.0(zod@3.23.8)))
+      binary-extensions: 2.3.0
+      expr-eval: 2.0.2
+      flat: 5.0.2
+      ibm-cloud-sdk-core: 5.1.0
+      js-yaml: 4.1.0
+      langchain: 0.3.5(@langchain/core@0.3.18(openai@4.72.0(zod@3.23.8)))(@langchain/google-genai@0.1.4(@langchain/core@0.3.18(openai@4.72.0(zod@3.23.8)))(zod@3.23.8))(@langchain/groq@0.1.2(@langchain/core@0.3.18(openai@4.72.0(zod@3.23.8))))(axios@1.7.8)(cheerio@1.0.0)(handlebars@4.7.8)(openai@4.72.0(zod@3.23.8))
+      langsmith: 0.2.7(openai@4.72.0(zod@3.23.8))
       uuid: 10.0.0
       zod: 3.23.8
       zod-to-json-schema: 3.23.5(zod@3.23.8)
@@ -8132,7 +8369,7 @@ snapshots:
       camelcase: 6.3.0
       decamelize: 1.2.0
       js-tiktoken: 1.0.15
-      langsmith: 0.2.5(openai@4.72.0(zod@3.23.8))
+      langsmith: 0.2.7(openai@4.72.0(zod@3.23.8))
       mustache: 4.2.0
       p-queue: 6.6.2
       p-retry: 4.6.2
@@ -8141,6 +8378,14 @@ snapshots:
       zod-to-json-schema: 3.23.5(zod@3.23.8)
     transitivePeerDependencies:
       - openai
+
+  '@langchain/google-genai@0.1.4(@langchain/core@0.3.18(openai@4.72.0(zod@3.23.8)))(zod@3.23.8)':
+    dependencies:
+      '@google/generative-ai': 0.21.0
+      '@langchain/core': 0.3.18(openai@4.72.0(zod@3.23.8))
+      zod-to-json-schema: 3.23.5(zod@3.23.8)
+    transitivePeerDependencies:
+      - zod
 
   '@langchain/groq@0.1.2(@langchain/core@0.3.18(openai@4.72.0(zod@3.23.8)))':
     dependencies:
@@ -8221,6 +8466,8 @@ snapshots:
   '@next/swc-win32-x64-msvc@15.0.3':
     optional: true
 
+  '@noble/hashes@1.5.0': {}
+
   '@nodelib/fs.scandir@2.1.5':
     dependencies:
       '@nodelib/fs.stat': 2.0.5
@@ -8232,6 +8479,10 @@ snapshots:
     dependencies:
       '@nodelib/fs.scandir': 2.1.5
       fastq: 1.17.1
+
+  '@paralleldrive/cuid2@2.2.2':
+    dependencies:
+      '@noble/hashes': 1.5.0
 
   '@pkgjs/parseargs@0.11.0':
     optional: true
@@ -8250,6 +8501,31 @@ snapshots:
     optionalDependencies:
       type-fest: 2.19.0
       webpack-hot-middleware: 2.26.1
+
+  '@prisma/client@5.22.0(prisma@5.22.0)':
+    optionalDependencies:
+      prisma: 5.22.0
+
+  '@prisma/debug@5.22.0': {}
+
+  '@prisma/engines-version@5.22.0-44.605197351a3c8bdd595af2d2a9bc3025bca48ea2': {}
+
+  '@prisma/engines@5.22.0':
+    dependencies:
+      '@prisma/debug': 5.22.0
+      '@prisma/engines-version': 5.22.0-44.605197351a3c8bdd595af2d2a9bc3025bca48ea2
+      '@prisma/fetch-engine': 5.22.0
+      '@prisma/get-platform': 5.22.0
+
+  '@prisma/fetch-engine@5.22.0':
+    dependencies:
+      '@prisma/debug': 5.22.0
+      '@prisma/engines-version': 5.22.0-44.605197351a3c8bdd595af2d2a9bc3025bca48ea2
+      '@prisma/get-platform': 5.22.0
+
+  '@prisma/get-platform@5.22.0':
+    dependencies:
+      '@prisma/debug': 5.22.0
 
   '@sinclair/typebox@0.27.8': {}
 
@@ -8664,6 +8940,13 @@ snapshots:
   '@swc/helpers@0.5.13':
     dependencies:
       tslib: 2.8.1
+
+  '@tanstack/query-core@5.60.6': {}
+
+  '@tanstack/react-query@5.61.3(react@19.0.0-rc-66855b96-20241106)':
+    dependencies:
+      '@tanstack/query-core': 5.60.6
+      react: 19.0.0-rc-66855b96-20241106
 
   '@testing-library/dom@10.4.0':
     dependencies:
@@ -9210,6 +9493,14 @@ snapshots:
       fastq: 1.17.1
 
   axios@1.7.4(debug@4.3.7):
+    dependencies:
+      follow-redirects: 1.15.9(debug@4.3.7)
+      form-data: 4.0.1
+      proxy-from-env: 1.1.0
+    transitivePeerDependencies:
+      - debug
+
+  axios@1.7.8:
     dependencies:
       follow-redirects: 1.15.9(debug@4.3.7)
       form-data: 4.0.1
@@ -9820,6 +10111,8 @@ snapshots:
 
   dateformat@4.6.3: {}
 
+  dayjs@1.11.13: {}
+
   debug@4.3.7:
     dependencies:
       ms: 2.1.3
@@ -10045,6 +10338,8 @@ snapshots:
   es-errors@1.3.0: {}
 
   es-module-lexer@1.5.4: {}
+
+  es-toolkit@1.27.0: {}
 
   esbuild-register@3.6.0(esbuild@0.24.0):
     dependencies:
@@ -11349,7 +11644,7 @@ snapshots:
 
   kleur@3.0.3: {}
 
-  langchain@0.3.5(@langchain/core@0.3.18(openai@4.72.0(zod@3.23.8)))(@langchain/groq@0.1.2(@langchain/core@0.3.18(openai@4.72.0(zod@3.23.8))))(axios@1.7.4)(cheerio@1.0.0)(handlebars@4.7.8)(openai@4.72.0(zod@3.23.8)):
+  langchain@0.3.5(@langchain/core@0.3.18(openai@4.72.0(zod@3.23.8)))(@langchain/google-genai@0.1.4(@langchain/core@0.3.18(openai@4.72.0(zod@3.23.8)))(zod@3.23.8))(@langchain/groq@0.1.2(@langchain/core@0.3.18(openai@4.72.0(zod@3.23.8))))(axios@1.7.4)(cheerio@1.0.0)(handlebars@4.7.8)(openai@4.72.0(zod@3.23.8)):
     dependencies:
       '@langchain/core': 0.3.18(openai@4.72.0(zod@3.23.8))
       '@langchain/openai': 0.3.13(@langchain/core@0.3.18(openai@4.72.0(zod@3.23.8)))
@@ -11365,6 +11660,7 @@ snapshots:
       zod: 3.23.8
       zod-to-json-schema: 3.23.5(zod@3.23.8)
     optionalDependencies:
+      '@langchain/google-genai': 0.1.4(@langchain/core@0.3.18(openai@4.72.0(zod@3.23.8)))(zod@3.23.8)
       '@langchain/groq': 0.1.2(@langchain/core@0.3.18(openai@4.72.0(zod@3.23.8)))
       axios: 1.7.4(debug@4.3.7)
       cheerio: 1.0.0
@@ -11373,7 +11669,43 @@ snapshots:
       - encoding
       - openai
 
+  langchain@0.3.5(@langchain/core@0.3.18(openai@4.72.0(zod@3.23.8)))(@langchain/google-genai@0.1.4(@langchain/core@0.3.18(openai@4.72.0(zod@3.23.8)))(zod@3.23.8))(@langchain/groq@0.1.2(@langchain/core@0.3.18(openai@4.72.0(zod@3.23.8))))(axios@1.7.8)(cheerio@1.0.0)(handlebars@4.7.8)(openai@4.72.0(zod@3.23.8)):
+    dependencies:
+      '@langchain/core': 0.3.18(openai@4.72.0(zod@3.23.8))
+      '@langchain/openai': 0.3.13(@langchain/core@0.3.18(openai@4.72.0(zod@3.23.8)))
+      '@langchain/textsplitters': 0.1.0(@langchain/core@0.3.18(openai@4.72.0(zod@3.23.8)))
+      js-tiktoken: 1.0.15
+      js-yaml: 4.1.0
+      jsonpointer: 5.0.1
+      langsmith: 0.2.5(openai@4.72.0(zod@3.23.8))
+      openapi-types: 12.1.3
+      p-retry: 4.6.2
+      uuid: 10.0.0
+      yaml: 2.6.0
+      zod: 3.23.8
+      zod-to-json-schema: 3.23.5(zod@3.23.8)
+    optionalDependencies:
+      '@langchain/google-genai': 0.1.4(@langchain/core@0.3.18(openai@4.72.0(zod@3.23.8)))(zod@3.23.8)
+      '@langchain/groq': 0.1.2(@langchain/core@0.3.18(openai@4.72.0(zod@3.23.8)))
+      axios: 1.7.8
+      cheerio: 1.0.0
+      handlebars: 4.7.8
+    transitivePeerDependencies:
+      - encoding
+      - openai
+
   langsmith@0.2.5(openai@4.72.0(zod@3.23.8)):
+    dependencies:
+      '@types/uuid': 10.0.0
+      commander: 10.0.1
+      p-queue: 6.6.2
+      p-retry: 4.6.2
+      semver: 7.6.3
+      uuid: 10.0.0
+    optionalDependencies:
+      openai: 4.72.0(zod@3.23.8)
+
+  langsmith@0.2.7(openai@4.72.0(zod@3.23.8)):
     dependencies:
       '@types/uuid': 10.0.0
       commander: 10.0.1
@@ -11481,6 +11813,10 @@ snapshots:
       yallist: 3.1.1
 
   lru-cache@7.18.3: {}
+
+  lucide-react@0.460.0(react@19.0.0-rc-66855b96-20241106):
+    dependencies:
+      react: 19.0.0-rc-66855b96-20241106
 
   lz-string@1.5.0: {}
 
@@ -12139,6 +12475,12 @@ snapshots:
       ansi-styles: 5.2.0
       react-is: 18.3.1
 
+  prisma@5.22.0:
+    dependencies:
+      '@prisma/engines': 5.22.0
+    optionalDependencies:
+      fsevents: 2.3.3
+
   proc-log@5.0.0: {}
 
   process-nextick-args@2.0.1: {}
@@ -12260,11 +12602,23 @@ snapshots:
       react: 19.0.0-rc-66855b96-20241106
       scheduler: 0.25.0-rc-66855b96-20241106
 
+  react-intersection-observer@9.13.1(react-dom@19.0.0-rc-66855b96-20241106(react@19.0.0-rc-66855b96-20241106))(react@19.0.0-rc-66855b96-20241106):
+    dependencies:
+      react: 19.0.0-rc-66855b96-20241106
+    optionalDependencies:
+      react-dom: 19.0.0-rc-66855b96-20241106(react@19.0.0-rc-66855b96-20241106)
+
   react-is@17.0.2: {}
 
   react-is@18.3.1: {}
 
   react-refresh@0.14.2: {}
+
+  react-toastify@10.0.6(react-dom@19.0.0-rc-66855b96-20241106(react@19.0.0-rc-66855b96-20241106))(react@19.0.0-rc-66855b96-20241106):
+    dependencies:
+      clsx: 2.1.1
+      react: 19.0.0-rc-66855b96-20241106
+      react-dom: 19.0.0-rc-66855b96-20241106(react@19.0.0-rc-66855b96-20241106)
 
   react@18.3.1:
     dependencies:

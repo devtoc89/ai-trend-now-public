@@ -11,8 +11,8 @@ datasource db {
 }
 
 model PostMeta {
-  id        String   @id @default(cuid()) @db.Char(25)
-  postId    String   @unique @db.Char(25)
+  id        String   @id @default(cuid()) @db.VarChar(25)
+  postId    String   @unique @db.VarChar(25)
   metadata  Json?
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
@@ -23,8 +23,8 @@ model PostMeta {
 }
 
 model PostDetail {
-  id        String   @id @db.Char(25)
-  postId    String   @unique @db.Char(25)
+  id        String   @id @db.VarChar(25)
+  postId    String   @unique @db.VarChar(25)
   title     String   @db.VarChar(200)
   content   String
   createdAt DateTime @default(now())
@@ -36,17 +36,19 @@ model PostDetail {
 }
 
 model PostBase {
-  id        String   @id @db.Char(25)
+  id        String   @id @db.VarChar(25)
+  aiPostId  String?  @unique @db.VarChar(25)
   isDeleted Boolean  @default(false)
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
 
   postDetail PostDetail?
   postMeta   PostMeta?
+  aiPost     AiPost?     @relation(fields: [aiPostId], references: [id], onDelete: Cascade)
 }
 
 model OriginalPostAndAiPostRelation {
-  id               String           @id @db.Char(25)
+  id               String           @id @db.VarChar(25)
   aiPostId         String           @db.VarChar(25)
   postId           String           @db.VarChar(200)
   createdAt        DateTime         @default(now())
@@ -58,7 +60,7 @@ model OriginalPostAndAiPostRelation {
 }
 
 model AiPost {
-  id        String   @id @db.Char(25)
+  id        String   @id @db.VarChar(25)
   title     String   @db.VarChar(200)
   content   String
   insights  String
@@ -66,10 +68,11 @@ model AiPost {
   updatedAt DateTime @updatedAt
 
   originalPostAndAiPostRelation OriginalPostAndAiPostRelation[]
+  postBase                      PostBase?
 }
 
 model OriginalPostStatus {
-  id          String    @id @db.Char(25)
+  id          String    @id @db.VarChar(25)
   postId      String    @unique @db.VarChar(200)
   selectedFlg Boolean   @default(false) @db.Boolean
   selectedAt  DateTime?
@@ -82,7 +85,7 @@ model OriginalPostStatus {
 }
 
 model OriginalPostSource {
-  id           String    @id @db.Char(25)
+  id           String    @id @db.VarChar(25)
   postId       String    @unique @db.VarChar(200)
   url          String    @db.VarChar(200)
   title        String    @db.VarChar(200)
@@ -98,7 +101,7 @@ model OriginalPostSource {
 }
 
 model OriginalPostMeta {
-  id        String   @id @db.Char(25)
+  id        String   @id @db.VarChar(25)
   postId    String   @unique @db.VarChar(200)
   source    String   @db.VarChar(250)
   category  String   @db.VarChar(50)

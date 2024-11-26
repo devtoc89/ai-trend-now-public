@@ -1,5 +1,5 @@
-import Default, { type AvatarProps } from "#atoms/Avatar/Avatar";
-export * from "#atoms/Avatar/Avatar";
+import Default, { type AvatarProps } from "#atoms/Avatar/Avatar.tsx";
+export * from "#atoms/Avatar/Avatar.tsx";
 
 export default function Avatar(props: AvatarProps) {
   return <Default {...props} />;

@@ -1,12 +1,5 @@
-import { Slogan } from "@repo/ui/organisms";
+import { permanentRedirect } from "next/navigation";
 
 export default function Home() {
-  return (
-    <div>
-      <Slogan>"와우"</Slogan>
-    </div>
-  );
+  permanentRedirect("/new");
 }
-//     "./Avatar": "./src/organisms/Avatar.tsx",
-//     "./Button": "./src/organisms/Button.tsx",
-//     "./LinkButton": "./src/organisms/LinkButton.tsx"
