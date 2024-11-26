@@ -3,13 +3,18 @@
   "version": "0.0.0",
   "private": true,
   "exports": {
-    "./tailwind": "./src/tailwind.ts"
+    "./style/*": "./src/style/*",
+    "./collection/*": "./src/collection/*",
+    "./date/*": "./src/date/*",
+    "./property/*": "./src/property/*",
+    "./parser/*": "./src/parser/*"
   },
   "scripts": {
     "format-and-lint": "biome check .",
     "generate:component": "turbo gen react-component"
   },
   "dependencies": {
+    "json5": "^2.2.3",
     "clsx": "catalog:",
     "tailwind-merge": "catalog:"
   },
