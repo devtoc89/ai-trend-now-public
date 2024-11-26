@@ -37,10 +37,6 @@ const postSchema = {
   },
 };
 
-type ArxivListRoutesParams = {
-  from?: string;
-  to?: string;
-};
 /**
  * Registers routes for crawling arxiv.
  *
@@ -48,7 +44,7 @@ type ArxivListRoutesParams = {
  * @param _ - Plugin options.
  * @returns Promise that resolves when the routes are registered.
  */
-async function arxivListRoutes(fastify: FastifyInstance, _: FastifyPluginOptions): Promise<void> {
+async function techcrunchListRoutes(fastify: FastifyInstance, _: FastifyPluginOptions): Promise<void> {
   /**
    * Sets up routes for crawling arxiv.
    * 1. POST /: crawling arxiv.
@@ -60,14 +56,17 @@ async function arxivListRoutes(fastify: FastifyInstance, _: FastifyPluginOptions
       schema: postSchema,
     },
     async (req: FastifyRequest<{ Querystring: getQueryStringQuery }>, _reply) => {
-      const { from, to } = req.body as ArxivListRoutesParams;
+      const { from, to } = req.body as {
+        from?: string;
+        to?: string;
+      };
       const defaultDate = getCurrentTimeISOString();
       return {
         message: JSON.stringify(
           await crawlAndPersist({
             from: from ?? defaultDate,
             to: to ?? defaultDate,
-            source: "arxiv",
+            source: "techcrunch",
           }),
         ),
       }; // 사용자 목록을 반환
@@ -75,4 +74,4 @@ async function arxivListRoutes(fastify: FastifyInstance, _: FastifyPluginOptions
   );
 }
 
-export default arxivListRoutes;
+export default techcrunchListRoutes;
