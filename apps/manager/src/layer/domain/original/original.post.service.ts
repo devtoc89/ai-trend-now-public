@@ -2,7 +2,7 @@
 
 import { serviceWrapper } from "#lib/helper/service/service.helper.ts";
 import { getPrismaClient } from "#lib/instance/prisma/prisma.instance.ts";
-import type { OriginalPostBase, OriginalPostMeta, OriginalPostSource, OriginalPostStatus } from "@prisma/client";
+import type { OriginalPostBase, OriginalPostMeta, OriginalPostSource, OriginalPostStatus } from "@repo/prisma-manager";
 import type { ResponseTypeDTO } from "@repo/types/dto/response/response.dto.ts";
 import { getCurrentTimeISOString } from "@repo/util/date/date.util.ts";
 

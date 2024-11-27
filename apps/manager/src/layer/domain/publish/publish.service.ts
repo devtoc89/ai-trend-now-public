@@ -2,16 +2,18 @@
 
 import { serviceWrapper } from "#lib/helper/service/service.helper.ts";
 import { getPrismaClient } from "#lib/instance/prisma/prisma.instance.ts";
+import { getUserPrismaClient } from "#lib/instance/prisma/user.prisma.instance.ts";
 import { createId } from "@paralleldrive/cuid2";
+import type { Prisma } from "@repo/prisma-manager";
 import { getCurrentTimeISOString } from "@repo/util/date/date.util.ts";
 
 export async function publishAiPost({ aiPostId }: { aiPostId: string }) {
-  const prisma = getPrismaClient();
+  const managerPrisma = getPrismaClient();
   const id = createId();
   const createdAt = getCurrentTimeISOString();
 
   return await serviceWrapper(publishAiPost.name, async () => {
-    const aiPost = await prisma.aiPost.findUnique({
+    const aiPost = await managerPrisma.aiPost.findUnique({
       where: {
         id: aiPostId,
       },
@@ -20,19 +22,28 @@ export async function publishAiPost({ aiPostId }: { aiPostId: string }) {
         title: true,
         content: true,
         insights: true,
+        summary: true,
         createdAt: true,
+        metadata: true,
       },
     });
 
-    const aiPostRelation = await prisma.originalPostAndAiPostRelation.findMany({
+    const aiPostRelation = await managerPrisma.originalPostAndAiPostRelation.findMany({
       where: {
         aiPostId,
       },
       select: {
         originalPostBase: {
           select: {
+            originalPostMeta: {
+              select: {
+                source: true,
+                category: true,
+              },
+            },
             originalPostSource: {
               select: {
+                title: true,
                 url: true,
               },
             },
@@ -42,8 +53,11 @@ export async function publishAiPost({ aiPostId }: { aiPostId: string }) {
     });
 
     if (!aiPost) throw new Error("AI Post not found");
+    const metadata = aiPost.metadata as Prisma.JsonObject;
 
-    const res = await prisma.postBase.create({
+    const userPrismaClient = getUserPrismaClient();
+    // TODO: AI Image 생성
+    const res = await userPrismaClient.postBase.create({
       data: {
         id,
         createdAt,
@@ -53,6 +67,7 @@ export async function publishAiPost({ aiPostId }: { aiPostId: string }) {
             id: createId(),
             title: aiPost.title,
             content: aiPost.content,
+            summary: aiPost.summary,
             createdAt,
           },
         },
@@ -61,11 +76,28 @@ export async function publishAiPost({ aiPostId }: { aiPostId: string }) {
             id: createId(),
             metadata: {
               insights: JSON.parse(aiPost.insights),
-              references: aiPostRelation.map((v) => v.originalPostBase.originalPostSource?.url ?? ""),
+              keywords: (metadata.keywords as Array<string>) ?? [],
+              imageUrl: "", // 뭔가 이미지 url
+              references: aiPostRelation.map((v) => ({
+                title: v.originalPostBase.originalPostSource?.title ?? "",
+                source: v.originalPostBase.originalPostMeta?.source ?? "",
+                category: v.originalPostBase.originalPostMeta?.category ?? "",
+                url: v.originalPostBase.originalPostSource?.url ?? "",
+              })),
             },
             createdAt,
           },
         },
+      },
+    });
+
+    await managerPrisma.aiPost.update({
+      where: {
+        id: aiPostId,
+      },
+      data: {
+        updatedAt: getCurrentTimeISOString(),
+        isPublished: true,
       },
     });
     return { id: res.id };

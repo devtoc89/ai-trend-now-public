@@ -5,7 +5,7 @@ import { serviceWrapper } from "#lib/helper/service/service.helper.ts";
 import { getPrismaClient } from "#lib/instance/prisma/prisma.instance.ts";
 import { CrawlStatus } from "#types/enums/crawlStatus.enum.ts";
 import { createId } from "@paralleldrive/cuid2";
-import type { PrismaClient } from "@prisma/client";
+import type { PrismaClient } from "@repo/prisma-manager";
 import type {
   CrawlCommonParamsDTO,
   CrawlCommonResponseDTO,

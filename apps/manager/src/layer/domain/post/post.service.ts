@@ -1,8 +1,8 @@
 "use server";
 
 import { serviceWrapper } from "#lib/helper/service/service.helper.ts";
-import { getPrismaClient } from "#lib/instance/prisma/prisma.instance.ts";
-import type { PostBase, PostDetail, PostMeta } from "@prisma/client";
+import { getUserPrismaClient } from "#lib/instance/prisma/user.prisma.instance.ts";
+import type { PostBase, PostDetail, PostMeta } from "@repo/prisma-user";
 import type { ResponseTypeDTO } from "@repo/types/dto/response/response.dto.ts";
 
 export type RetrievePostList = Array<
@@ -12,7 +12,7 @@ export type RetrievePostList = Array<
   }
 >;
 export async function retrievePostList({ page }: { page: number }): Promise<ResponseTypeDTO<RetrievePostList>> {
-  const prisma = getPrismaClient();
+  const prisma = getUserPrismaClient();
   return await serviceWrapper(retrievePostList.name, async () => {
     return await prisma.postBase.findMany({
       skip: page * 10,

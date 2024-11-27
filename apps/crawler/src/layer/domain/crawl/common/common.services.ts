@@ -1,4 +1,4 @@
-import type { PrismaClient } from "@prisma/client";
+import type { PrismaClient } from "@repo/prisma-manager";
 import { getMissingItems } from "@repo/util/collection/collection.util.ts";
 
 export async function getUniqueItems<T extends { id: string }>(prisma: PrismaClient, list: T[]): Promise<T[]> {

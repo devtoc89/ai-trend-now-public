@@ -20,7 +20,7 @@ function aiPostToViewItem(post: RetrieveAiItem) {
     title: post.title,
     content: post.content,
     createdAt: dateFormat({ value: post.createdAt }),
-    isPosted: !!post.postBase,
+    isPublished: post.isPublished,
   };
 }
 

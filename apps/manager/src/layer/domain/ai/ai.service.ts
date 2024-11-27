@@ -3,7 +3,7 @@ import { serviceWrapper } from "#lib/helper/service/service.helper.ts";
 import { logger } from "#lib/instance/logger/pino.instance.ts";
 import { getPrismaClient } from "#lib/instance/prisma/prisma.instance.ts";
 import { createId } from "@paralleldrive/cuid2";
-import type { AiPost, PostBase } from "@prisma/client";
+import type { AiPost } from "@repo/prisma-manager";
 import type { ResponseTypeDTO } from "@repo/types/dto/response/response.dto.ts";
 import { shuffleArray } from "@repo/util/collection/collection.util.ts";
 import { getCurrentTimeISOString } from "@repo/util/date/date.util.ts";
@@ -12,6 +12,9 @@ type AiContent = {
   insights: string[];
   content: string;
   title: string;
+  summary: string;
+  imageGeneratePrompt: string;
+  keywords: string[];
   isError: boolean;
 };
 
@@ -38,7 +41,10 @@ export async function generateAiPost(id: string[]) {
 
     if (sources.length === 0) throw new Error("id is not valid.");
 
-    const aiContentRaw = await postUserMessageToAI({ userMessage: JSON.stringify(sources) });
+    const aiContentRaw = await postUserMessageToAI({
+      promptName: "gemini-column-writer-ver1",
+      userMessage: JSON.stringify(sources),
+    });
     const aiContent = parseAiJson(aiContentRaw) as AiContent;
     if (aiContent.isError) throw new Error("AI Error");
 
@@ -48,8 +54,13 @@ export async function generateAiPost(id: string[]) {
         data: {
           id: aiPostId,
           title: aiContent.title,
-          content: aiContent.content,
+          content: aiContent.content.replace(aiContent.title, ""), // AI가 본문에 타이틀을 반복한 경우 제거
+          summary: aiContent.summary,
           insights: JSON.stringify(aiContent.insights),
+          metadata: {
+            keywords: aiContent.keywords,
+            imageGeneratePrompt: aiContent.imageGeneratePrompt,
+          },
           createdAt: getCurrentTimeISOString(),
         },
       });
@@ -87,10 +98,10 @@ export async function generateAiAutoPost() {
       }),
     );
     const aiContentRaw = await postUserMessageToAI({
+      promptName: "gemini-ai-content-choice",
       userMessage: JSON.stringify(
         sources.map((v) => ({ id: v.originalPostBase.id, title: v.title, content: v.content.substring(0, 500) })),
       ),
-      promptName: "gemini-ai-content-choice",
     });
     const aiContent = parseAiJson(aiContentRaw) as { idPairList: string[][]; isError: boolean };
     if (aiContent.isError) throw new Error("AI Error");
@@ -101,8 +112,10 @@ export async function generateAiAutoPost() {
       const newKey = ids.sort().join("--");
       removeDuplicateMap.set(newKey, ids);
     }
+
     const resIdList: string[] = [];
-    for (const ids of removeDuplicateMap.values()) {
+    const targetList = [...removeDuplicateMap.values()].slice(0, 3);
+    for (const ids of targetList) {
       const res = await generateAiPost(ids);
       if (res.success) {
         resIdList.push(res.data.id);
@@ -115,9 +128,10 @@ export async function generateAiAutoPost() {
   });
 }
 
-export type RetrieveAiItem = Pick<AiPost, "id" | "title" | "content" | "insights" | "createdAt"> & {
-  postBase: Pick<PostBase, "id"> | null;
-};
+export type RetrieveAiItem = Pick<
+  AiPost,
+  "id" | "title" | "content" | "insights" | "summary" | "createdAt" | "isPublished"
+>;
 
 export type RetrieveAiList = Array<RetrieveAiItem>;
 
@@ -136,12 +150,9 @@ export async function retrieveAiPostList({ page }: { page: number }): Promise<Re
         title: true,
         content: true,
         insights: true,
+        summary: true,
         createdAt: true,
-        postBase: {
-          select: {
-            id: true,
-          },
-        },
+        isPublished: true,
         originalPostAndAiPostRelation: {
           select: {
             originalPostBase: {
@@ -172,12 +183,9 @@ export async function retrieveAiPostItem({ id }: { id: string }): Promise<Respon
         title: true,
         content: true,
         insights: true,
+        summary: true,
         createdAt: true,
-        postBase: {
-          select: {
-            id: true,
-          },
-        },
+        isPublished: true,
         originalPostAndAiPostRelation: {
           select: {
             originalPostBase: {
