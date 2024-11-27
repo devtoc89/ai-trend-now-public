@@ -1,0 +1,78 @@
+"use server";
+
+import { type RetrievePostItem, retrievePostItem, retrievePostList } from "#layer/domain/post/post.service.ts";
+import { timeAgo } from "@repo/util/date/date.util.ts";
+
+type PostListViewItemMetadata = {
+  insights: Array<string>;
+  keywords: Array<string>;
+  imageGeneratePrompt: string;
+  references: Array<{
+    category: string;
+    title: string;
+    source: string;
+    url: string;
+  }>;
+};
+
+export type PostListViewList = {
+  id: string;
+  title: string;
+  summary: string;
+  createdAt: string;
+};
+
+export type PostItemViewItem = {
+  id: string;
+  title: string;
+  content: string;
+  summary: string;
+  metadata?: PostListViewItemMetadata;
+  createdAt: string;
+};
+
+function postItemToViewItem(post: RetrievePostItem): PostItemViewItem {
+  return {
+    id: post.id,
+    title: post.postDetail?.title || "",
+    content: (post.postDetail?.content || "")
+      .replace(/\)(\*{1,3})/g, ")$1 ")
+      // .replace(/(\n+)/g, "\n")
+      // .replace(/\n\s\n\s/gi, "\n\n&nbsp;\n\n")
+      // .replace(/\*\*/gi, "@$_%!\^")
+      // .replace(/\**\*/gi, "/")
+      // .replace(/@\$_%!\^/gi, "**")
+      // .replace(/<\/?u>/gi, "*")
+      .replaceAll("<br>", "\n"),
+    metadata: (post.postMeta?.metadata as PostListViewItemMetadata) || undefined,
+    summary: post.postDetail?.summary || "",
+    createdAt: timeAgo(post.createdAt),
+  };
+}
+
+function postListToViewList(post: RetrievePostItem): PostListViewList {
+  return {
+    id: post.id,
+    title: post.postDetail?.title || "",
+    summary: post.postDetail?.summary || "",
+    createdAt: timeAgo(post.createdAt),
+  };
+}
+
+export async function getPostItemAction({ id }: { id: string }): Promise<PostItemViewItem | null> {
+  const resItem = await retrievePostItem({ id });
+  if (!resItem.success) {
+    return null;
+  }
+
+  return postItemToViewItem(resItem.data);
+}
+
+export async function getPostListAction({ page }: { page: number }): Promise<PostListViewList[]> {
+  const listRes = await retrievePostList({ page });
+  if (!listRes.success) {
+    return [];
+  }
+
+  return listRes.data.map<PostListViewList>(postListToViewList);
+}
