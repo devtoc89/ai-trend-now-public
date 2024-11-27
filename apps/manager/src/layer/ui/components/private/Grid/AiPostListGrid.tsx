@@ -5,6 +5,7 @@ import { Button, Grid, type GridOptions } from "@repo/ui/organisms";
 import { dateFormat } from "@repo/util/date/date.util.ts";
 import { debounce } from "es-toolkit";
 import { type MouseEventHandler, useCallback, useState } from "react";
+import ReactMarkdown from "react-markdown";
 import { toast } from "react-toastify";
 
 const eventDebouncer = debounce((callback) => {
@@ -34,7 +35,7 @@ const header: GridOptions<AiPostListGridItemType>["header"] = [
     width: "1fr",
   },
   {
-    key: "isPosted",
+    key: "isPublished",
     label: "발행",
     width: "1fr",
   },
@@ -53,18 +54,20 @@ const content: GridOptions<AiPostListGridItemType>["content"] = {
   title: {
     render: ({ value }) => (
       <div className="px-2 py-1">
-        <p className="text-center line-clamp-2" title={value}>
+        <ReactMarkdown>{value}</ReactMarkdown>
+        {/* <p className="text-center line-clamp-2" title={value}>
           {value}
-        </p>
+        </p> */}
       </div>
     ),
   },
   content: {
     render: ({ value }) => (
       <div className="px-2 py-1">
-        <p className="break-all w-full line-clamp-2" title={value}>
+        <ReactMarkdown>{value}</ReactMarkdown>
+        {/* <p className="break-all w-full line-clamp-2" title={value}>
           {value}
-        </p>
+        </p> */}
       </div>
     ),
   },
@@ -84,7 +87,7 @@ export type AiPostListGridItemType = {
   title: string;
   content: string;
   createdAt: string;
-  isPosted: boolean;
+  isPublished: boolean;
 };
 
 function newListHook({ initialItems }: { initialItems: AiPostListGridItemType[] }) {
@@ -118,7 +121,7 @@ function newListHook({ initialItems }: { initialItems: AiPostListGridItemType[] 
         setData((prev) => ({
           ...prev,
           isLoading: false,
-          items: prev.items.map((v) => (v.id !== id ? v : { ...v, isPosted: true })),
+          items: prev.items.map((v) => (v.id !== id ? v : { ...v, isPublished: true })),
         }));
       } else {
         toast.error("발행이 실패하였습니다.");
@@ -154,7 +157,7 @@ function AiPostListGrid({ initialItems }: { initialItems: AiPostListGridItemType
     header,
     content: {
       ...content,
-      isPosted: {
+      isPublished: {
         render: ({ id, value }) => (
           <div className="px-2 py-1 text-center">
             {value ? (

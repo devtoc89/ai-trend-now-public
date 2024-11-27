@@ -208,7 +208,7 @@ function SelectedPostListGrid({ initialItems }: { initialItems: SelectedPostList
 
   return (
     <form className="w-full h-full flex flex-col" onSubmit={handleOnSubmit}>
-      <div className="flex justify-end">
+      <div className="flex justify-end gap-2">
         <Button type="button" variant="register" disabled={isProcessing} onClick={handleOnAiAutoPostButtonClick}>
           <div className="flex flex-row gap-1">
             {isProcessing && (

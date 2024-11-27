@@ -5,6 +5,7 @@ import { Grid, type GridOptions } from "@repo/ui/organisms";
 import { dateFormat } from "@repo/util/date/date.util.ts";
 import { debounce } from "es-toolkit";
 import { useCallback, useState } from "react";
+import ReactMarkdown from "react-markdown";
 
 const eventDebouncer = debounce((callback) => {
   callback();
@@ -44,18 +45,20 @@ const content: GridOptions<PostListGridItemType>["content"] = {
   title: {
     render: ({ value }) => (
       <div className="px-2 py-1">
-        <p className="text-center" title={value}>
+        <ReactMarkdown>{value}</ReactMarkdown>
+        {/* <p className="text-center" title={value}>
           {value}
-        </p>
+        </p> */}
       </div>
     ),
   },
   content: {
     render: ({ value }) => (
       <div className="px-2 py-1">
-        <p className="break-all w-full" title={value}>
+        <ReactMarkdown>{value}</ReactMarkdown>
+        {/* <p className="break-all w-full" title={value}>
           {value}
-        </p>
+        </p> */}
       </div>
     ),
   },
@@ -72,6 +75,7 @@ const subfieldContent: GridOptions<PostListGridItemType>["subfieldContent"] = {
   "metadata.insights": {
     render: ({ value }) => (
       <div className="px-2 py-1 text-center ">
+        {/* <ReactMarkdown>{value}</ReactMarkdown> */}
         <p className="text-center" title={value}>
           {value}
         </p>
@@ -79,11 +83,16 @@ const subfieldContent: GridOptions<PostListGridItemType>["subfieldContent"] = {
     ),
   },
   "metadata.references": {
-    render: ({ value }) => (
+    render: ({ value }: { value: Array<Record<string, string>> }) => (
       <div className="px-2 py-1 text-center ">
-        <p className="text-center whitespace-pre-wrap" title={value}>
-          {Array.from(value).join("\n\n")}
-        </p>
+        {value.map((v) => (
+          <div key={v.url} className="text-left">
+            <p className="whitespace-pre-wrap">category: {v.category}</p>
+            <p className="whitespace-pre-wrap">title: {v.title}</p>
+            <p className="whitespace-pre-wrap">source: {v.source}</p>
+            <p className="whitespace-pre-wrap">url: {v.url}</p>
+          </div>
+        ))}
       </div>
     ),
   },
