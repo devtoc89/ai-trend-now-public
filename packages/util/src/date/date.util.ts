@@ -35,3 +35,28 @@ export function datejsFormat({
 }): string {
   return dayjs(value).format(format);
 }
+
+export function timeAgo(date: Date): string {
+  const rtf = new Intl.RelativeTimeFormat("ko", { numeric: "auto" });
+  const now = new Date();
+  const seconds = Math.floor((now.getTime() - date.getTime()) / 1000);
+
+  const intervals: { [key: string]: number } = {
+    year: 60 * 60 * 24 * 365,
+    month: 60 * 60 * 24 * 30,
+    week: 60 * 60 * 24 * 7,
+    day: 60 * 60 * 24,
+    hour: 60 * 60,
+    minute: 60,
+    second: 1,
+  };
+
+  for (const [unit, secondsPerUnit] of Object.entries(intervals)) {
+    if (seconds >= secondsPerUnit || unit === "second") {
+      const value = Math.floor(seconds / secondsPerUnit);
+      return rtf.format(-value, unit as Intl.RelativeTimeFormatUnit);
+    }
+  }
+
+  return "";
+}
