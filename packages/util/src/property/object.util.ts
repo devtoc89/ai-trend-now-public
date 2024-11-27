@@ -1,4 +1,4 @@
-export function isKeyOf<T>(key: string | number | symbol, obj: T extends object ? T : object): key is keyof T {
+export function isKeyOf<T>(key: string | number | symbol, obj: T extends object ? T : never): key is keyof T {
   return key in obj;
 }
 
