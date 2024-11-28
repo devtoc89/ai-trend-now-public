@@ -1,17 +1,16 @@
 import { GlobalTitle } from "#consts/global.ts";
 import { getPostItemAction } from "#layer/domain/post/post.action.ts";
+import Markdown from "#layer/ui/components/common/Markdown/Markdown.tsx";
 import type { Metadata } from "next";
 import { unstable_cache } from "next/cache";
-import ReactMarkdown from "react-markdown";
-import rehypeRaw from "rehype-raw";
-import remarkGfm from "remark-gfm";
 
 // Next.js will invalidate the cache when a
 // request comes in, at most once every 1 hour.
+
 export const revalidate = 3600;
 export const dynamicParams = true; // or false, to 404 on unknown paths
 
-const getPostItemActionCache = unstable_cache(async (id) => await getPostItemAction({ id }), ["my-app-user"]);
+const getPostItemActionCache = unstable_cache(async (id) => await getPostItemAction({ id }), ["getPostItemAction"]);
 
 async function page({
   params,
@@ -27,22 +26,17 @@ async function page({
   return (
     <div className="h-full w-full flex flex-col">
       <div className="h-full w-full flex gap-5 flex-col">
-        <div key={post.id} className="border border-gray-300 rounded-md p-6 w-full">
-          <ReactMarkdown className="markdown-container">{post.title}</ReactMarkdown>
+        <div key={post.id} className=" p-6 w-full">
+          <Markdown>{post.title}</Markdown>
           <div>{post.createdAt}</div>
           <br />
-          <ReactMarkdown className="markdown-container">{post.summary}</ReactMarkdown>
-          <ReactMarkdown
-            remarkPlugins={[remarkGfm]}
-            rehypePlugins={[rehypeRaw]}
-            remarkRehypeOptions={{ passThrough: ["link"] }}
-            className="markdown-container"
-          >
+          <Markdown>{post.summary}</Markdown>
+          <Markdown>
             {
               // TODO: custom component로 만들 것!
               post.content
             }
-          </ReactMarkdown>
+          </Markdown>
           <br />
           <div className="">
             <h3>Reference</h3>

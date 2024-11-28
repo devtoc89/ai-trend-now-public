@@ -45,12 +45,15 @@ export async function retrievePostItem({ id }: { id: string }): Promise<Response
   });
 }
 
-export async function retrievePostList({ page }: { page: number }): Promise<ResponseTypeDTO<RetrievePostList>> {
+export async function retrievePostList({
+  page,
+  pageSize = 5,
+}: { page: number; pageSize?: number }): Promise<ResponseTypeDTO<RetrievePostList>> {
   const prisma = getPrismaClient();
   return await serviceWrapper(retrievePostList.name, async () => {
     return await prisma.postBase.findMany({
-      skip: page * 10,
-      take: 10,
+      skip: page * pageSize,
+      take: pageSize,
       orderBy: {
         createdAt: "desc",
       },
@@ -71,5 +74,19 @@ export async function retrievePostList({ page }: { page: number }): Promise<Resp
         },
       },
     });
+  });
+}
+
+export async function retrievePostTotalCount(): Promise<ResponseTypeDTO<number>> {
+  const prisma = getPrismaClient();
+  return await serviceWrapper(retrievePostList.name, async () => {
+    return (
+      await prisma.postBase.aggregate({
+        _count: true,
+        where: {
+          isDeleted: false,
+        },
+      })
+    )._count;
   });
 }

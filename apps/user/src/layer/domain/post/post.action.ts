@@ -1,7 +1,13 @@
 "use server";
 
-import { type RetrievePostItem, retrievePostItem, retrievePostList } from "#layer/domain/post/post.service.ts";
+import {
+  type RetrievePostItem,
+  retrievePostItem,
+  retrievePostList,
+  retrievePostTotalCount,
+} from "#layer/domain/post/post.service.ts";
 import { timeAgo } from "@repo/util/date/date.util.ts";
+import { unstable_cache } from "next/cache";
 
 type PostListViewItemMetadata = {
   insights: Array<string>;
@@ -68,11 +74,38 @@ export async function getPostItemAction({ id }: { id: string }): Promise<PostIte
   return postItemToViewItem(resItem.data);
 }
 
-export async function getPostListAction({ page }: { page: number }): Promise<PostListViewList[]> {
-  const listRes = await retrievePostList({ page });
+export async function getPostListAction({
+  page,
+  pageSize,
+}: { page: number; pageSize: number }): Promise<PostListViewList[]> {
+  const listRes = await retrievePostList({ page, pageSize });
   if (!listRes.success) {
     return [];
   }
 
   return listRes.data.map<PostListViewList>(postListToViewList);
 }
+export async function getPostTotalCountAction(): Promise<number> {
+  const contRes = await retrievePostTotalCount();
+  if (!contRes.success) {
+    return 1;
+  }
+
+  return contRes.data;
+}
+
+export const getPostListActionCache = unstable_cache(
+  async (page: number, pageSize: number) => await getPostListAction({ page, pageSize }),
+  [getPostListAction.name],
+  {
+    revalidate: 60,
+  },
+);
+
+export const getPostTotalCountActionCache = unstable_cache(
+  async () => await getPostTotalCountAction(),
+  [getPostTotalCountAction.name],
+  {
+    revalidate: 60,
+  },
+);

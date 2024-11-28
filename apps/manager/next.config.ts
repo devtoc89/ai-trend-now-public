@@ -1,12 +1,12 @@
 import type { NextConfig } from "next";
 
 const nextConfig: NextConfig = {
-  webpack: (config, { dev }) => {
-    if (dev) {
-      config.devtool = "source-map";
-    }
-    return config;
-  },
+  // webpack: (config, { dev }) => {
+  //   if (dev) {
+  //     config.devtool = "source-map";
+  //   }
+  //   return config;
+  // },
   // reactStrictMode: false,
   /* config options here */
   eslint: {

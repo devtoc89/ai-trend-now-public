@@ -55,7 +55,6 @@
     "pino-pretty": "^13.0.0",
     "postcss": "catalog:",
     "tailwindcss": "catalog:",
-    "ts-node": "catalog:",
     "typescript": "catalog:"
   }
 }

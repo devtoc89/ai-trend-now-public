@@ -1,3 +1,4 @@
+import { getAiNewsCrawlData } from "#layer/domain/crawl/news/ainews/ainews.service.ts";
 import { getTechCrunchCrawlData } from "#layer/domain/crawl/news/techcrunch/techcrunch.service.ts";
 import { getArxivCrawlData } from "#layer/domain/crawl/scholar/arxiv/arxiv.service.ts";
 import { crawlComplete, handleCrawlError } from "#lib/helper/crawler/crawler.helper.ts";
@@ -78,8 +79,11 @@ async function crawlResultPersist(
     const crawlResult = await pCrawlResult;
     if (!crawlResult.success) return 0;
 
-    const res = await createManyOriginalPostWithSource(prisma, crawlResult.data.meta, crawlResult.data.list, crawlId);
-    return res.success ? crawlResult.data.list.length : 0;
+    const list = crawlResult.data.list.filter((v) => !v.id);
+    if (list.length === 0) return 0;
+
+    const res = await createManyOriginalPostWithSource(prisma, crawlResult.data.meta, list, crawlId);
+    return res.success ? list.length : 0;
   });
 }
 
@@ -124,9 +128,12 @@ async function crawlResultListPersist(pCrawlResultList: Promise<ResponseTypeDTO<
 }
 
 const crawlFnMap = {
-  all: [getArxivCrawlData, getTechCrunchCrawlData],
+  // all: [getArxivCrawlData, getTechCrunchCrawlData, getAiNewsCrawlData, getOpenAiCrawlData],
+  all: [getArxivCrawlData, getTechCrunchCrawlData, getAiNewsCrawlData],
   arxiv: [getArxivCrawlData],
   techcrunch: [getTechCrunchCrawlData],
+  ainews: [getAiNewsCrawlData],
+  // openai: [getOpenAiCrawlData],
 };
 
 export async function crawlAndPersist(searchParam: CrawlCommonParamsDTO): Promise<ResponseTypeDTO<string>> {
