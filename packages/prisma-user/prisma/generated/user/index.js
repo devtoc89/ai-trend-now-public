@@ -160,7 +160,7 @@ const config = {
       "value": "prisma-client-js"
     },
     "output": {
-      "value": "A:\\real\\project\\ai-news-now\\packages\\prisma-user\\prisma\\generated\\user",
+      "value": "D:\\project\\personal\\ai-news-now\\packages\\prisma-user\\prisma\\generated\\user",
       "fromEnvVar": null
     },
     "config": {
@@ -174,7 +174,7 @@ const config = {
       }
     ],
     "previewFeatures": [],
-    "sourceFilePath": "A:\\real\\project\\ai-news-now\\packages\\prisma-user\\prisma\\schema.prisma",
+    "sourceFilePath": "D:\\project\\personal\\ai-news-now\\packages\\prisma-user\\prisma\\schema.prisma",
     "isCustomOutput": true
   },
   "relativeEnvPaths": {
