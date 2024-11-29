@@ -9,6 +9,9 @@ catalogs:
     '@biomejs/biome':
       specifier: 1.9.4
       version: 1.9.4
+    '@prisma/client':
+      specifier: 5.22.0
+      version: 5.22.0
     '@testing-library/dom':
       specifier: 10.4.0
       version: 10.4.0
@@ -107,9 +110,9 @@ importers:
       '@paralleldrive/cuid2':
         specifier: ^2.2.2
         version: 2.2.2
-      '@repo/prisma-manager':
-        specifier: workspace:*
-        version: link:../../packages/prisma-manager
+      '@prisma/client':
+        specifier: 'catalog:'
+        version: 5.22.0(prisma@5.22.0)
       '@repo/util':
         specifier: workspace:*
         version: link:../../packages/util
@@ -192,12 +195,9 @@ importers:
       '@paralleldrive/cuid2':
         specifier: ^2.2.2
         version: 2.2.2
-      '@repo/prisma-manager':
-        specifier: workspace:*
-        version: link:../../packages/prisma-manager
-      '@repo/prisma-user':
-        specifier: workspace:*
-        version: link:../../packages/prisma-user
+      '@prisma/client':
+        specifier: 'catalog:'
+        version: 5.22.0(prisma@5.22.0)
       '@repo/ui':
         specifier: workspace:*
         version: link:../../packages/ui
@@ -362,6 +362,9 @@ importers:
 
   apps/user:
     dependencies:
+      '@prisma/client':
+        specifier: 'catalog:'
+        version: 5.22.0(prisma@5.22.0)
       '@repo/prisma-user':
         specifier: workspace:*
         version: link:../../packages/prisma-user
@@ -472,6 +475,8 @@ importers:
       '@repo/typescript-config':
         specifier: workspace:*
         version: link:../typescript-config
+
+  packages/prisma-client-manager: {}
 
   packages/prisma-manager:
     dependencies:
