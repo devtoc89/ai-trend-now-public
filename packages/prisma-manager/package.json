@@ -1,13 +1,6 @@
 {
   "name": "@repo/prisma-manager",
   "version": "1.0.0",
-  "exports": {
-    ".": {
-      "import": "./prisma/generated/manager/index.js",
-      "require": "./prisma/generated/manager/index.js",
-      "types": "./prisma/generated/manager/index.d.ts"
-    }
-  },
   "scripts": {
     "push": "prisma db push",
     "pull": "prisma db pull",
