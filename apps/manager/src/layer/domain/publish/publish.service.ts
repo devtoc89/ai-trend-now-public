@@ -1,10 +1,10 @@
 "use server";
 
 import { serviceWrapper } from "#lib/helper/service/service.helper.ts";
-import { getPrismaClient } from "#lib/instance/prisma/prisma.instance.ts";
+import { getPrismaClient } from "#lib/instance/prisma/manager.prisma.instance.ts";
 import { getUserPrismaClient } from "#lib/instance/prisma/user.prisma.instance.ts";
 import { createId } from "@paralleldrive/cuid2";
-import type { Prisma } from "@repo/prisma-manager";
+import type { Prisma } from "@prisma/client/manager/index.js";
 import { getCurrentTimeISOString } from "@repo/util/date/date.util.ts";
 
 export async function publishAiPost({ aiPostId }: { aiPostId: string }) {

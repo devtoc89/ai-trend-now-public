@@ -31,7 +31,8 @@
     "remark-gfm": "^4.0.0",
     "tailwindcss-textshadow": "^2.1.3",
     "uuid": "catalog:",
-    "@repo/prisma-user": "workspace:*"
+    "@repo/prisma-user": "workspace:*",
+    "@prisma/client": "catalog:"
   },
   "devDependencies": {
     "@biomejs/biome": "catalog:",

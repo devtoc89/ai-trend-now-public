@@ -2,7 +2,7 @@
 
 import { serviceWrapper } from "#lib/helper/service/service.helper.ts";
 import { getPrismaClient } from "#lib/instance/prisma/prisma.instance.ts";
-import type { PostBase, PostDetail, PostMeta } from "@repo/prisma-user";
+import type { PostBase, PostDetail, PostMeta } from "@prisma/client/user/index.js";
 import type { ResponseTypeDTO } from "@repo/types/dto/response/response.dto.ts";
 
 export type RetrievePostItem = Pick<PostBase, "id" | "createdAt"> & {

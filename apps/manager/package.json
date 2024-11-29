@@ -36,8 +36,7 @@
     "react-markdown": "^9.0.1",
     "react-toastify": "^10.0.6",
     "uuid": "catalog:",
-    "@repo/prisma-manager": "workspace:*",
-    "@repo/prisma-user": "workspace:*"
+    "@prisma/client": "catalog:"
   },
   "devDependencies": {
     "@biomejs/biome": "catalog:",

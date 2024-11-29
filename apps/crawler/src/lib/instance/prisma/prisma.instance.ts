@@ -1,4 +1,4 @@
-import { PrismaClient } from "@repo/prisma-manager";
+import { PrismaClient } from "@prisma/client/manager/index.js";
 
 let globalPrisma = makePrismaClient();
 

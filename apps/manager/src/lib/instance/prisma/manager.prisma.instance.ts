@@ -1,28 +1,11 @@
 import { logger } from "#lib/instance/logger/pino.instance.ts";
-import { type Prisma, PrismaClient } from "@repo/prisma-manager";
-import { PrismaClient as UserPrismaClient } from "@repo/prisma-user";
+import { type Prisma, PrismaClient } from "@prisma/client/manager/index.js";
 
 let globalPrisma = makePrismaClient();
 
 function makePrismaClient() {
   logger.debug("prisma client instance created");
   const client = new PrismaClient({
-    // biome-ignore lint/suspicious/noExplicitAny: <explanation>
-    log: ["query", "info", "warn", "error"] as any, // 필요 시 로깅 옵션 추가
-  });
-  if (process.env.NODE_ENV !== "production") {
-    client.$on("query", (e) => {
-      const event = e as unknown as Prisma.QueryEvent;
-      console.log(`${event.query} ${event.params} `);
-    });
-  }
-
-  return client;
-}
-
-export function makeUserPrismaClient(): UserPrismaClient {
-  logger.debug("prisma client instance created");
-  const client = new UserPrismaClient({
     // biome-ignore lint/suspicious/noExplicitAny: <explanation>
     log: ["query", "info", "warn", "error"] as any, // 필요 시 로깅 옵션 추가
   });

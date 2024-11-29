@@ -1,9 +1,9 @@
 import { postUserMessageToAI } from "#layer/domain/ai/ai.core.ts";
 import { serviceWrapper } from "#lib/helper/service/service.helper.ts";
 import { logger } from "#lib/instance/logger/pino.instance.ts";
-import { getPrismaClient } from "#lib/instance/prisma/prisma.instance.ts";
+import { getPrismaClient } from "#lib/instance/prisma/manager.prisma.instance.ts";
 import { createId } from "@paralleldrive/cuid2";
-import type { AiPost } from "@repo/prisma-manager";
+import type { AiPost } from "@prisma/client/manager/index.js";
 import type { ResponseTypeDTO } from "@repo/types/dto/response/response.dto.ts";
 import { shuffleArray } from "@repo/util/collection/collection.util.ts";
 import { getCurrentTimeISOString } from "@repo/util/date/date.util.ts";
