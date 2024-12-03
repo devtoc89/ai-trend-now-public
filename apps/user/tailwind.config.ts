@@ -1,5 +1,5 @@
-import uiConfig from "@repo/ui/tailwind.config";
 import path from "node:path";
+import uiConfig from "@repo/ui/tailwind.config";
 import type { Config } from "tailwindcss";
 
 const userConfig: Config = {

@@ -1,14 +1,13 @@
-import "./fonts/pretendard.css";
-
-//
 import "@repo/ui/globals.css";
 import "./globals.css";
 
+import "./fonts/pretendard.css";
+
 import RootLayer from "#layer/ui/layouts/root/RootLayer.tsx";
 
-import { GLOBAL_TITLE } from "#consts/global.ts";
 import type { Metadata } from "next/types";
 import { ToastContainer } from "react-toastify";
+import { GLOBAL_TITLE } from "#consts/global.ts";
 import "react-toastify/dist/ReactToastify.css";
 
 export const metadata: Metadata = {
