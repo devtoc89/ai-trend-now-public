@@ -6,8 +6,9 @@
     "module": "esnext",
     "moduleResolution": "bundler",
     "allowImportingTsExtensions": true,
-    "noEmit": true
+    "noEmit": true,
+    "baseUrl": "."
   },
-  "include": ["src/**/*.ts", "src/**/*.tsx", "tailwind.config.ts", "index.ts"],
+  "include": ["src/**/*.ts", "src/**/*.tsx", "tailwind.config.ts", "index.ts", "s/**/*.ts"],
   "exclude": ["node_modules", "dist"]
 }

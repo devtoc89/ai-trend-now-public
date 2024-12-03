@@ -36,7 +36,12 @@ export function datejsFormat({
   return dayjs(value).format(format);
 }
 
+export function timeAgoFromStr(date: string): string {
+  return timeAgo(new Date(date));
+}
+
 export function timeAgo(date: Date): string {
+  if (!date) return "";
   const rtf = new Intl.RelativeTimeFormat("ko", { numeric: "auto" });
   const now = new Date();
   const seconds = Math.floor((now.getTime() - date.getTime()) / 1000);
