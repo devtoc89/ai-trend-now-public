@@ -6,6 +6,7 @@ import {
   PaginationNext,
   PaginationPrevious,
 } from "@repo/ui/components/ui/pagination.tsx";
+import { cn } from "@repo/util/style/tailwind.util.ts";
 import { range } from "es-toolkit";
 
 function PostPagePagination({
@@ -40,17 +41,33 @@ function PostPagePagination({
     <Pagination className="h-full w-full">
       <PaginationContent>
         <PaginationItem>
-          <PaginationPrevious href={`/post/page/${prevPage + 1}`} size="default" />
+          <PaginationPrevious
+            href={currentPage === prevPage ? "#" : `/post/page/${prevPage + 1}`}
+            size="default"
+            aria-disabled={currentPage === prevPage}
+            className={cn(currentPage === prevPage && "pointer-events-none")}
+          />
         </PaginationItem>
         {pageNavList.map((page) => (
           <PaginationItem key={page}>
-            <PaginationLink href={`/post/page/${page + 1}`} isActive={page === currentPage} size="default">
+            <PaginationLink
+              href={`/post/page/${page + 1}`}
+              isActive={page === currentPage}
+              size="default"
+              aria-disabled={currentPage === page}
+              className={cn(currentPage === page && "pointer-events-none")}
+            >
               {page + 1}
             </PaginationLink>
           </PaginationItem>
         ))}
         <PaginationItem>
-          <PaginationNext href={`/post/page/${nextPage + 1}`} size="default" />
+          <PaginationNext
+            href={currentPage === nextPage ? "#" : `/post/page/${nextPage + 1}`}
+            size="default"
+            aria-disabled={currentPage === nextPage}
+            className={cn(currentPage === nextPage && "pointer-events-none")}
+          />
         </PaginationItem>
       </PaginationContent>
     </Pagination>
