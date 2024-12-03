@@ -6,7 +6,6 @@ import {
   retrievePostList,
   retrievePostTotalCount,
 } from "#layer/domain/post/post.service.ts";
-import { timeAgo } from "@repo/util/date/date.util.ts";
 import { unstable_cache } from "next/cache";
 
 type PostListViewItemMetadata = {
@@ -52,7 +51,7 @@ function postItemToViewItem(post: RetrievePostItem): PostItemViewItem {
       .replaceAll("<br>", "\n"),
     metadata: (post.postMeta?.metadata as PostListViewItemMetadata) || undefined,
     summary: post.postDetail?.summary || "",
-    createdAt: timeAgo(post.createdAt),
+    createdAt: post.createdAt.toISOString(),
   };
 }
 
@@ -61,7 +60,7 @@ function postListToViewList(post: RetrievePostItem): PostListViewList {
     id: post.id,
     title: post.postDetail?.title || "",
     summary: post.postDetail?.summary || "",
-    createdAt: timeAgo(post.createdAt),
+    createdAt: post.createdAt.toISOString(),
   };
 }
 
@@ -105,6 +104,17 @@ export const getPostListActionCache = unstable_cache(
 export const getPostTotalCountActionCache = unstable_cache(
   async () => await getPostTotalCountAction(),
   [getPostTotalCountAction.name],
+  {
+    revalidate: 60,
+  },
+);
+
+export const getPostListAndCountActionCache = unstable_cache(
+  async (page: number, pageSize: number) => ({
+    list: await getPostListAction({ page, pageSize }),
+    totalCount: await getPostTotalCountAction(),
+  }),
+  [`${getPostListAction.name}_${getPostTotalCountAction.name}`],
   {
     revalidate: 60,
   },

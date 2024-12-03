@@ -9,9 +9,7 @@ function RootLayer({
   return (
     <html lang={lang}>
       <link rel="icon" href="/favicon.png" sizes="any" />
-      <body className={cn("antialiased text-shadow-ssm", className)}>{children}</body>
-
-      {/* <Modal title="Modal Title" /> */}
+      <body className={cn("antialiased text-shadow-ssm dark:bg-slate-900 ", className)}>{children}</body>
     </html>
   );
 }

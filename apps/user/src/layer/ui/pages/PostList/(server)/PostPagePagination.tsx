@@ -1,57 +1,59 @@
-import { cn } from "@repo/util/style/tailwind.util.ts";
+import {
+  Pagination,
+  PaginationContent,
+  PaginationItem,
+  PaginationLink,
+  PaginationNext,
+  PaginationPrevious,
+} from "@repo/ui/components/ui/pagination.tsx";
 import { range } from "es-toolkit";
-import Link from "next/link";
-
-function PageItem({ pageNumber, label, isSelected }: { pageNumber: number; label?: string; isSelected?: boolean }) {
-  return (
-    <Link
-      href={`/post/page/${pageNumber}`}
-      prefetch
-      className={cn(
-        "flex items-center justify-center px-3 h-8 leading-tight text-gray-500 bg-white border border-gray-300 hover:bg-gray-100 hover:text-gray-700 dark:bg-gray-800 dark:border-gray-700 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white",
-        isSelected && "font-bold",
-      )}
-    >
-      <p className="">{label || pageNumber}</p>
-    </Link>
-  );
-}
 
 function PostPagePagination({
   currentCursor,
   totalCount,
   pageSize,
-  navSize = 5,
+  navSize = 2,
 }: { currentCursor: number; totalCount: number; pageSize: number; navSize?: number }) {
   // const minPage = 0; // 0
   const currentPage = Math.max(0, currentCursor - 1); // start with 0
+  const pageOffset = navSize * 2 + 1;
+
+  // const curPageGroup = Math.floor(currentPage / navSize);
+  const minPage = 0; // start with 0
   const maxPage = Math.floor(Math.max(0, totalCount - 1) / pageSize); // start with 0
 
-  const minPageGroup = 0; // 0
-  // start with 0  if navSize=5 0 group page 0,1,2,3,4 / 1 group page  5,6,7,8,9
-  const curPageGroup = Math.floor(currentPage / navSize);
-  // start with 0  if navSize=5 0 group page 0,1,2,3,4 / 1 group page  5,6,7,8,9
-  const maxPageGroup = Math.floor(Math.max(0, maxPage - 1) / navSize);
+  const navStartPage = currentPage - navSize;
+  const navEndPage = currentPage + navSize;
 
-  const hasPrevPageGroup = curPageGroup - 1 >= minPageGroup;
-  const hasNextPageGroup = curPageGroup + 1 <= maxPageGroup;
+  const overflowStartPage = navStartPage < 0 ? -navStartPage : 0;
+  const overflowEndPage = navEndPage > maxPage ? navEndPage - maxPage : 0;
 
-  const navStartPage = curPageGroup * navSize + 1;
-  // start with 1, range last number is ignored
-  const navEndPage = Math.min(curPageGroup * navSize + navSize + 1, maxPage + 1 + 1);
+  const rebalancedStartPage = Math.max(minPage, navStartPage - overflowEndPage);
+  const rebalancedEndPage = Math.min(maxPage, navEndPage + overflowStartPage);
 
-  const pageNavList = range(navStartPage, navEndPage);
+  const prevPage = Math.max(minPage, currentPage - pageOffset);
+  const nextPage = Math.min(maxPage, currentPage + pageOffset);
+
+  const pageNavList = range(rebalancedStartPage, rebalancedEndPage + 1);
 
   return (
-    <div className="h-full w-full flex flex-row justify-center">
-      {/* {hasPrevPageGroup && <PageItem pageNumber={Math.max(minPage + 1, currentCursor - navSize)} label="<" />} */}
-      {hasPrevPageGroup && <PageItem pageNumber={curPageGroup * navSize} label="<" />}
-      {pageNavList.map((page) => (
-        <PageItem key={page} pageNumber={page} isSelected={page === currentCursor} />
-      ))}
-      {hasNextPageGroup && <PageItem pageNumber={curPageGroup * navSize + navSize + 1} label=">" />}
-      {/* {hasNextPageGroup && <PageItem pageNumber={Math.min(currentCursor + navSize, maxPage + 1)} label=">" />} */}
-    </div>
+    <Pagination className="h-full w-full">
+      <PaginationContent>
+        <PaginationItem>
+          <PaginationPrevious href={`/post/page/${prevPage + 1}`} size="default" />
+        </PaginationItem>
+        {pageNavList.map((page) => (
+          <PaginationItem key={page}>
+            <PaginationLink href={`/post/page/${page + 1}`} isActive={page === currentPage} size="default">
+              {page + 1}
+            </PaginationLink>
+          </PaginationItem>
+        ))}
+        <PaginationItem>
+          <PaginationNext href={`/post/page/${nextPage + 1}`} size="default" />
+        </PaginationItem>
+      </PaginationContent>
+    </Pagination>
   );
 }
 

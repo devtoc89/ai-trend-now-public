@@ -1,8 +1,10 @@
-import { GlobalTitle } from "#consts/global.ts";
+import { GLOBAL_TITLE } from "#consts/global.ts";
 import { getPostItemAction } from "#layer/domain/post/post.action.ts";
 import Markdown from "#layer/ui/components/common/Markdown/Markdown.tsx";
+import TimeAgo from "#layer/ui/pages/PostList/(client)/TimeAgo/TimeAgo.tsx";
 import type { Metadata } from "next";
 import { unstable_cache } from "next/cache";
+import Image from "next/image";
 
 // Next.js will invalidate the cache when a
 // request comes in, at most once every 1 hour.
@@ -26,17 +28,23 @@ async function page({
   return (
     <div className="h-full w-full flex flex-col">
       <div className="h-full w-full flex gap-5 flex-col">
-        <div key={post.id} className=" p-6 w-full">
+        <div key={post.id} className="md:p-6 p-0 w-full">
           <Markdown>{post.title}</Markdown>
-          <div>{post.createdAt}</div>
+          <div>
+            <TimeAgo>{post.createdAt}</TimeAgo>
+          </div>
           <br />
           <Markdown>{post.summary}</Markdown>
-          <Markdown>
-            {
-              // TODO: custom component로 만들 것!
-              post.content
-            }
-          </Markdown>
+          <div className="w-full">
+            <Image
+              src="/no_image.png"
+              width={1024}
+              height={1024}
+              alt="Image"
+              className="object-cover rounded-lg w-full max-h-80"
+            />
+          </div>
+          <Markdown>{post.content}</Markdown>
           <br />
           <div className="">
             <h3>Reference</h3>
@@ -65,8 +73,8 @@ export async function generateMetadata({
   const { id } = await params;
   const post = await getPostItemActionCache(id);
 
-  const title = post?.title ? `${post.title} (${GlobalTitle})` : GlobalTitle;
-  const description = post?.summary ? `${post.summary} (${GlobalTitle})` : GlobalTitle;
+  const title = post?.title ? `${post.title} (${GLOBAL_TITLE})` : GLOBAL_TITLE;
+  const description = post?.summary ? `${post.summary} (${GLOBAL_TITLE})` : GLOBAL_TITLE;
   const keywords = (post?.metadata?.keywords || ["ai"]).join(",");
 
   return {

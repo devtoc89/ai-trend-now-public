@@ -1,8 +1,10 @@
-/** @type {import('postcss-load-config').Config} */
-const config = {
-  plugins: {
-    tailwindcss: {},
-  },
-};
+export { default } from "@repo/ui/postcss.config";
 
-export default config;
+// /** @type {import('postcss-load-config').Config} */
+// const config = {
+//   plugins: {
+//     tailwindcss: {},
+//   },
+// };
+
+// export default config;

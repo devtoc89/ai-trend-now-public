@@ -1,10 +1,21 @@
+import Header from "#layer/ui/components/common/Header/Header.tsx";
 import type React from "react";
 
 function CommonLayout({
   children,
-  direction = "row",
-}: Readonly<{ children: React.ReactNode; direction?: "row" | "column" }>) {
-  return <div className={`flex h-screen w-screen flex-${direction} bg-white overflow-hidden`}>{children}</div>;
+  // direction = "row",
+}: Readonly<{
+  children: React.ReactNode;
+  // direction?: "row" | "column"
+}>) {
+  return (
+    <>
+      <header className="sticky top-0 z-10 w-full">
+        <Header />
+      </header>
+      <main>{children}</main>
+    </>
+  );
 }
 
 export default CommonLayout;

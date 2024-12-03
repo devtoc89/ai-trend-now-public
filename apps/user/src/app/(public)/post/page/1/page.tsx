@@ -1,21 +1,16 @@
-import { getPostListActionCache, getPostTotalCountActionCache } from "#layer/domain/post/post.action.ts";
+import { NEWS_PAGE_SIZE } from "#consts/global.ts";
+import { getPostListAndCountActionCache } from "#layer/domain/post/post.action.ts";
 import PostPage from "#layer/ui/pages/PostList/(server)/PostPage.tsx";
 
 export const revalidate = 60;
 
-// const getPostListActionCache = unstable_cache(async () => await getPostListAction({ page: 0 }), ["getPostListAction"], {
-//   revalidate: 60,
-// });
-
 async function page() {
-  const pageSize = 10;
-  const list = await getPostListActionCache(0, pageSize);
-  const pageTotalCount = await getPostTotalCountActionCache();
+  const { list, totalCount } = await getPostListAndCountActionCache(0, NEWS_PAGE_SIZE);
 
   // TODO: NO Data components.
   if (!list || list.length === 0) return <>No Data</>;
 
-  return <PostPage list={list} page={1} pageSize={pageSize} pageTotalCount={pageTotalCount} />;
+  return <PostPage list={list} page={1} pageSize={NEWS_PAGE_SIZE} pageTotalCount={totalCount} />;
 }
 
 export default page;

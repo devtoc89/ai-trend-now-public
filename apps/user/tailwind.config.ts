@@ -1,7 +1,10 @@
+import uiConfig from "@repo/ui/tailwind.config";
 import path from "node:path";
 import type { Config } from "tailwindcss";
 
-const config: Config = {
+const userConfig: Config = {
+  ...uiConfig,
+  presets: [uiConfig],
   content: [
     "./src/layer/ui/**/*.{js,ts,jsx,tsx,mdx}",
     "./src/app/**/*.{js,ts,jsx,tsx,mdx}",
@@ -19,4 +22,4 @@ const config: Config = {
     },
   },
 };
-export default config;
+export default userConfig;
