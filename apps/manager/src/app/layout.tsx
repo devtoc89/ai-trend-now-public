@@ -1,6 +1,6 @@
 import "./globals.css";
 
-import RootLayer from "#layer/ui/layouts/root/RootLayer.tsx";
+import RootLayer from "#layer/ui/layouts/root/RootLayer";
 import type { Metadata } from "next";
 import localFont from "next/font/local";
 

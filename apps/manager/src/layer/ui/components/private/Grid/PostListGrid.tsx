@@ -1,8 +1,8 @@
 "use client";
 
-import { getPostListAction } from "#layer/domain/post/post.action.ts";
+import { getPostListAction } from "#layer/domain/post/post.action";
 import { Grid, type GridOptions } from "@repo/ui/organisms";
-import { dateFormat } from "@repo/util/date/date.util.ts";
+import { dateFormat } from "@repo/util/date/date.util";
 import { debounce } from "es-toolkit";
 import { useCallback, useState } from "react";
 import ReactMarkdown from "react-markdown";

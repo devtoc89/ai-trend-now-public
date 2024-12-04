@@ -1,9 +1,9 @@
 "use client";
 
-import { generateAiAutoPostAction, generateAiPostAction } from "#layer/domain/ai/ai.action.ts";
-import { getSelectedPostListAction } from "#layer/domain/original/original.post.action.ts";
+import { generateAiAutoPostAction, generateAiPostAction } from "#layer/domain/ai/ai.action";
+import { getSelectedPostListAction } from "#layer/domain/original/original.post.action";
 import { Button, Checkbox, Grid, type GridOptions, Spinner } from "@repo/ui/organisms";
-import { dateFormat } from "@repo/util/date/date.util.ts";
+import { dateFormat } from "@repo/util/date/date.util";
 import { debounce } from "es-toolkit";
 import { type FormEventHandler, useCallback, useState } from "react";
 import { toast } from "react-toastify";
@@ -171,10 +171,10 @@ function SelectedPostListGrid({ initialItems }: { initialItems: SelectedPostList
     e.preventDefault();
     const el = e.currentTarget;
     const id: string[] = [...el.querySelectorAll("input[type='checkbox']:checked")].map((v) => v.id);
-    if (id.length <= 1) {
-      toast.error("2개 이상을 선택해 주세요.");
-      return;
-    }
+    // if (id.length <= 1) {
+    //   toast.error("2개 이상을 선택해 주세요.");
+    //   return;
+    // }
     try {
       setIsProcessing(true);
       const res = await generateAiPostAction({ id });

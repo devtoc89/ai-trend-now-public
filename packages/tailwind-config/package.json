@@ -8,5 +8,8 @@
   },
   "dependencies": {
     "tailwindcss": "catalog:"
+  },
+  "peerDependencies": {
+    "@repo/typescript-config": "workspace:"
   }
 }

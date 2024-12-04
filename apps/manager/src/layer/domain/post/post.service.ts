@@ -1,9 +1,9 @@
 "use server";
 
-import { serviceWrapper } from "#lib/helper/service/service.helper.ts";
-import { getUserPrismaClient } from "#lib/instance/prisma/user.prisma.instance.ts";
+import { serviceWrapper } from "#lib/helper/service/service.helper";
+import { getUserPrismaClient } from "#lib/instance/prisma/user.prisma.instance";
 import type { PostBase, PostDetail, PostMeta } from "@prisma/client/user/index.js";
-import type { ResponseTypeDTO } from "@repo/types/dto/response/response.dto.ts";
+import type { ResponseTypeDTO } from "@repo/types/dto/response/response.dto";
 
 export type RetrievePostList = Array<
   Pick<PostBase, "id" | "createdAt"> & {

@@ -1,11 +1,11 @@
 "use server";
 
-import { serviceWrapper } from "#lib/helper/service/service.helper.ts";
-import { getPrismaClient } from "#lib/instance/prisma/manager.prisma.instance.ts";
-import { getUserPrismaClient } from "#lib/instance/prisma/user.prisma.instance.ts";
+import { serviceWrapper } from "#lib/helper/service/service.helper";
+import { getPrismaClient } from "#lib/instance/prisma/manager.prisma.instance";
+import { getUserPrismaClient } from "#lib/instance/prisma/user.prisma.instance";
 import { createId } from "@paralleldrive/cuid2";
 import type { Prisma } from "@prisma/client/manager/index.js";
-import { getCurrentTimeISOString } from "@repo/util/date/date.util.ts";
+import { getCurrentTimeISOString } from "@repo/util/date/date.util";
 
 export async function publishAiPost({ aiPostId }: { aiPostId: string }) {
   const managerPrisma = getPrismaClient();

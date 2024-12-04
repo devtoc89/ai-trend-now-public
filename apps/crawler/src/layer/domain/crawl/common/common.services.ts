@@ -1,5 +1,5 @@
 import type { PrismaClient } from "@prisma/client/manager/index.js";
-import { getMissingItems } from "@repo/util/collection/collection.util.ts";
+import { getMissingItems } from "@repo/util/collection/collection.util";
 
 export async function getUniqueItems<T extends { id: string }>(prisma: PrismaClient, list: T[]): Promise<T[]> {
   const entries = list.sort((a, b) => b.id.localeCompare(a.id)) || [];

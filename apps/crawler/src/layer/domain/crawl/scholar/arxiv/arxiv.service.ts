@@ -1,19 +1,20 @@
-import { getUniqueItems } from "#layer/domain/crawl/common/common.services.ts";
-import { fetchArxiv } from "#layer/domain/crawl/scholar/arxiv/arxiv.client.ts";
-import { arxivClientResponseParser } from "#layer/domain/crawl/scholar/arxiv/arxiv.parser.ts";
-import { serviceWrapper } from "#lib/helper/service/service.helper.ts";
-import { getPrismaClient } from "#lib/instance/prisma/prisma.instance.ts";
+import { getUniqueItems } from "#layer/domain/crawl/common/common.services";
+import { fetchArxiv } from "#layer/domain/crawl/scholar/arxiv/arxiv.client";
+import { arxivClientResponseParser } from "#layer/domain/crawl/scholar/arxiv/arxiv.parser";
+import { serviceWrapper } from "#lib/helper/service/service.helper";
+import { getPrismaClient } from "#lib/instance/prisma/prisma.instance";
 import type {
   CrawlArxivParsedDTO,
   CrawlArxivParsedEntryDTO,
   CrawlArxivSearchParamsDTO,
-} from "@repo/types/dto/crawl/arxiv/arxiv.crawl.dto.ts";
+} from "@repo/types/dto/crawl/arxiv/arxiv.crawl.dto";
 import type {
   CrawlCommonParamsDTO,
   CrawlCommonResponseDTO,
   CreateManyOriginalPostListItemDTO,
-} from "@repo/types/dto/crawl/common/common.crawl.dto.ts";
-import type { ResponseTypeDTO } from "@repo/types/dto/response/response.dto.ts";
+} from "@repo/types/dto/crawl/common/common.crawl.dto";
+import type { ResponseTypeDTO } from "@repo/types/dto/response/response.dto";
+import { PostCategoryEnum } from "@repo/types/enums/crawlStatus.enum";
 
 const etcKey: Array<keyof CrawlArxivParsedEntryDTO> = ["author", "arxiv:primary_category", "arxiv:comment"];
 
@@ -60,7 +61,7 @@ export async function getArxivCrawlData(
     );
 
     return {
-      meta: { source: "arxiv", category: "paper" },
+      meta: { source: "arxiv", category: PostCategoryEnum.PAPER },
       list: uniqueItems.map<CreateManyOriginalPostListItemDTO>((v) => ({
         id: v.id,
         url: v.id,

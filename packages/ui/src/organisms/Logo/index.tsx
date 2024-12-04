@@ -1,2 +1,2 @@
-export * from "./GlobalLogo.tsx";
-export { default as GlobalLogo } from "./GlobalLogo.tsx";
+export * from "./GlobalLogo";
+export { default as GlobalLogo } from "./GlobalLogo";

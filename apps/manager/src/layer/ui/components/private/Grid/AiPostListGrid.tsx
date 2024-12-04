@@ -1,8 +1,8 @@
 "use client";
-import { getAiPostListAction } from "#layer/domain/ai/ai.action.ts";
-import { publishAiPostAction } from "#layer/domain/publish/publish.action.ts";
+import { getAiPostListAction } from "#layer/domain/ai/ai.action";
+import { publishAiPostAction } from "#layer/domain/publish/publish.action";
 import { Button, Grid, type GridOptions } from "@repo/ui/organisms";
-import { dateFormat } from "@repo/util/date/date.util.ts";
+import { dateFormat } from "@repo/util/date/date.util";
 import { debounce } from "es-toolkit";
 import { type MouseEventHandler, useCallback, useState } from "react";
 import ReactMarkdown from "react-markdown";

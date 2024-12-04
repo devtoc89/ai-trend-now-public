@@ -1,4 +1,4 @@
-import { cn } from "@repo/util/style/tailwind.util.ts";
+import { cn } from "@repo/util/style/tailwind.util";
 import type React from "react";
 
 function RootLayer({
@@ -9,7 +9,9 @@ function RootLayer({
   return (
     <html lang={lang}>
       <link rel="icon" href="/favicon.png" sizes="any" />
-      <body className={cn("antialiased text-shadow-ssm dark:bg-slate-900 ", className)}>{children}</body>
+      <body className={cn("antialiased text-shadow-ssm dark:shadow-gray-300 dark:bg-slate-900 ", className)}>
+        {children}
+      </body>
     </html>
   );
 }

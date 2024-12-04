@@ -1,8 +1,8 @@
 "use client";
 
-import Spinner from "#organisms/Spinner/Spinner.tsx";
-import { type GetDotProp, getDotProp } from "@repo/util/property/object.util.ts";
-import { cn } from "@repo/util/style/tailwind.util.ts";
+import Spinner from "#organisms/Spinner/Spinner";
+import { type GetDotProp, getDotProp } from "@repo/util/property/object.util";
+import { cn } from "@repo/util/style/tailwind.util";
 import { debounce } from "es-toolkit";
 import { type ReactNode, useEffect } from "react";
 import { useInView } from "react-intersection-observer";

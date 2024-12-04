@@ -1,14 +1,15 @@
-import { getUniqueItems } from "#layer/domain/crawl/common/common.services.ts";
-import { fetchTechCrunchItem, fetchTechCrunchList } from "#layer/domain/crawl/news/techcrunch/techcrunch.client.ts";
-import { parseTechcrunchDetail, parseTechcrunchList } from "#layer/domain/crawl/news/techcrunch/techcrunch.parser.ts";
-import { serviceWrapper } from "#lib/helper/service/service.helper.ts";
-import { getPrismaClient } from "#lib/instance/prisma/prisma.instance.ts";
+import { getUniqueItems } from "#layer/domain/crawl/common/common.services";
+import { fetchTechCrunchItem, fetchTechCrunchList } from "#layer/domain/crawl/news/techcrunch/techcrunch.client";
+import { parseTechcrunchDetail, parseTechcrunchList } from "#layer/domain/crawl/news/techcrunch/techcrunch.parser";
+import { serviceWrapper } from "#lib/helper/service/service.helper";
+import { getPrismaClient } from "#lib/instance/prisma/prisma.instance";
 import type {
   CrawlCommonParamsDTO,
   CrawlCommonResponseDTO,
   CreateManyOriginalPostListItemDTO,
-} from "@repo/types/dto/crawl/common/common.crawl.dto.ts";
-import type { ResponseTypeDTO } from "@repo/types/dto/response/response.dto.ts";
+} from "@repo/types/dto/crawl/common/common.crawl.dto";
+import type { ResponseTypeDTO } from "@repo/types/dto/response/response.dto";
+import { PostCategoryEnum } from "@repo/types/enums/crawlStatus.enum";
 
 type TechCrunchListItem = {
   title: string;
@@ -75,14 +76,14 @@ export async function getTechCrunchCrawlData(
     const listResponse = await fetchAndParseTechCrunch();
 
     if (!listResponse.success) {
-      throw new Error(`Failed to fetch or parse Arxiv data. Reason: ${listResponse.error}`);
+      throw new Error(`Failed to fetch or parse techcrunch data. Reason: ${listResponse.error}`);
     }
     const originalList = listResponse.data;
 
     return {
       meta: {
         source: "techcrunch",
-        category: "news",
+        category: PostCategoryEnum.NEWS,
       },
       list: originalList.map<CreateManyOriginalPostListItemDTO>((v) => {
         return {

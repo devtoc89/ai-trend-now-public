@@ -3,9 +3,9 @@
   "version": "0.1.0",
   "private": true,
   "imports": {
-    "#*": "./src/*",
-    "#*.ts": "./src/*.ts",
-    "#*.tsx": "./src/*.tsx"
+    "#*": {
+      "import": ["./src/*", "./src/*.ts", "./src/*.tsx"]
+    }
   },
   "scripts": {
     "dev": "next dev --turbopack -p 3332",

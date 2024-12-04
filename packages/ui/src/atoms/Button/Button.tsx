@@ -1,4 +1,4 @@
-import { cn } from "@repo/util/style/tailwind.util.ts";
+import { cn } from "@repo/util/style/tailwind.util";
 import { type VariantProps, cva } from "class-variance-authority";
 import type { ButtonHTMLAttributes } from "react";
 

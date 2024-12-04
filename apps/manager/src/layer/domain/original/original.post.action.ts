@@ -4,10 +4,10 @@ import {
   retrieveNewPostList,
   retrieveSelectedPostList,
   updatePostStatus,
-} from "#layer/domain/original/original.post.service.ts";
-import type { NewPostListGridItemType } from "#layer/ui/components/private/Grid/NewPostListGrid.tsx";
-import type { SelectedPostListGridItemType } from "#layer/ui/components/private/Grid/SelectedPostListGrid.tsx";
-import { dateFormat } from "@repo/util/date/date.util.ts";
+} from "#layer/domain/original/original.post.service";
+import type { NewPostListGridItemType } from "#layer/ui/components/private/Grid/NewPostListGrid";
+import type { SelectedPostListGridItemType } from "#layer/ui/components/private/Grid/SelectedPostListGrid";
+import { dateFormat } from "@repo/util/date/date.util";
 
 //TODO: cache.
 //TODO: error handling in UI

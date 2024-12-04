@@ -1,7 +1,7 @@
 "use client";
-import { changeNewPostStatusAction, getNewPostListAction } from "#layer/domain/original/original.post.action.ts";
+import { changeNewPostStatusAction, getNewPostListAction } from "#layer/domain/original/original.post.action";
 import { Checkbox, Grid, type GridOptions } from "@repo/ui/organisms";
-import { dateFormat } from "@repo/util/date/date.util.ts";
+import { dateFormat } from "@repo/util/date/date.util";
 import { debounce } from "es-toolkit";
 import type React from "react";
 import { useCallback, useState } from "react";

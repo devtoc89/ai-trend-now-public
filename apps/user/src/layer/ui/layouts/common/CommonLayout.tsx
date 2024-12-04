@@ -1,4 +1,4 @@
-import Header from "#layer/ui/components/common/Header/Header.tsx";
+import Header from "#layer/ui/components/common/(server)/Header/Header";
 import type React from "react";
 
 function CommonLayout({

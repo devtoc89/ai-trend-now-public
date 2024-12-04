@@ -3,28 +3,38 @@
   "version": "0.0.0",
   "private": true,
   "exports": {
-    "./style/*.ts": "./src/style/*.ts",
-    "./collection/*.ts": "./src/collection/*.ts",
-    "./date/*.ts": "./src/date/*.ts",
-    "./property/*.ts": "./src/property/*.ts",
-    "./parser/*.ts": "./src/parser/*.ts",
-    "./style/*": "./src/style/*",
-    "./collection/*": "./src/collection/*",
-    "./date/*": "./src/date/*",
-    "./property/*": "./src/property/*",
-    "./parser/*": "./src/parser/*"
+    ".": {
+      "types": "./dist/src/index.d.ts",
+      "require": "./dist/src/index.js",
+      "import": "./dist/src/index.js",
+      "default": "./src/index.ts"
+    },
+    "./*": {
+      "types": "./dist/src/*.d.ts",
+      "require": "./dist/src/*.js",
+      "import": "./dist/src/*.js",
+      "default": "./src/*"
+    },
+    "./**/*": {
+      "types": "./dist/src/**/*.d.ts",
+      "require": "./dist/src/**/*.js",
+      "import": "./dist/src/**/*.js",
+      "default": "./src/**/*"
+    }
   },
   "scripts": {
     "format-and-lint": "biome check .",
-    "generate:component": "turbo gen react-component"
+    "generate:component": "turbo gen react-component",
+    "build": "rimraf dist&& tsc -p tsconfig.json"
   },
   "dependencies": {
+    "clsx": "catalog:",
     "dayjs": "^1.11.13",
     "json5": "^2.2.3",
-    "clsx": "catalog:",
     "tailwind-merge": "catalog:"
   },
-  "devDependencies": {
-    "@repo/typescript-config": "workspace:*"
+  "peerDependencies": {
+    "@repo/typescript-config": "workspace:*",
+    "rimraf": "catalog:"
   }
 }

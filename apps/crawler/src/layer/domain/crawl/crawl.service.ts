@@ -1,10 +1,9 @@
-import { getAiNewsCrawlData } from "#layer/domain/crawl/news/ainews/ainews.service.ts";
-import { getTechCrunchCrawlData } from "#layer/domain/crawl/news/techcrunch/techcrunch.service.ts";
-import { getArxivCrawlData } from "#layer/domain/crawl/scholar/arxiv/arxiv.service.ts";
-import { crawlComplete, handleCrawlError } from "#lib/helper/crawler/crawler.helper.ts";
-import { serviceWrapper } from "#lib/helper/service/service.helper.ts";
-import { getPrismaClient } from "#lib/instance/prisma/prisma.instance.ts";
-import { CrawlStatus } from "#types/enums/crawlStatus.enum.ts";
+import { getAiNewsCrawlData } from "#layer/domain/crawl/news/ainews/ainews.service";
+import { getTechCrunchCrawlData } from "#layer/domain/crawl/news/techcrunch/techcrunch.service";
+import { getArxivCrawlData } from "#layer/domain/crawl/scholar/arxiv/arxiv.service";
+import { crawlComplete, handleCrawlError } from "#lib/helper/crawler/crawler.helper";
+import { serviceWrapper } from "#lib/helper/service/service.helper";
+import { getPrismaClient } from "#lib/instance/prisma/prisma.instance";
 import { createId } from "@paralleldrive/cuid2";
 import type { PrismaClient } from "@prisma/client/manager/index.js";
 import type {
@@ -12,10 +11,11 @@ import type {
   CrawlCommonResponseDTO,
   CreateManyOriginalPostListItemDTO,
   CreateOriginalPostCommonMetaDTO,
-} from "@repo/types/dto/crawl/common/common.crawl.dto.ts";
-import type { ResponseTypeDTO } from "@repo/types/dto/response/response.dto.ts";
-import { getCurrentTimeISOString } from "@repo/util/date/date.util.ts";
-import { isKeyOf } from "@repo/util/property/object.util.ts";
+} from "@repo/types/dto/crawl/common/common.crawl.dto";
+import type { ResponseTypeDTO } from "@repo/types/dto/response/response.dto";
+import { CrawlStatusEnum } from "@repo/types/enums/crawlStatus.enum";
+import { getCurrentTimeISOString } from "@repo/util/date/date.util";
+import { isKeyOf } from "@repo/util/property/object.util";
 
 async function createManyOriginalPostWithSource(
   prisma: PrismaClient,
@@ -102,7 +102,7 @@ async function crawlResultListPersist(pCrawlResultList: Promise<ResponseTypeDTO<
     crawlResultPersist.name,
     async () => {
       await prisma.crawlBase.create({
-        data: { id: crawlId, crawlTime: 0, createdAt: startTime.toISOString(), status: CrawlStatus.IN_PROGRESS },
+        data: { id: crawlId, crawlTime: 0, createdAt: startTime.toISOString(), status: CrawlStatusEnum.IN_PROGRESS },
       });
 
       const resList = await Promise.all(pCrawlResultList.map((v) => crawlResultPersist(prisma, v, crawlId)));

@@ -1,7 +1,7 @@
-import { getPrismaClient } from "#lib/instance/prisma/prisma.instance.ts";
-import { CrawlStatus } from "#types/enums/crawlStatus.enum.ts";
+import { getPrismaClient } from "#lib/instance/prisma/prisma.instance";
 import type { Prisma, PrismaClient } from "@prisma/client/manager/index.js";
-import { getElapsedTime } from "@repo/util/date/date.util.ts";
+import { CrawlStatusEnum } from "@repo/types/enums/crawlStatus.enum";
+import { getElapsedTime } from "@repo/util/date/date.util";
 
 type Params = {
   crawlId: string;
@@ -28,7 +28,7 @@ export async function handleCrawlError({ crawlId, startTime }: Params): Promise<
     where: { id: crawlId },
     data: {
       crawlTime: getElapsedTime(startTime),
-      status: CrawlStatus.FAILED,
+      status: CrawlStatusEnum.FAILED,
     },
   });
 }
@@ -46,7 +46,7 @@ export async function crawlComplete(
   startTime: Date,
   count = 0,
 ) {
-  await await crawlStatusUpdate(tx, crawlId, startTime, CrawlStatus.COMPLETED, count);
+  await await crawlStatusUpdate(tx, crawlId, startTime, CrawlStatusEnum.COMPLETED, count);
 }
 /**
  * Updates the status and crawl time of a crawl session to FAILED.
@@ -56,7 +56,7 @@ export async function crawlComplete(
  * @param startTime - The date and time when the crawl session started.
  */
 export async function crawlFail(tx: Prisma.TransactionClient | PrismaClient, crawlId: string, startTime: Date) {
-  await crawlStatusUpdate(tx, crawlId, startTime, CrawlStatus.FAILED);
+  await crawlStatusUpdate(tx, crawlId, startTime, CrawlStatusEnum.FAILED);
 }
 /**
  * Updates the status and crawl time of a crawl session.
@@ -70,7 +70,7 @@ export async function crawlStatusUpdate(
   tx: Prisma.TransactionClient | PrismaClient,
   crawlId: string,
   startTime: Date,
-  status: CrawlStatus,
+  status: CrawlStatusEnum,
   count?: number,
 ) {
   await tx.crawlBase.update({

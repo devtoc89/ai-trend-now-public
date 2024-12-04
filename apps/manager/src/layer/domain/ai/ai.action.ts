@@ -6,9 +6,9 @@ import {
   generateAiPost,
   retrieveAiPostItem,
   retrieveAiPostList,
-} from "#layer/domain/ai/ai.service.ts";
-import type { AiPostListGridItemType } from "#layer/ui/components/private/Grid/AiPostListGrid.tsx";
-import { dateFormat } from "@repo/util/date/date.util.ts";
+} from "#layer/domain/ai/ai.service";
+import type { AiPostListGridItemType } from "#layer/ui/components/private/Grid/AiPostListGrid";
+import { dateFormat } from "@repo/util/date/date.util";
 
 //TODO: cache.
 //TODO: error handling in UI

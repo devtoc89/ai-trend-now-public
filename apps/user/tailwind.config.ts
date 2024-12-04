@@ -1,5 +1,5 @@
-import path from "node:path";
 import uiConfig from "@repo/ui/tailwind.config";
+import path from "node:path";
 import type { Config } from "tailwindcss";
 
 const userConfig: Config = {
@@ -8,7 +8,7 @@ const userConfig: Config = {
   content: [
     "./src/layer/ui/**/*.{js,ts,jsx,tsx,mdx}",
     "./src/app/**/*.{js,ts,jsx,tsx,mdx}",
-    path.join(path.dirname(require.resolve("@repo/ui")), "src/**/*.{js,ts,jsx,tsx,mdx}"),
+    path.join(path.dirname(require.resolve("@repo/ui")), "**/*.{js,ts,jsx,tsx,mdx}"),
   ],
   plugins: [require("tailwindcss-textshadow")],
   theme: {

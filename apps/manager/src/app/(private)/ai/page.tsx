@@ -1,5 +1,5 @@
-import { getAiPostListAction } from "#layer/domain/ai/ai.action.ts";
-import AiPostListGrid from "#layer/ui/components/private/Grid/AiPostListGrid.tsx";
+import { getAiPostListAction } from "#layer/domain/ai/ai.action";
+import AiPostListGrid from "#layer/ui/components/private/Grid/AiPostListGrid";
 
 /**
  * The /new page.

@@ -1,5 +1,5 @@
-import { handleServiceError } from "#lib/handler/error/error.handler.ts";
-import type { ResponseTypeDTO } from "@repo/types/dto/response/response.dto.ts";
+import { handleServiceError } from "#lib/handler/error/error.handler";
+import type { ResponseTypeDTO } from "@repo/types/dto/response/response.dto";
 
 /**
  * Wraps a service call in a try/catch block and returns a `ResponseTypeDTO`.

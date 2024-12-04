@@ -1,9 +1,9 @@
+import { logger } from "#lib/instance/logger/pino.instance";
+import { registerRoutes } from "#routes/register";
 import fastifySwagger from "@fastify/swagger";
 import fastifySwaggerUi from "@fastify/swagger-ui";
 import type { TypeBoxTypeProvider } from "@fastify/type-provider-typebox";
 import Fastify, { type FastifyInstance } from "fastify";
-import { logger } from "#lib/instance/logger/pino.instance.ts";
-import { registerRoutes } from "#routes/register.ts";
 
 /**
  * Creates a new Fastify server instance with the logger and TypeBox type provider.

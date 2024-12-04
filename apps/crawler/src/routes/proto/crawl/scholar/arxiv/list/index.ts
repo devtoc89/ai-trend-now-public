@@ -1,5 +1,5 @@
-import { crawlAndPersist } from "#layer/domain/crawl/crawl.service.ts";
-import { getCurrentTimeISOString } from "@repo/util/date/date.util.ts";
+import { crawlAndPersist } from "#layer/domain/crawl/crawl.service";
+import { getCurrentTimeISOString } from "@repo/util/date/date.util";
 import type { FastifyInstance, FastifyPluginOptions, FastifyRequest } from "fastify";
 
 interface getQueryStringQuery {

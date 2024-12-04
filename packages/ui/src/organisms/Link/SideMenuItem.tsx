@@ -1,4 +1,4 @@
-import IconLink from "#molecules/Link/IconLink.tsx";
+import IconLink from "#molecules/Link/IconLink";
 
 export interface SideMenuItemProps {
   icon: React.ReactNode;

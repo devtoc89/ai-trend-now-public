@@ -1,14 +1,20 @@
-import { getUniqueItems } from "#layer/domain/crawl/common/common.services.ts";
-import { fetchAiNewsItem, fetchAiNewsList } from "#layer/domain/crawl/news/ainews/ainews.client.ts";
-import { parseAiNewsDetail, parseAiNewsList } from "#layer/domain/crawl/news/ainews/ainews.parser.ts";
-import { serviceWrapper } from "#lib/helper/service/service.helper.ts";
-import { getPrismaClient } from "#lib/instance/prisma/prisma.instance.ts";
 import type {
   CrawlCommonParamsDTO,
   CrawlCommonResponseDTO,
   CreateManyOriginalPostListItemDTO,
-} from "@repo/types/dto/crawl/common/common.crawl.dto.ts";
-import type { ResponseTypeDTO } from "@repo/types/dto/response/response.dto.ts";
+} from "@repo/types/dto/crawl/common/common.crawl.dto";
+import type { ResponseTypeDTO } from "@repo/types/dto/response/response.dto";
+import { PostCategoryEnum } from "@repo/types/enums/crawlStatus.enum";
+// import type {
+//   CrawlCommonParamsDTO,
+//   CrawlCommonResponseDTO,
+//   CreateManyOriginalPostListItemDTO,
+// } from "@repo/types/dto/enums/crawlStatus.enum";
+import { getUniqueItems } from "#layer/domain/crawl/common/common.services";
+import { fetchAiNewsItem, fetchAiNewsList } from "#layer/domain/crawl/news/ainews/ainews.client";
+import { parseAiNewsDetail, parseAiNewsList } from "#layer/domain/crawl/news/ainews/ainews.parser";
+import { serviceWrapper } from "#lib/helper/service/service.helper";
+import { getPrismaClient } from "#lib/instance/prisma/prisma.instance";
 
 type AiNewsListItem = {
   title: string;
@@ -73,14 +79,14 @@ export async function getAiNewsCrawlData(_: CrawlCommonParamsDTO): Promise<Respo
     const listResponse = await fetchAndParseAiNews();
 
     if (!listResponse.success) {
-      throw new Error(`Failed to fetch or parse Arxiv data. Reason: ${listResponse.error}`);
+      throw new Error(`Failed to fetch or parse AiNews data. Reason: ${listResponse.error}`);
     }
     const originalList = listResponse.data;
 
     return {
       meta: {
         source: "AiNews",
-        category: "news",
+        category: PostCategoryEnum.NEWS,
       },
       list: originalList.map<CreateManyOriginalPostListItemDTO>((v) => {
         return {

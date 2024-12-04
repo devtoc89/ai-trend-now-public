@@ -1,4 +1,4 @@
-import { cn } from "@repo/util/style/tailwind.util.ts";
+import { cn } from "@repo/util/style/tailwind.util";
 
 function Spinner({ className }: { className?: string }) {
   return (

@@ -1,6 +1,6 @@
 "use server";
 
-import { publishAiPost } from "#layer/domain/publish/publish.service.ts";
+import { publishAiPost } from "#layer/domain/publish/publish.service";
 
 //TODO: cache.
 //TODO: error handling in UI

@@ -1,8 +1,8 @@
 "use server";
 
-import { retrievePostList } from "#layer/domain/post/post.service.ts";
-import type { PostListGridItemType } from "#layer/ui/components/private/Grid/PostListGrid.tsx";
-import { dateFormat } from "@repo/util/date/date.util.ts";
+import { retrievePostList } from "#layer/domain/post/post.service";
+import type { PostListGridItemType } from "#layer/ui/components/private/Grid/PostListGrid";
+import { dateFormat } from "@repo/util/date/date.util";
 
 //TODO: cache.
 //TODO: error handling in UI

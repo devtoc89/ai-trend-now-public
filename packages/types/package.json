@@ -2,11 +2,33 @@
   "name": "@repo/types",
   "version": "0.0.0",
   "private": true,
-  "license": "MIT",
-  "publishConfig": {
-    "access": "public"
+  "exports": {
+    ".": {
+      "types": "./dist/src/index.d.ts",
+      "require": "./dist/src/index.js",
+      "import": "./dist/src/index.js",
+      "default": "./src/index.ts"
+    },
+    "./*": {
+      "types": "./dist/src/*.d.ts",
+      "require": "./dist/src/*.js",
+      "import": "./dist/src/*.js",
+      "default": "./src/*"
+    },
+    "./**/*": {
+      "types": "./dist/src/**/*.d.ts",
+      "require": "./dist/src/**/*.js",
+      "import": "./dist/src/**/*.js",
+      "default": "./src/**/*"
+    }
+  },
+  "scripts": {
+    "build": "rimraf dist&& tsc -p tsconfig.json"
   },
   "devDependencies": {
     "@repo/typescript-config": "workspace:*"
+  },
+  "peerDependencies": {
+    "rimraf": "catalog:"
   }
 }

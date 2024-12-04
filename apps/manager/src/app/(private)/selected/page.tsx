@@ -1,5 +1,5 @@
-import { getSelectedPostListAction } from "#layer/domain/original/original.post.action.ts";
-import SelectedPostListGrid from "#layer/ui/components/private/Grid/SelectedPostListGrid.tsx";
+import { getSelectedPostListAction } from "#layer/domain/original/original.post.action";
+import SelectedPostListGrid from "#layer/ui/components/private/Grid/SelectedPostListGrid";
 
 /**
  * The /selected page.

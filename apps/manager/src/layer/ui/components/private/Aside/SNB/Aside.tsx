@@ -1,6 +1,5 @@
+import Sidebar from "#layer/ui/components/private/Aside/SNB/SideBar/SideBar";
 import { GlobalLogo } from "@repo/ui/organisms";
-import React from "react";
-import Sidebar from "#layer/ui/components/private/Aside/SNB/SideBar/SideBar.tsx";
 
 function Aside() {
   return (

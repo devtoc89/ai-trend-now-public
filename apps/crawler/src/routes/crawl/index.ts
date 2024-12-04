@@ -1,6 +1,6 @@
-import { crawlAndPersist } from "#layer/domain/crawl/crawl.service.ts";
+import { crawlAndPersist } from "#layer/domain/crawl/crawl.service";
 import { type FastifyPluginAsyncTypebox, Type } from "@fastify/type-provider-typebox";
-import { getCurrentTimeISOString } from "@repo/util/date/date.util.ts";
+import { getCurrentTimeISOString } from "@repo/util/date/date.util";
 
 const crawlRoutes: FastifyPluginAsyncTypebox = async function (fastify, _): Promise<void> {
   fastify.post(

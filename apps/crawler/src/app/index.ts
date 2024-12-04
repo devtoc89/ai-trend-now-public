@@ -2,7 +2,7 @@ if (process.env.NODE_ENV !== "production") {
   require("dotenv").config();
 }
 
-import getServerInstance from "#app/server.ts";
+import getServerInstance from "#app/server";
 
 const start = async () => {
   const port = process.env.PORT ? Number(process.env.PORT) : 8000;

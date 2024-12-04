@@ -1,13 +1,13 @@
-import { postUserMessageToAI } from "#layer/domain/ai/ai.core.ts";
-import { serviceWrapper } from "#lib/helper/service/service.helper.ts";
-import { logger } from "#lib/instance/logger/pino.instance.ts";
-import { getPrismaClient } from "#lib/instance/prisma/manager.prisma.instance.ts";
+import { postUserMessageToAI } from "#layer/domain/ai/ai.core";
+import { serviceWrapper } from "#lib/helper/service/service.helper";
+import { logger } from "#lib/instance/logger/pino.instance";
+import { getPrismaClient } from "#lib/instance/prisma/manager.prisma.instance";
 import { createId } from "@paralleldrive/cuid2";
 import type { AiPost } from "@prisma/client/manager/index.js";
-import type { ResponseTypeDTO } from "@repo/types/dto/response/response.dto.ts";
-import { shuffleArray } from "@repo/util/collection/collection.util.ts";
-import { getCurrentTimeISOString } from "@repo/util/date/date.util.ts";
-import { parseAiJson } from "@repo/util/parser/ai-json.util.ts";
+import type { ResponseTypeDTO } from "@repo/types/dto/response/response.dto";
+import { shuffleArray } from "@repo/util/collection/collection.util";
+import { getCurrentTimeISOString } from "@repo/util/date/date.util";
+import { parseAiJson } from "@repo/util/parser/ai-json.util";
 type AiContent = {
   insights: string[];
   content: string;

@@ -5,7 +5,7 @@ import {
   retrievePostItem,
   retrievePostList,
   retrievePostTotalCount,
-} from "#layer/domain/post/post.service.ts";
+} from "#layer/domain/post/post.service";
 import { unstable_cache } from "next/cache";
 
 type PostListViewItemMetadata = {
@@ -117,5 +117,13 @@ export const getPostListAndCountActionCache = unstable_cache(
   [`${getPostListAction.name}_${getPostTotalCountAction.name}`],
   {
     revalidate: 60,
+  },
+);
+
+export const getPostItemActionCache = unstable_cache(
+  async (id) => await getPostItemAction({ id }),
+  [getPostItemAction.name],
+  {
+    revalidate: 14400,
   },
 );

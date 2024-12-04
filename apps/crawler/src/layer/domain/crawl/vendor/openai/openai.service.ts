@@ -1,14 +1,14 @@
-import { getUniqueItems } from "#layer/domain/crawl/common/common.services.ts";
-import { fetchOpenAiItem, fetchOpenAiList } from "#layer/domain/crawl/vendor/openai/openai.client.ts";
-import { parseOpenAiDetail, parseOpenAiList } from "#layer/domain/crawl/vendor/openai/openai.parser.ts";
-import { serviceWrapper } from "#lib/helper/service/service.helper.ts";
-import { getPrismaClient } from "#lib/instance/prisma/prisma.instance.ts";
+import { getUniqueItems } from "#layer/domain/crawl/common/common.services";
+import { fetchOpenAiItem, fetchOpenAiList } from "#layer/domain/crawl/vendor/openai/openai.client";
+import { parseOpenAiDetail, parseOpenAiList } from "#layer/domain/crawl/vendor/openai/openai.parser";
+import { serviceWrapper } from "#lib/helper/service/service.helper";
+import { getPrismaClient } from "#lib/instance/prisma/prisma.instance";
 import type {
   CrawlCommonParamsDTO,
   CrawlCommonResponseDTO,
   CreateManyOriginalPostListItemDTO,
-} from "@repo/types/dto/crawl/common/common.crawl.dto.ts";
-import type { ResponseTypeDTO } from "@repo/types/dto/response/response.dto.ts";
+} from "@repo/types/dto/crawl/common/common.crawl.dto";
+import type { ResponseTypeDTO } from "@repo/types/dto/response/response.dto";
 
 type OpenAiListItem = {
   title: string;

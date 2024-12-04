@@ -1,6 +1,6 @@
-import Aside from "#layer/ui/components/private/Aside/SNB/Aside.tsx";
-// import Sidebar from "#layer/ui/components/SideBar/SideBar.tsx";
-import CommonLayout from "#layer/ui/layouts/common/CommonLayout.tsx";
+import Aside from "#layer/ui/components/private/Aside/SNB/Aside";
+// import Sidebar from "#layer/ui/components/SideBar/SideBar";
+import CommonLayout from "#layer/ui/layouts/common/CommonLayout";
 
 export default async function InformationLayout({
   children,

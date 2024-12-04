@@ -1,5 +1,5 @@
-import { getPostListAction } from "#layer/domain/post/post.action.ts";
-import PostListGrid from "#layer/ui/components/private/Grid/PostListGrid.tsx";
+import { getPostListAction } from "#layer/domain/post/post.action";
+import PostListGrid from "#layer/ui/components/private/Grid/PostListGrid";
 
 /**
  * The /new page.

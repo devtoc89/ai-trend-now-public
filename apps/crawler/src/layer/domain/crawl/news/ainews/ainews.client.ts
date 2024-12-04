@@ -1,7 +1,7 @@
 // TODO: 크롤러와 관련된 코드는 별도 package분리가 나을지 고려 필요.
 // TODO: 필요에 따라 조회 조건 고도화 필요.
 
-import { getHtmlBody } from "#lib/helper/scrap/zyte.scrap.ts";
+import { getHtmlBody } from "#lib/helper/scrap/zyte.scrap";
 
 const urlForm = () => "https://www.artificialintelligence-news.com/artificial-intelligence-news";
 

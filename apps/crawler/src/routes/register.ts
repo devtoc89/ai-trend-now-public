@@ -1,6 +1,6 @@
+import type { FastifyInstance } from "fastify"; // import { routerRegister } from "#app/server";
 import fs from "node:fs";
 import path from "node:path";
-import type { FastifyInstance } from "fastify"; // import { routerRegister } from "#app/server.ts";
 
 // 스크립트가 위치한 폴더 경로 설정
 const routeDir = __dirname;
@@ -17,8 +17,8 @@ async function recursiveSearchPath(
   for (const file of files) {
     const filePath = path.join(dir, file);
     const ext = path.extname(file);
-    // 확장자가 .ts 파일만 실행하도록 필터링
-    if (file === "index.ts") {
+    // 확장자가  파일만 실행하도록 필터링
+    if (file === "index.ts" || file === "index.js") {
       try {
         await callback(filePath, prefix);
       } catch (error) {

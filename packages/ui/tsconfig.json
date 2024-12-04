@@ -1,14 +1,10 @@
 {
-  "extends": "@repo/typescript-config/react-library.json",
+  "extends": "@repo/typescript-config/nextjs.app.json",
   "compilerOptions": {
     "rootDir": ".",
     "outDir": "dist",
-    "module": "esnext",
-    "moduleResolution": "bundler",
-    "allowImportingTsExtensions": true,
-    "noEmit": true,
     "baseUrl": "."
   },
-  "include": ["src/**/*.ts", "src/**/*.tsx", "tailwind.config.ts", "index.ts", "s/**/*.ts"],
-  "exclude": ["node_modules", "dist"]
+  "include": ["src/**/*.ts", "src/**/*.tsx", "tailwind.config.ts"],
+  "exclude": ["dist", "node_modules", "**/*.d.ts"]
 }
