@@ -23,9 +23,7 @@
     }
   },
   "scripts": {
-    "format-and-lint": "biome check .",
-    "generate:component": "turbo gen react-component",
-    "build": "rimraf dist&& tsc -p tsconfig.json"
+    "prebuild": "rimraf dist&& tsc -p tsconfig.json"
   },
   "dependencies": {
     "clsx": "catalog:",

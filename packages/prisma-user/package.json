@@ -5,7 +5,8 @@
     "push": "prisma db push",
     "pull": "prisma db pull",
     "generate": "prisma generate --no-engine",
-    "studio": "prisma studio"
+    "studio": "prisma studio",
+    "prebuild": "prisma generate"
   },
   "dependencies": {
     "@prisma/client": "5.22.0"
