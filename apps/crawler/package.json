@@ -3,15 +3,15 @@
   "version": "1.0.0",
   "private": "true",
   "imports": {
-    "#app/*": ["./build/src/app/*.js"],
-    "#lib/*": ["./build/src/lib/*.js"],
-    "#layer/*": ["./build/src/layer/*.js"],
-    "#routes/*": ["./build/src/routes/*.js"]
+    "#app/*": ["./dist/src/app/*.js"],
+    "#lib/*": ["./dist/src/lib/*.js"],
+    "#layer/*": ["./dist/src/layer/*.js"],
+    "#routes/*": ["./dist/src/routes/*.js"]
   },
   "scripts": {
-    "dev": "ts-node-dev --respawn src/app/index.ts",
-    "build": "rimraf dist&& tsc -p tsconfig.json",
-    "start": "node -r tsconfig-paths/register build/src/app/index.js",
+    "dev": "ts-node-dev -r tsconfig-paths/register src/app/index.ts",
+    "build": "rimraf dist && tsc -p tsconfig.json",
+    "start": "node dist/src/app/index.js",
     "test": "jest"
   },
   "dependencies": {

@@ -11,10 +11,10 @@
       "#layer/*": ["./layer/*"],
       "#routes/*": ["./routes/*"]
     },
-    "outDir": "./build",
+    "outDir": "./dist",
     "rootDir": "."
   },
 
   "include": ["src/**/*.ts"],
-  "exclude": ["build", "dist", "**/*.d.ts"]
+  "exclude": ["dist", "**/*.d.ts"]
 }
