@@ -2,6 +2,7 @@
   "name": "devtoc89-public-prj1",
   "private": true,
   "scripts": {
+    "prebuild": "turbo prebuild",
     "build": "turbo build",
     "dev": "turbo dev",
     "lint": "turbo lint",
@@ -11,7 +12,8 @@
   "devDependencies": {
     "@biomejs/biome": "1.9.4",
     "turbo": "^2.2.3",
-    "typescript": "catalog:"
+    "typescript": "catalog:",
+    "rimraf": "catalog:"
   },
   "packageManager": "pnpm@8.15.6",
   "engines": {
