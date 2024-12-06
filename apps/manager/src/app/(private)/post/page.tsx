@@ -1,4 +1,4 @@
-import { getPostListAction } from "#layer/domain/post/post.action";
+import { getPostListAction } from "#layer/action/post/post.action";
 import PostListGrid from "#layer/ui/components/private/Grid/PostListGrid";
 
 /**

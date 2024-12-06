@@ -1,6 +1,7 @@
 "use client";
 
-import { getPostListAction } from "#layer/domain/post/post.action";
+import { getPostListAction } from "#layer/action/post/post.action";
+import type { PostListGridItem } from "#types/viewModel/PostListGridItem";
 import { Grid, type GridOptions } from "@repo/ui/organisms";
 import { dateFormat } from "@repo/util/date/date.util";
 import { debounce } from "es-toolkit";
@@ -11,7 +12,7 @@ const eventDebouncer = debounce((callback) => {
   callback();
 }, 250);
 
-const header: GridOptions<PostListGridItemType>["header"] = [
+const header: GridOptions<PostListGridItem>["header"] = [
   {
     key: "title",
     label: "제목",
@@ -41,7 +42,7 @@ const header: GridOptions<PostListGridItemType>["header"] = [
   },
 ];
 
-const content: GridOptions<PostListGridItemType>["content"] = {
+const content: GridOptions<PostListGridItem>["content"] = {
   title: {
     render: ({ value }) => (
       <div className="px-2 py-1">
@@ -71,7 +72,7 @@ const content: GridOptions<PostListGridItemType>["content"] = {
   },
 };
 
-const subfieldContent: GridOptions<PostListGridItemType>["subfieldContent"] = {
+const subfieldContent: GridOptions<PostListGridItem>["subfieldContent"] = {
   "metadata.insights": {
     render: ({ value }) => (
       <div className="px-2 py-1 text-center ">
@@ -98,15 +99,7 @@ const subfieldContent: GridOptions<PostListGridItemType>["subfieldContent"] = {
   },
 };
 
-export type PostListGridItemType = {
-  id: string;
-  title: string;
-  content: string;
-  metadata: Record<string, string>;
-  createdAt: string;
-};
-
-function newListHook({ initialItems }: { initialItems: PostListGridItemType[] }) {
+function newListHook({ initialItems }: { initialItems: PostListGridItem[] }) {
   const [data, setData] = useState({
     items: [...initialItems],
     isLoading: false,
@@ -130,9 +123,9 @@ function newListHook({ initialItems }: { initialItems: PostListGridItemType[] })
   return { next, ...data };
 }
 
-function PostListGrid({ initialItems }: { initialItems: PostListGridItemType[] }) {
+function PostListGrid({ initialItems }: { initialItems: PostListGridItem[] }) {
   const { items, next, hasNext } = newListHook({ initialItems });
-  const [gridOptions] = useState<GridOptions<PostListGridItemType>>({
+  const [gridOptions] = useState<GridOptions<PostListGridItem>>({
     header,
     content,
     subfieldContent,

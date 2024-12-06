@@ -1,7 +1,8 @@
 "use client";
 
-import { generateAiAutoPostAction, generateAiPostAction } from "#layer/domain/ai/ai.action";
-import { getSelectedPostListAction } from "#layer/domain/original/original.post.action";
+import { generateAiAutoPostAction, generateAiPostAction } from "#layer/action/ai/ai.action";
+import { getSelectedPostListAction } from "#layer/action/post/original.post.action";
+import type { SelectedPostListGridItem } from "#types/viewModel/SelectedPostListGridItem";
 import { Button, Checkbox, Grid, type GridOptions, Spinner } from "@repo/ui/organisms";
 import { dateFormat } from "@repo/util/date/date.util";
 import { debounce } from "es-toolkit";
@@ -12,7 +13,7 @@ const eventDebouncer = debounce((callback) => {
   callback();
 }, 1000);
 
-const header: GridOptions<SelectedPostListGridItemType>["header"] = [
+const header: GridOptions<SelectedPostListGridItem>["header"] = [
   {
     key: "category",
     label: "유형",
@@ -56,7 +57,7 @@ const header: GridOptions<SelectedPostListGridItemType>["header"] = [
   },
 ];
 
-const content: GridOptions<SelectedPostListGridItemType>["content"] = {
+const content: GridOptions<SelectedPostListGridItem>["content"] = {
   category: {
     render: ({ value }) => (
       <div className="px-2 py-1">
@@ -115,18 +116,7 @@ const content: GridOptions<SelectedPostListGridItemType>["content"] = {
   },
 };
 
-export type SelectedPostListGridItemType = {
-  id: string;
-  category: string;
-  source: string;
-  title: string;
-  content: string;
-  orgCreateAt: string;
-  createdAt: string;
-  url: string;
-};
-
-function newListHook({ initialItems }: { initialItems: SelectedPostListGridItemType[] }) {
+function newListHook({ initialItems }: { initialItems: SelectedPostListGridItem[] }) {
   const [data, setData] = useState({
     items: [...initialItems],
     isLoading: false,
@@ -150,10 +140,10 @@ function newListHook({ initialItems }: { initialItems: SelectedPostListGridItemT
   return { next, ...data };
 }
 
-function SelectedPostListGrid({ initialItems }: { initialItems: SelectedPostListGridItemType[] }) {
+function SelectedPostListGrid({ initialItems }: { initialItems: SelectedPostListGridItem[] }) {
   const { items, next, hasNext } = newListHook({ initialItems });
   const [isProcessing, setIsProcessing] = useState(false);
-  const gridOptions: GridOptions<SelectedPostListGridItemType> = {
+  const gridOptions: GridOptions<SelectedPostListGridItem> = {
     header,
     content,
     customContent: {

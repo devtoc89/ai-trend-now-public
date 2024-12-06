@@ -1,5 +1,6 @@
 "use client";
-import { changeNewPostStatusAction, getNewPostListAction } from "#layer/domain/original/original.post.action";
+import { changeNewPostStatusAction, getNewPostListAction } from "#layer/action/post/original.post.action";
+import type { NewPostListGridItem } from "#types/viewModel/NewPostListGridItem";
 import { Checkbox, Grid, type GridOptions } from "@repo/ui/organisms";
 import { dateFormat } from "@repo/util/date/date.util";
 import { debounce } from "es-toolkit";
@@ -10,7 +11,7 @@ const eventDebouncer = debounce((callback) => {
   callback();
 }, 250);
 
-const header: GridOptions<NewPostListGridItemType>["header"] = [
+const header: GridOptions<NewPostListGridItem>["header"] = [
   {
     key: "category",
     label: "유형",
@@ -53,7 +54,7 @@ const header: GridOptions<NewPostListGridItemType>["header"] = [
   },
 ];
 
-const content: GridOptions<NewPostListGridItemType>["content"] = {
+const content: GridOptions<NewPostListGridItem>["content"] = {
   category: {
     render: ({ value }) => (
       <div className="px-2 py-1">
@@ -112,18 +113,6 @@ const content: GridOptions<NewPostListGridItemType>["content"] = {
   },
 };
 
-export type NewPostListGridItemType = {
-  id: string;
-  category: string;
-  source: string;
-  title: string;
-  content: string;
-  orgCreateAt: string;
-  createdAt: string;
-  url: string;
-  isSelected: boolean;
-};
-
 const handleOnChange: React.ChangeEventHandler<HTMLInputElement> = (e) => {
   // e.preventDefault();
   const target = e.target as HTMLInputElement;
@@ -140,7 +129,7 @@ const handleOnChange: React.ChangeEventHandler<HTMLInputElement> = (e) => {
   }
 };
 
-function newListHook({ initialItems }: { initialItems: NewPostListGridItemType[] }) {
+function newListHook({ initialItems }: { initialItems: NewPostListGridItem[] }) {
   const [data, setData] = useState({
     items: [...initialItems],
     isLoading: false,
@@ -164,9 +153,9 @@ function newListHook({ initialItems }: { initialItems: NewPostListGridItemType[]
   return { next, ...data };
 }
 
-function NewPostListGrid({ initialItems }: { initialItems: NewPostListGridItemType[] }) {
+function NewPostListGrid({ initialItems }: { initialItems: NewPostListGridItem[] }) {
   const { items, next, hasNext } = newListHook({ initialItems });
-  const [gridOptions] = useState<GridOptions<NewPostListGridItemType>>({
+  const [gridOptions] = useState<GridOptions<NewPostListGridItem>>({
     header,
     content: {
       ...content,

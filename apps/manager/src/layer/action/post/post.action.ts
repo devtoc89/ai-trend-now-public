@@ -1,19 +1,19 @@
 "use server";
 
-import { retrievePostList } from "#layer/domain/post/post.service";
-import type { PostListGridItemType } from "#layer/ui/components/private/Grid/PostListGrid";
+import { retrievePostList } from "#layer/service/post/post.service";
+import type { PostListGridItem } from "#types/viewModel/PostListGridItem";
 import { dateFormat } from "@repo/util/date/date.util";
 
 //TODO: cache.
 //TODO: error handling in UI
 
-export async function getPostListAction({ page }: { page: number }): Promise<PostListGridItemType[]> {
+export async function getPostListAction({ page }: { page: number }): Promise<PostListGridItem[]> {
   const listRes = await retrievePostList({ page });
   if (!listRes.success) {
     return [];
   }
 
-  return listRes.data.map<PostListGridItemType>((post) => ({
+  return listRes.data.map<PostListGridItem>((post) => ({
     id: post.id,
     title: post.postDetail?.title || "",
     content: post.postDetail?.content || "",

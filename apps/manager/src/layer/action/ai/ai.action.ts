@@ -1,17 +1,10 @@
 "use server";
 
-import {
-  type RetrieveAiItem,
-  generateAiAutoPost,
-  generateAiPost,
-  retrieveAiPostItem,
-  retrieveAiPostList,
-} from "#layer/domain/ai/ai.service";
-import type { AiPostListGridItemType } from "#layer/ui/components/private/Grid/AiPostListGrid";
+import type { RetrieveAiItem } from "#layer/repository/ai-post/ai.post.repo";
+import { retrieveAiPostItem, retrieveAiPostList } from "#layer/service/ai-post/ai.post.service";
+import { generateAiAutoPost, generateAiPost } from "#layer/service/ai/ai.service";
+import type { AiPostListGridItem } from "#types/viewModel/AiPostListGridItem";
 import { dateFormat } from "@repo/util/date/date.util";
-
-//TODO: cache.
-//TODO: error handling in UI
 
 function aiPostToViewItem(post: RetrieveAiItem) {
   return {
@@ -24,7 +17,7 @@ function aiPostToViewItem(post: RetrieveAiItem) {
   };
 }
 
-export async function getAiPostItemAction({ id }: { id: string }): Promise<AiPostListGridItemType | null> {
+export async function getAiPostItemAction({ id }: { id: string }): Promise<AiPostListGridItem | null> {
   const itemRes = await retrieveAiPostItem({ id });
   if (!itemRes.success) {
     return null;
@@ -32,13 +25,13 @@ export async function getAiPostItemAction({ id }: { id: string }): Promise<AiPos
   return itemRes.data ? aiPostToViewItem(itemRes.data) : null;
 }
 
-export async function getAiPostListAction({ page }: { page: number }): Promise<AiPostListGridItemType[]> {
+export async function getAiPostListAction({ page }: { page: number }): Promise<AiPostListGridItem[]> {
   const listRes = await retrieveAiPostList({ page });
   if (!listRes.success) {
     return [];
   }
 
-  return listRes.data.map<AiPostListGridItemType>((post) => aiPostToViewItem(post));
+  return listRes.data.map<AiPostListGridItem>((post) => aiPostToViewItem(post));
 }
 export async function generateAiPostAction({ id }: { id: string[] }) {
   if (id.length === 0) return { success: false, error: "No post selected" };

@@ -1,6 +1,7 @@
 "use client";
-import { getAiPostListAction } from "#layer/domain/ai/ai.action";
-import { publishAiPostAction } from "#layer/domain/publish/publish.action";
+import { getAiPostListAction } from "#layer/action/ai/ai.action";
+import { publishAiPostAction } from "#layer/action/publish/publish.action";
+import type { AiPostListGridItem } from "#types/viewModel/AiPostListGridItem";
 import { Button, Grid, type GridOptions } from "@repo/ui/organisms";
 import { dateFormat } from "@repo/util/date/date.util";
 import { debounce } from "es-toolkit";
@@ -12,7 +13,7 @@ const eventDebouncer = debounce((callback) => {
   callback();
 }, 250);
 
-const header: GridOptions<AiPostListGridItemType>["header"] = [
+const header: GridOptions<AiPostListGridItem>["header"] = [
   {
     key: "insights",
     label: "인사이트",
@@ -41,7 +42,7 @@ const header: GridOptions<AiPostListGridItemType>["header"] = [
   },
 ];
 
-const content: GridOptions<AiPostListGridItemType>["content"] = {
+const content: GridOptions<AiPostListGridItem>["content"] = {
   insights: {
     render: ({ value }) => (
       <div className="px-2 py-1">
@@ -81,16 +82,7 @@ const content: GridOptions<AiPostListGridItemType>["content"] = {
   },
 };
 
-export type AiPostListGridItemType = {
-  id: string;
-  insights: string;
-  title: string;
-  content: string;
-  createdAt: string;
-  isPublished: boolean;
-};
-
-function newListHook({ initialItems }: { initialItems: AiPostListGridItemType[] }) {
+function newListHook({ initialItems }: { initialItems: AiPostListGridItem[] }) {
   const [data, setData] = useState({
     items: [...initialItems],
     isLoading: false,
@@ -137,7 +129,7 @@ function newListHook({ initialItems }: { initialItems: AiPostListGridItemType[] 
   return { publish, next, ...data };
 }
 
-function AiPostListGrid({ initialItems }: { initialItems: AiPostListGridItemType[] }) {
+function AiPostListGrid({ initialItems }: { initialItems: AiPostListGridItem[] }) {
   const { items, next, hasNext, publish } = newListHook({ initialItems });
 
   const handleOnClick: MouseEventHandler<HTMLButtonElement> = useCallback(
@@ -153,7 +145,7 @@ function AiPostListGrid({ initialItems }: { initialItems: AiPostListGridItemType
     [publish],
   );
 
-  const [gridOptions] = useState<GridOptions<AiPostListGridItemType>>({
+  const [gridOptions] = useState<GridOptions<AiPostListGridItem>>({
     header,
     content: {
       ...content,

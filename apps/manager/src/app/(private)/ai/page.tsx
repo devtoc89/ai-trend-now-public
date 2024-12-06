@@ -1,4 +1,4 @@
-import { getAiPostListAction } from "#layer/domain/ai/ai.action";
+import { getAiPostListAction } from "#layer/action/ai/ai.action";
 import AiPostListGrid from "#layer/ui/components/private/Grid/AiPostListGrid";
 
 /**

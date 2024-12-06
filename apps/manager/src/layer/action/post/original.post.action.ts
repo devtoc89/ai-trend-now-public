@@ -4,21 +4,21 @@ import {
   retrieveNewPostList,
   retrieveSelectedPostList,
   updatePostStatus,
-} from "#layer/domain/original/original.post.service";
-import type { NewPostListGridItemType } from "#layer/ui/components/private/Grid/NewPostListGrid";
-import type { SelectedPostListGridItemType } from "#layer/ui/components/private/Grid/SelectedPostListGrid";
+} from "#layer/service/original-post/original.post.service";
+import type { NewPostListGridItem } from "#types/viewModel/NewPostListGridItem";
+import type { SelectedPostListGridItem } from "#types/viewModel/SelectedPostListGridItem";
 import { dateFormat } from "@repo/util/date/date.util";
 
 //TODO: cache.
 //TODO: error handling in UI
 
-export async function getNewPostListAction({ page }: { page: number }): Promise<NewPostListGridItemType[]> {
+export async function getNewPostListAction({ page }: { page: number }): Promise<NewPostListGridItem[]> {
   const listRes = await retrieveNewPostList({ page });
   if (!listRes.success) {
     return [];
   }
 
-  return listRes.data.map<NewPostListGridItemType>((post) => ({
+  return listRes.data.map<NewPostListGridItem>((post) => ({
     id: post.id,
     category: post.originalPostMeta?.category || "",
     source: post.originalPostMeta?.source || "",
@@ -31,13 +31,13 @@ export async function getNewPostListAction({ page }: { page: number }): Promise<
   }));
 }
 
-export async function getSelectedPostListAction({ page }: { page: number }): Promise<SelectedPostListGridItemType[]> {
+export async function getSelectedPostListAction({ page }: { page: number }): Promise<SelectedPostListGridItem[]> {
   const listRes = await retrieveSelectedPostList({ page });
   if (!listRes.success) {
     return [];
   }
 
-  return listRes.data.map<SelectedPostListGridItemType>((post) => ({
+  return listRes.data.map<SelectedPostListGridItem>((post) => ({
     id: post.id,
     category: post.originalPostMeta?.category || "",
     source: post.originalPostMeta?.source || "",

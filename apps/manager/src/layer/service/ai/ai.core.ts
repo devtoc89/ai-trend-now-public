@@ -25,12 +25,19 @@ import * as hub from "langchain/hub";
 // 1. html to list content
 // 2. html to detail content
 // 3. 기사 작성
-
-const model = new ChatGoogleGenerativeAI({
-  modelName: "gemini-1.5-flash",
-  //   maxOutputTokens: 2048,
-  apiKey: process.env.GEMINI_API_KEY,
-});
+let modelIdx = 0;
+const model = [
+  new ChatGoogleGenerativeAI({
+    modelName: "gemini-1.5-flash",
+    //   maxOutputTokens: 2048,
+    apiKey: process.env.GEMINI_API_KEY,
+  }),
+  new ChatGoogleGenerativeAI({
+    modelName: "gemini-1.5-flash",
+    //   maxOutputTokens: 2048,
+    apiKey: process.env.GEMINI_API_KEY2,
+  }),
+];
 
 // Define the function that determines whether to continue or not
 function shouldContinue({ messages }: typeof MessagesAnnotation.State) {
@@ -40,7 +47,7 @@ function shouldContinue({ messages }: typeof MessagesAnnotation.State) {
 
 // Define the function that calls the model
 async function callModel(state: typeof MessagesAnnotation.State) {
-  const response = await model.invoke(state.messages);
+  const response = await model[modelIdx++ % 2]?.invoke(state.messages);
   // We return a list, because this will get added to the existing list
   return { messages: [response] };
 }
