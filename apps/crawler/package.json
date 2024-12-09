@@ -9,10 +9,11 @@
     "#routes/*": ["./dist/src/routes/*.js"]
   },
   "scripts": {
-    "dev": "ts-node-dev -r tsconfig-paths/register src/app/index.ts",
+    "dev": "ts-node-dev -r tsconfig-paths/register src/app/index.ts -p 8000",
     "build": "rimraf dist && tsc -p tsconfig.json",
-    "start": "node dist/src/app/index.js",
-    "test": "jest"
+    "start": "node dist/src/app/index.js -p 8000",
+    "test": "jest",
+    "remove-build": "rimraf dist"
   },
   "dependencies": {
     "@fastify/autoload": "^6.0.0",
@@ -29,21 +30,23 @@
     "module-alias": "^2.2.3",
     "pino": "^9.5.0",
     "pino-pretty": "^13.0.0",
-    "tsconfig-paths": "^4.2.0"
+    "tsconfig-paths": "^4.2.0",
+    "yargs-parser": "21.1.1"
   },
   "devDependencies": {
     "@fastify/swagger": "^9.3.0",
     "@fastify/swagger-ui": "^5.1.0",
     "@repo/types": "workspace:*",
     "@repo/typescript-config": "workspace:*",
+    "@repo/util": "workspace:*",
     "@types/jest": "catalog:",
     "@types/node": "catalog:",
+    "@types/yargs-parser": "^21.0.3",
     "dotenv": "^16.4.5",
     "jest": "catalog:",
     "ts-jest": "catalog:",
     "ts-node": "catalog:",
     "ts-node-dev": "catalog:",
-    "@repo/util": "workspace:*",
     "typescript": "catalog:"
   },
   "peerDependencies": {

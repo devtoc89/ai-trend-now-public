@@ -3,9 +3,14 @@ if (process.env.NODE_ENV !== "production") {
 }
 
 import getServerInstance from "#app/server";
+import parser from "yargs-parser";
 
 const start = async () => {
-  const port = process.env.PORT ? Number(process.env.PORT) : 8000;
+  // TODO: refactor initializing code.
+  const args = parser(process.argv.slice(2), {
+    number: ["port", "p"],
+  });
+  const port = args.p || args.port || Number(process.env.PORT ?? 0) || 8000;
   const server = await getServerInstance();
   try {
     server.listen({ port });
