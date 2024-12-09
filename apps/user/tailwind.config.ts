@@ -14,7 +14,7 @@ const userConfig: Config = {
   theme: {
     extend: {
       fontFamily: {
-        pretendard: ["Pretendard", "sans-serif"],
+        pretendard: ["var(--font-pretendard)", "sans-serif"],
       },
       textShadow: {
         ssm: "1px 1px 1px rgba(88, 88, 88, 0.25)",

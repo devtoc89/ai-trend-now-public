@@ -1,8 +1,6 @@
 import "@repo/ui/globals.css";
 import "./globals.css";
 
-import "./fonts/pretendard.css";
-
 import RootLayer from "#layer/ui/layouts/root/RootLayer";
 
 import { commonMetadata } from "#lib/helper/metadata/metadata.helper";
