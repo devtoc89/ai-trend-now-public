@@ -1,7 +1,8 @@
-import AiPostRepository, { type AiContent } from "#layer/repository/ai-post/ai.post.repo";
+import AiPostRepository from "#layer/repository/ai-post/ai.post.repo";
 import OriginalPostRepository from "#layer/repository/original-post/original.post.repo";
 import OriginalPostAndAiPostRelationRepository from "#layer/repository/relations/original.post.ai.post.relation.repo";
 import { postUserMessageToAI } from "#layer/service/ai/ai.core";
+import { writePostByAi } from "#layer/service/ai/ai.writer";
 import { serviceWrapper } from "#lib/helper/service/service.helper";
 import { getPrismaClient } from "#lib/instance/prisma/manager.prisma.instance";
 import { createId } from "@paralleldrive/cuid2";
@@ -9,13 +10,6 @@ import { PostCategoryEnum } from "@repo/types/enums/post.category.enum";
 import { shuffleArray } from "@repo/util/collection/collection.util";
 import { logger } from "@repo/util/logger/pino.instance";
 import { parseAiJson } from "@repo/util/parser/ai-json.util";
-
-const categoryPromptMap = {
-  [PostCategoryEnum.ALL]: "gemini-column-writer-ver1", // TODO
-  [PostCategoryEnum.PAPER]: "gemini-paper-writer-ver1",
-  [PostCategoryEnum.COLUMN]: "gemini-column-writer-ver1",
-  [PostCategoryEnum.NEWS]: "gemini-column-writer-ver1", // TODO
-};
 
 /**
  * Generates an AI document based on a list of source post IDs.
@@ -31,17 +25,16 @@ export async function generateAiPost(
   const prisma = getPrismaClient();
 
   return await serviceWrapper(generateAiPost.name, async () => {
-    const sources = await OriginalPostRepository.select.manyForAiPost(prisma, postIdList, postCategoryList);
+    const sources = (await OriginalPostRepository.select.manyForAiPost(prisma, postIdList, postCategoryList))
+      .map((v) => {
+        if (!v.originalPostBase.originalPostMeta) return null;
+        return { originalPostMeta: v.originalPostBase.originalPostMeta, originalPostSource: { ...v } };
+      })
+      .filter((v) => !!v);
 
     if (sources.length === 0) throw new Error("id is not valid.");
 
-    const aiContentRaw = await postUserMessageToAI({
-      promptName: categoryPromptMap[aiPostCategory],
-      userMessage: JSON.stringify(sources),
-    });
-
-    const aiContent = parseAiJson(aiContentRaw) as AiContent;
-    if (aiContent.isError) throw new Error("AI Error");
+    const aiContent = await await writePostByAi(aiPostCategory, sources);
 
     const aiPostId = createId();
     await prisma.$transaction(async (tx) => {
