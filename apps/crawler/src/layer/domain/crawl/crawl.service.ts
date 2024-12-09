@@ -13,7 +13,7 @@ import type {
   CreateOriginalPostCommonMetaDTO,
 } from "@repo/types/dto/crawl/common/common.crawl.dto";
 import type { ResponseTypeDTO } from "@repo/types/dto/response/response.dto";
-import { CrawlStatusEnum } from "@repo/types/enums/crawlStatus.enum";
+import { CrawlStatusEnum } from "@repo/types/enums/crawl.status.enum";
 import { getCurrentTimeISOString } from "@repo/util/date/date.util";
 import { isKeyOf } from "@repo/util/property/object.util";
 
@@ -34,25 +34,25 @@ async function createManyOriginalPostWithSource(
       });
       await Promise.all([
         // 2. source
-        tx.originalPostSource.createMany({
+        await tx.originalPostSource.createMany({
           data: resultList.map((entry) => ({
             id: createId(),
             postId: entry.id,
             title: entry.title,
             content: entry.content,
-            url: entry.url,
-            orgCreatedAt: entry.orgCreatedAt,
-            orgUpdatedAt: entry.orgUpdatedAt,
             createdAt,
           })),
         }),
         // 3. meta
-        tx.originalPostMeta.createMany({
+        await tx.originalPostMeta.createMany({
           data: resultList.map((entry) => ({
             id: createId(),
             postId: entry.id,
             category: meta.category,
             source: meta.source,
+            url: entry.url,
+            orgCreatedAt: entry.orgCreatedAt,
+            orgUpdatedAt: entry.orgUpdatedAt,
             etc: entry.etc,
             createdAt,
           })),
@@ -79,7 +79,7 @@ async function crawlResultPersist(
     const crawlResult = await pCrawlResult;
     if (!crawlResult.success) return 0;
 
-    const list = crawlResult.data.list.filter((v) => !v.id);
+    const list = crawlResult.data.list.filter((v) => v.id);
     if (list.length === 0) return 0;
 
     const res = await createManyOriginalPostWithSource(prisma, crawlResult.data.meta, list, crawlId);
@@ -99,7 +99,7 @@ async function crawlResultListPersist(pCrawlResultList: Promise<ResponseTypeDTO<
   const startTime = new Date();
 
   return await serviceWrapper(
-    crawlResultPersist.name,
+    crawlResultListPersist.name,
     async () => {
       await prisma.crawlBase.create({
         data: { id: crawlId, crawlTime: 0, createdAt: startTime.toISOString(), status: CrawlStatusEnum.IN_PROGRESS },
