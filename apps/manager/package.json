@@ -11,7 +11,7 @@
     "dev": "next dev --turbopack -p 3332",
     "debug": "cross-env NODE_OPTIONS='--inspect' next dev",
     "build": "next build",
-    "start": "next start",
+    "start": "next start -p 3332",
     "lint": "next lint",
     "test": "jest",
     "remove-build": "rimraf .next"
@@ -24,7 +24,6 @@
     "@paralleldrive/cuid2": "^2.2.2",
     "@repo/ui": "workspace:*",
     "@repo/util": "workspace:*",
-    "@tanstack/react-query": "^5.61.3",
     "cross-env": "^7.0.3",
     "es-toolkit": "^1.27.0",
     "langchain": "^0.3.5",
