@@ -5,13 +5,13 @@ import { ArrowLeft } from "lucide-react";
 import { useRouter } from "next/navigation";
 import { useCallback } from "react";
 
-function PageBackButton() {
+function PageBackButton({ variant = "default" }: { variant?: "ghost" | "outline" | "default" }) {
   const router = useRouter();
   const handleOnClick = useCallback(() => {
     router.back();
   }, [router]);
   return (
-    <Button onClick={handleOnClick} variant="default">
+    <Button onClick={handleOnClick} variant={variant}>
       back
       <ArrowLeft />
     </Button>

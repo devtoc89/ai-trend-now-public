@@ -38,11 +38,13 @@ function NavMenu() {
               <Link
                 href={comp.href}
                 aria-disabled={isActivated}
-                className={cn(isActivated && "pointer-events-none ", navigationMenuTriggerStyle())}
+                className={cn(
+                  isActivated && "pointer-events-none ",
+                  navigationMenuTriggerStyle(),
+                  "bg-transparent dark:text-white",
+                )}
               >
-                <p className={cn(isActivated && "pointer-events-none font-extrabold text-base text-black")}>
-                  {comp.title}
-                </p>
+                <p className={cn(isActivated && "pointer-events-none font-extrabold text-base")}>{comp.title}</p>
               </Link>
             </NavigationMenuItem>
           );
