@@ -1,5 +1,5 @@
 import { GLOBAL_TITLE } from "#consts/global";
-import type { PostItemViewItem } from "#layer/domain/post/post.action";
+import type { PostItemViewItem } from "#layer/action/post.action";
 import type { Metadata } from "next";
 
 export async function generatePagePostMetadata({

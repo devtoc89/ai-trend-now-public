@@ -1,4 +1,4 @@
-import { getPostItemActionCache } from "#layer/domain/post/post.action";
+import { getPostItemActionCache } from "#layer/action/post.action";
 import PostDetailPage from "#layer/ui/pages/PostDetailPage/(server)/PostDetailPage";
 import { generatePagePostMetadata } from "#lib/helper/metadata/metadata.helper";
 import type { Metadata } from "next";

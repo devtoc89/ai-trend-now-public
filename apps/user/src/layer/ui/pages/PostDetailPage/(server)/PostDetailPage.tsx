@@ -1,4 +1,4 @@
-import { getPostItemActionCache } from "#layer/domain/post/post.action";
+import { getPostItemActionCache } from "#layer/action/post.action";
 import PostDetailPageContent from "#layer/ui/pages/PostDetailPage/(server)/PostDetailPageContent";
 import NoData from "@repo/ui/components/ui/NoData";
 

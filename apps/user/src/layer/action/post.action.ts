@@ -5,34 +5,18 @@ import {
   retrievePostItem,
   retrievePostList,
   retrievePostTotalCount,
-} from "#layer/domain/post/post.service";
+} from "#layer/service/post.service";
+import type { PostCategoryEnum } from "@repo/types/enums/post.category.enum";
+import type { AiContentExt, AiContentMeta } from "@repo/types/model/ai.model";
 import { unstable_cache } from "next/cache";
 
-type PostListViewItemMetadata = {
-  insights: Array<string>;
-  keywords: Array<string>;
-  imageGeneratePrompt: string;
-  references: Array<{
-    category: string;
-    title: string;
-    source: string;
-    url: string;
-  }>;
-};
-
-export type PostListViewList = {
+export type PostListViewList = Omit<AiContentExt, "isError" | "content" | "metadata"> & {
   id: string;
-  title: string;
-  summary: string;
   createdAt: string;
 };
 
-export type PostItemViewItem = {
+export type PostItemViewItem = Omit<AiContentExt, "isError"> & {
   id: string;
-  title: string;
-  content: string;
-  summary: string;
-  metadata?: PostListViewItemMetadata;
   createdAt: string;
 };
 
@@ -49,7 +33,7 @@ function postItemToViewItem(post: RetrievePostItem): PostItemViewItem {
       // .replace(/@\$_%!\^/gi, "**")
       // .replace(/<\/?u>/gi, "*")
       .replaceAll("<br>", "\n"),
-    metadata: (post.postMeta?.metadata as PostListViewItemMetadata) || undefined,
+    metadata: (post.postMeta?.metadata as AiContentMeta) || undefined,
     summary: post.postDetail?.summary || "",
     createdAt: post.createdAt.toISOString(),
   };
@@ -76,16 +60,17 @@ export async function getPostItemAction({ id }: { id: string }): Promise<PostIte
 export async function getPostListAction({
   page,
   pageSize,
-}: { page: number; pageSize: number }): Promise<PostListViewList[]> {
-  const listRes = await retrievePostList({ page, pageSize });
+  category,
+}: { page: number; pageSize: number; category: PostCategoryEnum }): Promise<PostListViewList[]> {
+  const listRes = await retrievePostList({ category, page, pageSize });
   if (!listRes.success) {
     return [];
   }
 
   return listRes.data.map<PostListViewList>(postListToViewList);
 }
-export async function getPostTotalCountAction(): Promise<number> {
-  const contRes = await retrievePostTotalCount();
+export async function getPostTotalCountAction({ category }: { category: PostCategoryEnum }): Promise<number> {
+  const contRes = await retrievePostTotalCount({ category });
   if (!contRes.success) {
     return 1;
   }
@@ -93,26 +78,20 @@ export async function getPostTotalCountAction(): Promise<number> {
   return contRes.data;
 }
 
-export const getPostListActionCache = unstable_cache(
-  async (page: number, pageSize: number) => await getPostListAction({ page, pageSize }),
-  [getPostListAction.name],
-  {
-    revalidate: 60,
-  },
-);
+export const getPostListActionCache = async (category: PostCategoryEnum, page: number, pageSize: number) => {
+  const { list } = await getPostListAndCountActionCache(category, page, pageSize);
+  return list;
+};
 
-export const getPostTotalCountActionCache = unstable_cache(
-  async () => await getPostTotalCountAction(),
-  [getPostTotalCountAction.name],
-  {
-    revalidate: 60,
-  },
-);
+export const getPostTotalCountActionCache = async (category: PostCategoryEnum, page: number, pageSize: number) => {
+  const { totalCount } = await getPostListAndCountActionCache(category, page, pageSize);
+  return totalCount;
+};
 
 export const getPostListAndCountActionCache = unstable_cache(
-  async (page: number, pageSize: number) => ({
-    list: await getPostListAction({ page, pageSize }),
-    totalCount: await getPostTotalCountAction(),
+  async (category: PostCategoryEnum, page: number, pageSize: number) => ({
+    list: await getPostListAction({ category, page, pageSize }),
+    totalCount: await getPostTotalCountAction({ category }),
   }),
   [`${getPostListAction.name}_${getPostTotalCountAction.name}`],
   {
@@ -124,6 +103,6 @@ export const getPostItemActionCache = unstable_cache(
   async (id) => await getPostItemAction({ id }),
   [getPostItemAction.name],
   {
-    revalidate: 14400,
+    revalidate: 60,
   },
 );
