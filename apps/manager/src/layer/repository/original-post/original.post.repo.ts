@@ -1,34 +1,9 @@
-import type {
-  OriginalPostBase,
-  OriginalPostMeta,
-  OriginalPostSource,
-  OriginalPostStatus,
-  Prisma,
-} from "@prisma/client/manager/index.js";
+import type { Prisma } from "@prisma/client/manager/index.js";
 import type { PostCategoryEnum } from "@repo/types/enums/post.category.enum";
 import { getCurrentTimeISOString } from "@repo/util/date/date.util";
 
-export type RetrieveNewPostList = Array<
-  Pick<OriginalPostBase, "id"> & {
-    originalPostMeta: Pick<OriginalPostMeta, "source" | "category"> | null;
-    originalPostSource: Pick<OriginalPostSource, "title" | "content" | "url" | "createdAt" | "orgCreatedAt"> | null;
-    originalPostStatus: Pick<OriginalPostStatus, "selectedFlg"> | null;
-  }
->;
-
-export type RetrieveSelectedPostList = Array<
-  Pick<OriginalPostBase, "id"> & {
-    originalPostMeta: Pick<OriginalPostMeta, "source" | "category"> | null;
-    originalPostSource: Pick<OriginalPostSource, "title" | "content" | "url" | "createdAt" | "orgCreatedAt"> | null;
-  }
->;
-
 class _select {
-  public static manyForNewPostList(
-    tx: Prisma.TransactionClient,
-    page: number,
-    pageSize: number,
-  ): Promise<RetrieveNewPostList> {
+  public static manyForNewPostList(tx: Prisma.TransactionClient, page: number, pageSize: number) {
     return tx.originalPostBase.findMany({
       skip: page * pageSize,
       take: pageSize,
@@ -41,15 +16,15 @@ class _select {
           select: {
             source: true,
             category: true,
+            url: true,
+            orgCreatedAt: true,
           },
         },
         originalPostSource: {
           select: {
             title: true,
             content: true,
-            url: true,
             createdAt: true,
-            orgCreatedAt: true,
           },
         },
         originalPostStatus: {
@@ -81,15 +56,15 @@ class _select {
           select: {
             source: true,
             category: true,
+            url: true,
+            orgCreatedAt: true,
           },
         },
         originalPostSource: {
           select: {
             title: true,
             content: true,
-            url: true,
             createdAt: true,
-            orgCreatedAt: true,
           },
         },
       },
@@ -119,24 +94,6 @@ class _select {
     postIdList: string[],
     postCategoryList: PostCategoryEnum[],
   ) {
-    console.log(postCategoryList);
-    console.log(postCategoryList);
-    console.log(postCategoryList);
-    console.log(postCategoryList);
-    console.log({
-      postId: {
-        in: postIdList,
-      },
-      ...(postCategoryList.length !== 0
-        ? {
-            originalPostBase: {
-              originalPostMeta: {
-                category: { in: postCategoryList },
-              },
-            },
-          }
-        : {}),
-    });
     return tx.originalPostSource.findMany({
       where: {
         postId: {
@@ -155,6 +112,21 @@ class _select {
       select: {
         title: true,
         content: true,
+        createdAt: true,
+        originalPostBase: {
+          select: {
+            originalPostMeta: {
+              select: {
+                source: true,
+                category: true,
+                etc: true,
+                url: true,
+                orgCreatedAt: true,
+                orgUpdatedAt: true,
+              },
+            },
+          },
+        },
       },
     });
   }
@@ -169,9 +141,7 @@ class _select {
           autoFlg: false,
         },
       },
-      orderBy: {
-        createdAt: "asc",
-      },
+      orderBy: [{ createdAt: "asc" }, { originalPostMeta: { orgUpdatedAt: "asc" } }],
       take: 1,
       select: {
         id: true,
@@ -179,13 +149,17 @@ class _select {
           select: {
             title: true,
             content: true,
-            url: true,
+            createdAt: true,
           },
         },
         originalPostMeta: {
           select: {
             source: true,
             category: true,
+            orgCreatedAt: true,
+            orgUpdatedAt: true,
+            url: true,
+            etc: true,
           },
         },
       },

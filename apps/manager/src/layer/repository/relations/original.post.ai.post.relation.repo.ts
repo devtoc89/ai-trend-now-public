@@ -15,13 +15,13 @@ class _select {
               select: {
                 source: true,
                 category: true,
+                url: true,
               },
             },
             originalPostSource: {
               select: {
                 title: true,
                 content: true,
-                url: true,
               },
             },
           },

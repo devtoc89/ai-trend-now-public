@@ -1,7 +1,7 @@
 import { createId } from "@paralleldrive/cuid2";
-import type { AiPost, OriginalPostMeta, OriginalPostSource } from "@prisma/client/manager/index.js";
 import type { PostBase, PostDetail, PostMeta, Prisma as UserPrisma } from "@prisma/client/user/index.js";
-import type { JsonObject } from "@prisma/client/user/runtime/library.js";
+import type { PostCategoryEnum } from "@repo/types/enums/post.category.enum";
+import type { AiContentExt } from "@repo/types/model/ai.model";
 import { getCurrentTimeISOString } from "@repo/util/date/date.util";
 
 export type RetrievePostList = Array<
@@ -39,50 +39,33 @@ class _select {
 }
 
 class _insert {
-  public static create(
+  public static createByAiContent(
     tx: UserPrisma.TransactionClient,
     id: string,
-    aiPost: Pick<AiPost, "id" | "title" | "content" | "summary" | "category" | "insights" | "metadata"> & {
-      originalPostAndAiPostRelation: {
-        originalPostBase: {
-          originalPostSource: Pick<OriginalPostSource, "title" | "content" | "url">;
-          originalPostMeta: Pick<OriginalPostMeta, "source" | "category">;
-        };
-      }[];
-    },
+    aiPostId: string,
+    aiContent: AiContentExt,
+    category: PostCategoryEnum,
   ) {
     const createdAt = getCurrentTimeISOString();
-    // const metadata = aiPost.metadata as unknown as ManagerPrisma.JsonObject;
     return tx.postBase.create({
       data: {
         id,
         createdAt,
-        aiPostId: aiPost.id,
+        aiPostId,
         postDetail: {
           create: {
             id: createId(),
-            title: aiPost.title,
-            content: aiPost.content,
-            summary: aiPost.summary,
+            title: aiContent.title,
+            content: aiContent.content,
+            summary: aiContent.summary,
             createdAt,
           },
         },
         postMeta: {
           create: {
             id: createId(),
-            category: aiPost.category,
-            metadata: {
-              insights: JSON.parse(aiPost.insights),
-              keywords: ((aiPost?.metadata as JsonObject | null)?.keywords as Array<string>) ?? [],
-              imageUrl: "", // 뭔가 이미지 url
-              references: aiPost.originalPostAndAiPostRelation.map((v) => ({
-                title: v.originalPostBase.originalPostSource.title ?? "",
-                content: v.originalPostBase.originalPostSource.content ?? "",
-                source: v.originalPostBase.originalPostMeta.source ?? "",
-                category: v.originalPostBase.originalPostMeta.category ?? "",
-                url: v.originalPostBase.originalPostSource.url ?? "",
-              })),
-            },
+            category,
+            metadata: aiContent.metadata,
             createdAt,
           },
         },

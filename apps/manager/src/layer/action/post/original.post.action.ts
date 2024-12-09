@@ -24,9 +24,9 @@ export async function getNewPostListAction({ page }: { page: number }): Promise<
     source: post.originalPostMeta?.source || "",
     title: post.originalPostSource?.title || "",
     content: post.originalPostSource?.content || "",
-    orgCreateAt: dateFormat({ value: post.originalPostSource?.orgCreatedAt }),
+    orgCreateAt: dateFormat({ value: post.originalPostMeta?.orgCreatedAt }),
     createdAt: dateFormat({ value: post.originalPostSource?.createdAt }),
-    url: post.originalPostSource?.url || "",
+    url: post.originalPostMeta?.url || "",
     isSelected: !!post.originalPostStatus?.selectedFlg,
   }));
 }
@@ -43,9 +43,9 @@ export async function getSelectedPostListAction({ page }: { page: number }): Pro
     source: post.originalPostMeta?.source || "",
     title: post.originalPostSource?.title || "",
     content: post.originalPostSource?.content || "",
-    orgCreateAt: dateFormat({ value: post?.originalPostSource?.orgCreatedAt }),
+    orgCreateAt: dateFormat({ value: post?.originalPostMeta?.orgCreatedAt }),
     createdAt: dateFormat({ value: post?.originalPostSource?.createdAt }),
-    url: post.originalPostSource?.url || "",
+    url: post.originalPostMeta?.url || "",
   }));
 }
 
