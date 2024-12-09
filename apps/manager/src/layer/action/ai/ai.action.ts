@@ -4,12 +4,13 @@ import type { RetrieveAiItem } from "#layer/repository/ai-post/ai.post.repo";
 import { retrieveAiPostItem, retrieveAiPostList } from "#layer/service/ai-post/ai.post.service";
 import { generateAiAutoPost, generateAiPost } from "#layer/service/ai/ai.service";
 import type { AiPostListGridItem } from "#types/viewModel/AiPostListGridItem";
+import type { AiContentMeta } from "@repo/types/model/ai.model";
 import { dateFormat } from "@repo/util/date/date.util";
 
 function aiPostToViewItem(post: RetrieveAiItem) {
   return {
     id: post.id,
-    insights: post.insights,
+    insights: (post.metadata as AiContentMeta)?.insights,
     title: post.title,
     content: post.content,
     createdAt: dateFormat({ value: post.createdAt }),
