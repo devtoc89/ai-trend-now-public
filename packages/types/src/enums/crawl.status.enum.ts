@@ -4,8 +4,3 @@ export enum CrawlStatusEnum {
   COMPLETED = "completed",
   FAILED = "failed",
 }
-
-export enum PostCategoryEnum {
-  PAPER = "paper",
-  NEWS = "news",
-}
