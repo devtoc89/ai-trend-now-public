@@ -5,9 +5,13 @@
     "prebuild": "turbo prebuild",
     "build": "turbo build",
     "dev": "turbo dev",
+    "dev-watch": "turbo dev-watch",
     "lint": "turbo lint",
+    "start": "turbo start",
     "format-and-lint": "biome check .",
-    "format-and-lint:fix": "biome check . --write"
+    "format-and-lint:fix": "biome check . --write",
+    "dev-story": "turbo dev-story",
+    "build-story": "turbo build-story"
   },
   "devDependencies": {
     "@biomejs/biome": "1.9.4",
