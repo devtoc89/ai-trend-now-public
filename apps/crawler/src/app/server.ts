@@ -1,10 +1,11 @@
-import { logger } from "#lib/instance/logger/pino.instance";
 import { registerRoutes } from "#routes/register";
 import fastifySwagger from "@fastify/swagger";
 import fastifySwaggerUi from "@fastify/swagger-ui";
 import type { TypeBoxTypeProvider } from "@fastify/type-provider-typebox";
+import { prettyConfig } from "@repo/util/logger/pino.instance";
 import Fastify, { type FastifyInstance } from "fastify";
 
+const isDev = process.env.NODE_ENV !== "production";
 /**
  * Creates a new Fastify server instance with the logger and TypeBox type provider.
  *
@@ -12,9 +13,15 @@ import Fastify, { type FastifyInstance } from "fastify";
  */
 function createFastifyInstance(): FastifyInstance {
   const server = Fastify({
-    logger: true,
+    logger: isDev
+      ? {
+          transport: {
+            target: "pino-pretty",
+            options: prettyConfig,
+          },
+        }
+      : true, // 프로덕션에서는 기본 JSON 로깅 사용
   }).withTypeProvider<TypeBoxTypeProvider>();
-  server.log = logger.child({ name: "fastify" });
   return server;
 }
 
