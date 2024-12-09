@@ -1,6 +1,6 @@
 "use server";
 
-import type { PostListViewList } from "#layer/domain/post/post.action";
+import type { PostListViewList } from "#layer/action/post.action";
 import PostListPageList from "#layer/ui/pages/PostListPage/(server)/PostListPageList";
 import PostPagePagination from "#layer/ui/pages/PostListPage/(server)/PostListPagePagination";
 

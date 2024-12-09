@@ -1,6 +1,6 @@
 "use server";
 
-import type { PostListViewList } from "#layer/domain/post/post.action";
+import type { PostListViewList } from "#layer/action/post.action";
 import TimeAgo from "#layer/ui/components/common/(client)/TimeAgo/TimeAgo";
 import Markdown from "#layer/ui/components/common/(server)/Markdown/Markdown";
 import Image from "next/image";
