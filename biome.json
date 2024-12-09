@@ -27,7 +27,8 @@
         "noBannedTypes": "error",
         "noUselessThisAlias": "error",
         "noUselessTypeConstraint": "error",
-        "useArrowFunction": "off"
+        "useArrowFunction": "off",
+        "noStaticOnlyClass": "off"
       },
       "nursery": {
         "useConsistentCurlyBraces": "error"
