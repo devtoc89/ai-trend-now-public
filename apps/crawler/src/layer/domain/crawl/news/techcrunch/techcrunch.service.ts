@@ -9,7 +9,7 @@ import type {
   CreateManyOriginalPostListItemDTO,
 } from "@repo/types/dto/crawl/common/common.crawl.dto";
 import type { ResponseTypeDTO } from "@repo/types/dto/response/response.dto";
-import { PostCategoryEnum } from "@repo/types/enums/crawlStatus.enum";
+import { PostCategoryEnum } from "@repo/types/enums/post.category.enum";
 
 type TechCrunchListItem = {
   title: string;

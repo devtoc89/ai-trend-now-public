@@ -1,6 +1,6 @@
 import { getPrismaClient } from "#lib/instance/prisma/prisma.instance";
 import type { Prisma, PrismaClient } from "@prisma/client/manager/index.js";
-import { CrawlStatusEnum } from "@repo/types/enums/crawlStatus.enum";
+import { CrawlStatusEnum } from "@repo/types/enums/crawl.status.enum";
 import { getElapsedTime } from "@repo/util/date/date.util";
 
 type Params = {

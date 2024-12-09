@@ -14,7 +14,7 @@ import type {
   CreateManyOriginalPostListItemDTO,
 } from "@repo/types/dto/crawl/common/common.crawl.dto";
 import type { ResponseTypeDTO } from "@repo/types/dto/response/response.dto";
-import { PostCategoryEnum } from "@repo/types/enums/crawlStatus.enum";
+import { PostCategoryEnum } from "@repo/types/enums/post.category.enum";
 
 const etcKey: Array<keyof CrawlArxivParsedEntryDTO> = ["author", "arxiv:primary_category", "arxiv:comment"];
 
@@ -30,8 +30,8 @@ export async function fetchAndParseArxivData(
 ): Promise<ResponseTypeDTO<CrawlArxivParsedDTO>> {
   return await serviceWrapper(fetchAndParseArxivData.name, async () => {
     const response = await fetchArxiv(searchParam);
-    if (!response) throw new Error("No response from API");
-    return arxivClientResponseParser(response);
+    if (!response.success || !response.data) throw new Error("No response from API");
+    return arxivClientResponseParser(response.data);
   });
 }
 
@@ -69,13 +69,11 @@ export async function getArxivCrawlData(
         content: v.summary,
         orgCreatedAt: v.published,
         orgUpdatedAt: v.updated,
-        etc: JSON.stringify(
-          etcKey.reduce<Partial<CrawlArxivParsedEntryDTO>>((pv, cv) => {
-            // biome-ignore lint/suspicious/noExplicitAny: <explanation>
-            (pv as any)[cv] = v[cv];
-            return pv;
-          }, {}),
-        ),
+        etc: etcKey.reduce<Partial<CrawlArxivParsedEntryDTO>>((pv, cv) => {
+          // biome-ignore lint/suspicious/noExplicitAny: <explanation>
+          (pv as any)[cv] = v[cv];
+          return pv;
+        }, {}),
       })),
     };
   });
