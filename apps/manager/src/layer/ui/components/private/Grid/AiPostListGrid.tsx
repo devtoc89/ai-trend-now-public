@@ -46,8 +46,8 @@ const content: GridOptions<AiPostListGridItem>["content"] = {
   insights: {
     render: ({ value }) => (
       <div className="px-2 py-1">
-        <p className="break-all w-full line-clamp-2" title={value}>
-          {value}
+        <p className="break-all w-full line-clamp-2" title={value?.join(", ")}>
+          {value?.join(", ")}
         </p>
       </div>
     ),
