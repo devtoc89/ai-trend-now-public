@@ -11,6 +11,7 @@ datasource db {
 model PostMeta {
   id        String   @id @default(cuid()) @db.VarChar(25)
   postId    String   @unique @db.VarChar(25)
+  category  String   @default("column")
   metadata  Json?
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
@@ -18,6 +19,7 @@ model PostMeta {
   postBase PostBase @relation(fields: [postId], references: [id], onDelete: Cascade)
 
   @@index([postId])
+  @@index([category])
 }
 
 model PostDetail {
