@@ -9,9 +9,14 @@ const nextConfig: NextConfig = {
   // },
   // reactStrictMode: false,
   /* config options here */
+  // serverRuntimeConfig: {},
   eslint: {
     ignoreDuringBuilds: true,
   },
+  transpilePackages: ['next-mdx-remote'],
 };
 
-export default nextConfig;
+
+
+
+export default nextConfig

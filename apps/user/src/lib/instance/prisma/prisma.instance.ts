@@ -1,10 +1,10 @@
-import { logger } from "@repo/util/logger/pino.instance";
-import { type Prisma, PrismaClient } from "@prisma/client/user/index.js";
+import { type Prisma, PrismaClient } from "@prisma/client/user/edge.js";
+// import { logger } from "@repo/util/logger/pino.instance";
 
 let globalPrisma = makePrismaClient();
 
 function makePrismaClient() {
-  logger.debug("prisma client instance created");
+  console.debug("prisma client instance created");
   const client = new PrismaClient({
     // biome-ignore lint/suspicious/noExplicitAny: <explanation>
     log: ["query", "info", "warn", "error"] as any, // 필요 시 로깅 옵션 추가

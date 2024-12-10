@@ -1,20 +1,11 @@
-"use server";
-
 import { cn } from "@repo/util/style/tailwind.util";
-import ReactMarkdown from "react-markdown";
-import rehypeRaw from "rehype-raw";
-import remarkGfm from "remark-gfm";
-function Markdown({ children, className }: { children: string; className?: string }) {
-  return (
-    <ReactMarkdown
-      remarkPlugins={[remarkGfm]}
-      rehypePlugins={[rehypeRaw]}
-      remarkRehypeOptions={{ passThrough: ["link"] }}
-      className={cn("markdown-container", className)}
-    >
-      {children}
-    </ReactMarkdown>
-  );
+import { marked } from "marked";
+import xss from "xss";
+
+async function Markdown({ children, className }: { children: string; className?: string }) {
+  const __html = xss(await marked(children)); // XSS 방지
+  // biome-ignore lint/security/noDangerouslySetInnerHtml: <explanation>
+  return <div className={cn("markdown-container", className)} dangerouslySetInnerHTML={{ __html }} />;
 }
 
 export default Markdown;

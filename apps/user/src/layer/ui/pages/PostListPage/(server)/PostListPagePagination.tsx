@@ -45,8 +45,9 @@ function PostPagePagination({
       <PaginationContent>
         <PaginationItem>
           <PaginationPrevious
-            href={currentPage === prevPage ? "#" : `${urlPath}/page/${prevPage + 1}`}
+            href={currentPage === prevPage ? "#" : `${urlPath}page/${prevPage + 1}`}
             size="default"
+            prefetch
             aria-disabled={currentPage === prevPage}
             className={cn(currentPage === prevPage && "pointer-events-none")}
           />
@@ -54,9 +55,10 @@ function PostPagePagination({
         {pageNavList.map((page) => (
           <PaginationItem key={page}>
             <PaginationLink
-              href={`${urlPath}/page/${page + 1}`}
+              href={`${urlPath}page/${page + 1}`}
               isActive={page === currentPage}
               size="default"
+              prefetch
               aria-disabled={currentPage === page}
               className={cn(currentPage === page && "pointer-events-none")}
             >
@@ -66,8 +68,9 @@ function PostPagePagination({
         ))}
         <PaginationItem>
           <PaginationNext
-            href={currentPage === nextPage ? "#" : `${urlPath}/page/${nextPage + 1}`}
+            href={currentPage === nextPage ? "#" : `${urlPath}page/${nextPage + 1}`}
             size="default"
+            prefetch
             aria-disabled={currentPage === nextPage}
             className={cn(currentPage === nextPage && "pointer-events-none")}
           />

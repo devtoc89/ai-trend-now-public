@@ -5,6 +5,9 @@ import type { Metadata } from "next";
 
 export const revalidate = 3600;
 export const dynamicParams = true;
+export const runtime = "edge";
+
+
 
 async function page({
   params,

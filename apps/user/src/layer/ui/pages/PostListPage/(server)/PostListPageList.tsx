@@ -13,7 +13,6 @@ function PostListPageList({ list, urlPath }: { list: PostListViewList[]; urlPath
         <Link
           key={post.id}
           href={`${urlPath}${post.id}`}
-          prefetch
           className="border border-gray-200 rounded-md whitespace-pre-wrap w-full shadow-lg overflow-hidden dark:bg-slate-800 dark:border-gray-700 dark:text-white"
         >
           <div className="flex flex-col md:flex-row md:h-[13rem]">

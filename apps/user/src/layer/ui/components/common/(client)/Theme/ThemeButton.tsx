@@ -15,12 +15,14 @@ function ThemeButton() {
   }, []);
 
   useEffect(() => {
-    const elBody = document.getElementsByTagName("body")[0];
-    if (elBody) {
-      if (dark) {
-        elBody.classList.add("dark");
-      } else {
-        elBody.classList.remove("dark");
+    if (typeof document !== "undefined") {
+      const elBody = document.getElementsByTagName("body")[0];
+      if (elBody) {
+        if (dark) {
+          elBody.classList.add("dark");
+        } else {
+          elBody.classList.remove("dark");
+        }
       }
     }
   }, [dark]);
