@@ -24,15 +24,15 @@ function PostListPageList({ list, urlPath }: { list: PostListViewList[]; urlPath
                 <div className="flex flex-row items-baseline gap-4">
                   <div className="flex-1  pb-2 md:pb-0 flex flex-row gap-2">
                     <div className="flex-1">
-                      <Markdown>{post.title}</Markdown>
+                      <Markdown className="whitespace-nowrap">{post.title}</Markdown>
                     </div>
                   </div>
                   <div className="w-fit">
                     <TimeAgo>{post.createdAt}</TimeAgo>
                   </div>
                 </div>
-                <div className=" pb-4 md:pb-0">
-                  <Markdown>{post.summary}</Markdown>
+                <div className="pb-4 md:pb-0">
+                  <Markdown className="whitespace-nowrap">{post.summary}</Markdown>
                 </div>
               </div>
               <div

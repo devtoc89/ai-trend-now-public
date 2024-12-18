@@ -1,16 +1,11 @@
 "use client";
 
 import { PAPER_PAGE_URL, PAPER_ROOT_URL } from "#consts/global";
-import { usePathname } from "next/navigation";
 
-import {
-  NavigationMenu,
-  NavigationMenuItem,
-  NavigationMenuList,
-  navigationMenuTriggerStyle,
-} from "@repo/ui/components/ui/navigation-menu";
+import { NavigationMenu, NavigationMenuItem, NavigationMenuList } from "@repo/ui/components/ui/navigation-menu";
 import { cn } from "@repo/util/style/tailwind.util";
-import Link from "next/link";
+import { usePathname } from "next/navigation";
+import { useState } from "react";
 
 const components: { title: string; href: string; isActivate: (url: string) => boolean }[] = [
   // {
@@ -27,28 +22,16 @@ const components: { title: string; href: string; isActivate: (url: string) => bo
 
 function NavMenu() {
   const path = usePathname();
+  const [comp] = useState(components.find((comp) => comp.isActivate(path)));
 
   return (
-    <NavigationMenu className="text-gray-800">
+    <NavigationMenu>
       <NavigationMenuList>
-        {components.map((comp) => {
-          const isActivated = comp.isActivate(path);
-          return (
-            <NavigationMenuItem key={comp.href}>
-              <Link
-                href={comp.href}
-                aria-disabled={isActivated}
-                className={cn(
-                  isActivated && "pointer-events-none ",
-                  navigationMenuTriggerStyle(),
-                  "bg-transparent dark:text-white",
-                )}
-              >
-                <p className={cn(isActivated && "pointer-events-none font-extrabold text-base")}>{comp.title}</p>
-              </Link>
-            </NavigationMenuItem>
-          );
-        })}
+        {comp && (
+          <NavigationMenuItem key={comp.href}>
+            <span className={cn("font-extrabold text-base")}>{comp.title}</span>
+          </NavigationMenuItem>
+        )}
       </NavigationMenuList>
     </NavigationMenu>
   );
