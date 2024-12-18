@@ -4,7 +4,11 @@
   "private": true,
   "imports": {
     "#*": {
-      "import": ["./src/*", "./src/*.ts", "./src/*.tsx"]
+      "import": [
+        "./src/*",
+        "./src/*.ts",
+        "./src/*.tsx"
+      ]
     }
   },
   "scripts": {
@@ -17,7 +21,7 @@
     "remove-build": "rimraf .next",
     "pages:build": "pnpm next-on-pages",
     "preview": "pnpm pages:build && wrangler pages dev",
-    "deploy-cloud": "pnpm pages:build && wrangler pages deploy",
+    "deploy-cloud": "rimraf .next && pnpm pages:build && wrangler pages deploy",
     "cf-typegen": "wrangler types --env-interface CloudflareEnv env.d.ts"
   },
   "dependencies": {
