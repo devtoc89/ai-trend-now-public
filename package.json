@@ -15,9 +15,9 @@
   },
   "devDependencies": {
     "@biomejs/biome": "1.9.4",
-    "turbo": "^2.2.3",
-    "typescript": "catalog:",
-    "rimraf": "catalog:"
+    "rimraf": "catalog:",
+    "turbo": "^2.3.3",
+    "typescript": "catalog:"
   },
   "packageManager": "pnpm@8.15.6",
   "engines": {
