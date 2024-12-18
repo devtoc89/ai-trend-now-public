@@ -1,15 +1,9 @@
 "use server";
 
-import {
-  Pagination,
-  PaginationContent,
-  PaginationItem,
-  PaginationLink,
-  PaginationNext,
-  PaginationPrevious,
-} from "@repo/ui/components/ui/pagination";
+import { Pagination, PaginationContent, PaginationItem, PaginationLink } from "@repo/ui/components/ui/pagination";
 import { cn } from "@repo/util/style/tailwind.util";
 import { range } from "es-toolkit";
+import { ChevronLeft, ChevronRight } from "lucide-react";
 
 function PostPagePagination({
   currentCursor,
@@ -42,15 +36,17 @@ function PostPagePagination({
 
   return (
     <Pagination className="h-full w-full">
-      <PaginationContent>
+      <PaginationContent className="justify-between w-full">
         <PaginationItem>
-          <PaginationPrevious
+          <PaginationLink
             href={currentPage === prevPage ? "#" : `${urlPath}page/${prevPage + 1}`}
             size="default"
             prefetch
             aria-disabled={currentPage === prevPage}
-            className={cn(currentPage === prevPage && "pointer-events-none")}
-          />
+            className={cn(currentPage === prevPage && "pointer-events-none", "p-0 px-2")}
+          >
+            <ChevronLeft className="h-4 w-4" />
+          </PaginationLink>
         </PaginationItem>
         {pageNavList.map((page) => (
           <PaginationItem key={page}>
@@ -60,20 +56,22 @@ function PostPagePagination({
               size="default"
               prefetch
               aria-disabled={currentPage === page}
-              className={cn(currentPage === page && "pointer-events-none")}
+              className={cn(currentPage === page && "pointer-events-none", "p-0 px-2")}
             >
               {page + 1}
             </PaginationLink>
           </PaginationItem>
         ))}
         <PaginationItem>
-          <PaginationNext
+          <PaginationLink
             href={currentPage === nextPage ? "#" : `${urlPath}page/${nextPage + 1}`}
             size="default"
             prefetch
             aria-disabled={currentPage === nextPage}
-            className={cn(currentPage === nextPage && "pointer-events-none")}
-          />
+            className={cn(currentPage === nextPage && "pointer-events-none", "p-0 px-2")}
+          >
+            <ChevronRight className="h-4 w-4" />
+          </PaginationLink>
         </PaginationItem>
       </PaginationContent>
     </Pagination>
