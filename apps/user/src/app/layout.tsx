@@ -1,4 +1,4 @@
-import "@repo/ui/globals.css";
+// import "@repo/ui/globals.css";
 import "./globals.css";
 
 import RootLayer from "#layer/ui/layouts/root/RootLayer";
