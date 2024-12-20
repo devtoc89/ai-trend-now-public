@@ -57,9 +57,8 @@ function PostDetailPageContent({ post }: { post: PostItemViewItem }) {
               src={NoImageSrc}
               width={1024}
               height={1024}
-              alt="Image"
-              objectFit="cover"
-              style={{ width: "100%" }}
+              alt="related iamge"
+              style={{ width: "100%", objectFit: "cover" }}
             />
           </div>
           <Markdown>{post.content}</Markdown>

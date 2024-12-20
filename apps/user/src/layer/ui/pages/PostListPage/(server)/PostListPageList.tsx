@@ -22,9 +22,8 @@ function PostListPageList({ list, urlPath }: { list: PostListViewList[]; urlPath
                 src={NoImageSrc}
                 width={13 * 16}
                 height={13 * 16}
-                alt="Image"
-                objectFit="cover"
-                style={{ width: "100%" }}
+                alt="related iamge"
+                style={{ width: "100%", objectFit: "cover" }}
               />
             </div>
             <div className="flex-1  px-6  relative">
