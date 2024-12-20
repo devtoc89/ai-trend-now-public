@@ -5,6 +5,7 @@ import TimeAgo from "#layer/ui/components/common/(client)/TimeAgo/TimeAgo";
 import Markdown from "#layer/ui/components/common/(server)/Markdown/Markdown";
 import Image from "next/image";
 import Link from "next/link";
+import NoImageSrc from "public/no_image.webp";
 
 function PostListPageList({ list, urlPath }: { list: PostListViewList[]; urlPath: string }) {
   return (
@@ -17,7 +18,14 @@ function PostListPageList({ list, urlPath }: { list: PostListViewList[]; urlPath
         >
           <div className="flex flex-col md:flex-row md:h-[13rem]">
             <div className="md:w-[13rem] flex justify-center items-center">
-              <Image src="/no_image.png" width={13 * 16} height={13 * 16} alt="Image" className="object-cover w-full" />
+              <Image
+                src={NoImageSrc}
+                width={13 * 16}
+                height={13 * 16}
+                alt="Image"
+                objectFit="cover"
+                style={{ width: "100%" }}
+              />
             </div>
             <div className="flex-1  px-6  relative">
               <div className=" overflow-hidden ">

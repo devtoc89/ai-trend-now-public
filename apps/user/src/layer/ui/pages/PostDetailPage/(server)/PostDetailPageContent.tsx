@@ -7,6 +7,7 @@ import TimeAgo from "#layer/ui/components/common/(client)/TimeAgo/TimeAgo";
 import Markdown from "#layer/ui/components/common/(server)/Markdown/Markdown";
 import type { AiContentReference } from "@repo/types/model/ai.model";
 import Image from "next/image";
+import NoImageSrc from "public/no_image.webp";
 
 function ReferenceItem({ item }: { item: AiContentReference }) {
   return (
@@ -51,13 +52,14 @@ function PostDetailPageContent({ post }: { post: PostItemViewItem }) {
           </div>
           <br />
           <Markdown>{post.summary}</Markdown>
-          <div className="w-full">
+          <div className="w-full max-h-80  rounded-lg overflow-hidden my-2 flex justify-center items-center">
             <Image
-              src="/no_image.png"
+              src={NoImageSrc}
               width={1024}
               height={1024}
               alt="Image"
-              className="object-cover rounded-lg w-full max-h-80"
+              objectFit="cover"
+              style={{ width: "100%" }}
             />
           </div>
           <Markdown>{post.content}</Markdown>
@@ -68,7 +70,7 @@ function PostDetailPageContent({ post }: { post: PostItemViewItem }) {
           </div>
           <br />
           <div className="">
-            <h3>Reference</h3>
+            <p className="font-semibold">Reference</p>
             {post.metadata?.references.map((v) => (
               <ReferenceItem item={v} key={v.url} />
             ))}
@@ -76,7 +78,9 @@ function PostDetailPageContent({ post }: { post: PostItemViewItem }) {
         </div>
       </div>
       <div className="flex flex-row justify-end">
+        {/* <div className="fixed bottom-0 right-0"> */}
         <PageBackButton variant="ghost" />
+        {/* </div> */}
       </div>
     </div>
   );
