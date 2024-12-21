@@ -41,3 +41,5 @@ yarn-error.log*
 apps/ai-test
 apps/ai-trend-news-prototype
 packages/next-server-util
+
+apps/user/wrangler.toml
