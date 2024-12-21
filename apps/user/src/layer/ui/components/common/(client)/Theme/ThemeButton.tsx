@@ -31,18 +31,10 @@ function ThemeButton() {
   }, []);
 
   return (
-    // <div className="rounded-md border bg-background ">
-    <Button
-      variant="outline"
-      size="icon"
-      onClick={handleOnClick}
-      className="border-inherit"
-      // className={cn(dark ? "text-white bg-slate-900 hover:bg-black" : "text-inherit bg-gray-100 hover:bg-white")}
-    >
+    <Button variant="outline" size="icon" onClick={handleOnClick} className="border-inherit" title="ThemeChangeButton">
       <Sun className="h-[1.2rem] w-[1.2rem] rotate-0 scale-100 transition-all dark:-rotate-90 dark:scale-0" />
       <Moon className="absolute h-[1.2rem] w-[1.2rem] rotate-90 scale-0 transition-all dark:rotate-0 dark:scale-100" />
     </Button>
-    // </div>
   );
 }
 
