@@ -1,7 +1,7 @@
 import JSON5 from "json5";
 
 function removeOutsideCurlyBraces(text: string) {
-  const startPos = text.lastIndexOf("{");
+  const startPos = text.indexOf("{");
   const endPost = text.lastIndexOf("}");
   if (startPos < 0 || endPost < 0) throw new Error("Malformed JSON");
 
