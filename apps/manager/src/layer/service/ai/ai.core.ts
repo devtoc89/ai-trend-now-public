@@ -1,22 +1,3 @@
-// import { ChatGroq } from "@langchain/groq";
-// const model = new ChatGroq({
-//   model: process.env.GROQ_TARGET_MODEL,
-//   temperature: 0,
-//   maxTokens: undefined,
-//   maxRetries: 2,
-//   // other params...
-// });
-
-// import { OpenAI } from "@langchain/openai";
-// const model = new OpenAI({
-//   model: "gemini-1.5-flash",
-//   apiKey: process.env.GEMINI_API_KEY, // Replace with your OpenAI API key
-//   configuration: {
-//     apiKey: process.env.GEMINI_API_KEY,
-//     baseURL: "https://generativelanguage.googleapis.com/v1beta/openai/",
-//   },
-// });
-
 import { ChatGoogleGenerativeAI } from "@langchain/google-genai";
 import { MessagesAnnotation, StateGraph } from "@langchain/langgraph";
 import * as hub from "langchain/hub";
@@ -71,11 +52,11 @@ export async function postUserMessageToAI({
     const prompt = await promptTemplate.invoke({ question: userMessage });
     const res = await app.invoke(prompt);
     const messages = res.messages;
-    const lastMessage = messages[messages.length - 1]?.content
-    if(lastMessage && !Array.isArray(lastMessage)) {
+    const lastMessage = messages[messages.length - 1]?.content;
+    if (lastMessage && !Array.isArray(lastMessage)) {
       return lastMessage;
     }
-    throw new Error("created ai content has type mistake.")
+    throw new Error("created ai content has type mistake.");
   } catch (error) {
     console.error(error);
   }
