@@ -90,7 +90,13 @@ function InnerMenuGroup({ group }: { group: MenuGroup }) {
 function InnerMenuItem({ item }: { item: MenuItem }) {
   return (
     <MenubarItem disabled={item.disabled}>
-      {!item.disabled && item.href ? <Link href={item.href}>{item.label}</Link> : item.label}
+      {!item.disabled && item.href ? (
+        <Link href={item.href} className="w-full">
+          {item.label}
+        </Link>
+      ) : (
+        item.label
+      )}
     </MenubarItem>
   );
 }
