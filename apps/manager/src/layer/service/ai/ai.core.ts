@@ -71,7 +71,11 @@ export async function postUserMessageToAI({
     const prompt = await promptTemplate.invoke({ question: userMessage });
     const res = await app.invoke(prompt);
     const messages = res.messages;
-    return messages[messages.length - 1].content;
+    const lastMessage = messages[messages.length - 1]?.content
+    if(lastMessage && !Array.isArray(lastMessage)) {
+      return lastMessage;
+    }
+    throw new Error("created ai content has type mistake.")
   } catch (error) {
     console.error(error);
   }
