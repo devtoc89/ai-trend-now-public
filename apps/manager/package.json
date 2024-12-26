@@ -4,7 +4,11 @@
   "private": true,
   "imports": {
     "#*": {
-      "import": ["./src/*", "./src/*.ts", "./src/*.tsx"]
+      "import": [
+        "./src/*",
+        "./src/*.ts",
+        "./src/*.tsx"
+      ]
     }
   },
   "scripts": {
@@ -17,26 +21,37 @@
     "remove-build": "rimraf .next"
   },
   "dependencies": {
+    "@aws-sdk/client-cognito-identity-provider": "^3.716.0",
     "@langchain/community": "^0.3.14",
     "@langchain/core": "^0.3.18",
     "@langchain/google-genai": "^0.1.4",
     "@langchain/langgraph": "^0.2.20",
     "@paralleldrive/cuid2": "^2.2.2",
+    "@prisma/client": "catalog:",
     "@repo/ui": "workspace:*",
     "@repo/util": "workspace:*",
+    "@types/jsonwebtoken": "^9.0.7",
+    "@types/jwk-to-pem": "^2.0.3",
+    "amazon-cognito-identity-js": "^6.3.12",
+    "argon2": "^0.41.1",
     "cross-env": "^7.0.3",
+    "crypto-js": "^4.2.0",
     "es-toolkit": "^1.27.0",
+    "fast-sha256": "^1.3.0",
+    "ioredis": "^5.4.2",
+    "jsonwebtoken": "^9.0.2",
+    "jwk-to-pem": "^2.0.7",
     "langchain": "^0.3.5",
     "lucide-react": "^0.460.0",
     "next": "catalog:",
-    "pino": "^9.5.0",
     "react": "catalog:",
     "react-dom": "catalog:",
     "react-intersection-observer": "^9.13.1",
     "react-markdown": "^9.0.1",
     "react-toastify": "^10.0.6",
+    "server-only": "^0.0.1",
     "uuid": "catalog:",
-    "@prisma/client": "catalog:"
+    "zod": "^3.24.1"
   },
   "devDependencies": {
     "@biomejs/biome": "catalog:",
@@ -46,6 +61,7 @@
     "@testing-library/dom": "catalog:",
     "@testing-library/jest-dom": "catalog:",
     "@testing-library/react": "catalog:",
+    "@types/crypto-js": "^4.2.2",
     "@types/node": "catalog:",
     "@types/react": "catalog:",
     "@types/react-dom": "catalog:",

@@ -9,6 +9,19 @@ datasource db {
   directUrl = env("MANAGER_DIRECT_URL")
 }
 
+// TODO: DB 자원 획득 시, 이관 필요.
+model User {
+  sub            String   @id @db.VarChar(64)
+  name           String   @db.VarChar(200)
+  email          String   @unique @db.VarChar(200)
+  hashedPassword String   @db.VarChar(128)
+  confirmed      Boolean  @default(false)
+  createdAt      DateTime @default(now())
+  updatedAt      DateTime @updatedAt
+
+  @@index([email])
+}
+
 model OriginalPostAndAiPostRelation {
   id               String           @id @db.VarChar(25)
   aiPostId         String           @db.VarChar(25)

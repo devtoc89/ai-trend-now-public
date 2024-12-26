@@ -1,5 +1,7 @@
 "use server";
 
+import { dateFormat } from "@repo/util/date/date.util";
+import { doAuthInAction } from "#layer/action/auth/auth.action";
 import {
   retrieveNewPostList,
   retrieveSelectedPostList,
@@ -7,12 +9,12 @@ import {
 } from "#layer/service/original-post/original.post.service";
 import type { NewPostListGridItem } from "#types/viewModel/NewPostListGridItem";
 import type { SelectedPostListGridItem } from "#types/viewModel/SelectedPostListGridItem";
-import { dateFormat } from "@repo/util/date/date.util";
 
 //TODO: cache.
 //TODO: error handling in UI
 
 export async function getNewPostListAction({ page }: { page: number }): Promise<NewPostListGridItem[]> {
+  await doAuthInAction();
   const listRes = await retrieveNewPostList({ page });
   if (!listRes.success) {
     return [];
@@ -32,6 +34,7 @@ export async function getNewPostListAction({ page }: { page: number }): Promise<
 }
 
 export async function getSelectedPostListAction({ page }: { page: number }): Promise<SelectedPostListGridItem[]> {
+  await doAuthInAction();
   const listRes = await retrieveSelectedPostList({ page });
   if (!listRes.success) {
     return [];
@@ -50,5 +53,6 @@ export async function getSelectedPostListAction({ page }: { page: number }): Pro
 }
 
 export async function changeNewPostStatusAction(id: string, selectedFlg: boolean) {
+  await doAuthInAction();
   return await updatePostStatus({ id, selectedFlg });
 }

@@ -13,8 +13,8 @@
   "aliases": {
     "components": "src/components",
     "ui": "src/components/ui",
-    "utils": "s/lib/utils",
-    "lib": "s/lib",
+    "utils": "@repo/util/style/tailwind.util",
+    "lib": "@repo/util/style",
     "hooks": "src/hooks"
   },
   "iconLibrary": "lucide"
