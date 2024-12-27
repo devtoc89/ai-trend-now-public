@@ -1,81 +1,83 @@
-# Turborepo starter
+# AI Trend Platform
 
-This is an official starter Turborepo.
+AI 관련 뉴스와 논문을 수집, 가공하여 제공하는 모노레포 기반의 통합 플랫폼입니다.
 
-## Using this example
+## 주요 기능
+- AI 관련 컨텐츠 자동 수집 및 가공
+  - 논문 (Arxiv)
+- AI 기반 컨텐츠 생성
+- 사용자 웹 서비스
+- 관리자 시스템
 
-Run the following command:
+## 시스템 구성
 
-```sh
-npx create-turbo@latest
-```
+### Apps
 
-## What's inside?
+- **user**: 사용자용 웹 애플리케이션 (Next.js)
+- **manager**: 관리자 시스템 (Next.js)
+- **crawler**: 크롤링 서버 (Fastify)
+- **batch**: 배치 작업 서버 (Node.js)
+- **storybook**: UI 컴포넌트 문서화
 
-This Turborepo includes the following packages/apps:
+### Packages
 
-### Apps and Packages
+- **ui**: 공통 UI 컴포넌트 라이브러리
+- **util**: 공통 유틸리티
+- **types**: 공통 타입 정의
+- **prisma-manager**: 관리자 DB 스키마/클라이언트
+- **prisma-user**: 사용자 DB 스키마/클라이언트
+- **tailwind-config**: Tailwind CSS 공통 설정
+- **typescript-config**: TypeScript 공통 설정
 
-- `docs`: a [Next.js](https://nextjs.org/) app
-- `web`: another [Next.js](https://nextjs.org/) app
-- `@repo/ui`: a stub React component library shared by both `web` and `docs` applications
-- `@repo/eslint-config`: `eslint` configurations (includes `eslint-config-next` and `eslint-config-prettier`)
-- `@repo/typescript-config`: `tsconfig.json`s used throughout the monorepo
+## 기술 스택
 
-Each package/app is 100% [TypeScript](https://www.typescriptlang.org/).
+- **언어/런타임**: TypeScript, Node.js (>=18)
+- **프레임워크**: Next.js (App Router), Fastify, node-cron
+- **DB**: PostgreSQL, Redis
+- **ORM**: Prisma
+- **AI**: LangChain, Google Gemini
+- **스타일링**: Tailwind CSS, Shadcn UI
+- **패키지 관리**: pnpm workspace
+- **빌드 도구**: Turborepo
+- **테스트**: Jest
+- **로깅**: Pino
 
-### Utilities
+## 시작하기
 
-This Turborepo has some additional tools already setup for you:
+### 사전 요구사항
 
-- [TypeScript](https://www.typescriptlang.org/) for static type checking
-- [ESLint](https://eslint.org/) for code linting
-- [Prettier](https://prettier.io) for code formatting
+- Node.js >= 18
+- pnpm >= 8.15.6
+- PostgreSQL
+- Redis
 
-### Build
+### 설치
+# 의존성 설치
+pnpm install
 
-To build all apps and packages, run the following command:
-
-```
-cd my-turborepo
-pnpm build
-```
-
-### Develop
-
-To develop all apps and packages, run the following command:
-
-```
-cd my-turborepo
+# 전체 앱 개발 서버 실행
 pnpm dev
-```
 
-### Remote Caching
+# 특정 앱만 실행
+pnpm --filter user dev
+pnpm --filter manager dev
+pnpm --filter crawler dev
+pnpm --filter batch dev
 
-Turborepo can use a technique known as [Remote Caching](https://turbo.build/repo/docs/core-concepts/remote-caching) to share cache artifacts across machines, enabling you to share build caches with your team and CI/CD pipelines.
+자세한 스크립트 설정은 turbo.json 참고
 
-By default, Turborepo will cache locally. To enable Remote Caching you will need an account with Vercel. If you don't have an account you can [create one](https://vercel.com/signup), then enter the following commands:
-
-```
-cd my-turborepo
-npx turbo login
-```
-
-This will authenticate the Turborepo CLI with your [Vercel account](https://vercel.com/docs/concepts/personal-accounts/overview).
-
-Next, you can link your Turborepo to your Remote Cache by running the following command from the root of your Turborepo:
-
-```
-npx turbo link
-```
-
-## Useful Links
-
-Learn more about the power of Turborepo:
-
-- [Tasks](https://turbo.build/repo/docs/core-concepts/monorepos/running-tasks)
-- [Caching](https://turbo.build/repo/docs/core-concepts/caching)
-- [Remote Caching](https://turbo.build/repo/docs/core-concepts/remote-caching)
-- [Filtering](https://turbo.build/repo/docs/core-concepts/monorepos/filtering)
-- [Configuration Options](https://turbo.build/repo/docs/reference/configuration)
-- [CLI Usage](https://turbo.build/repo/docs/reference/command-line-reference)
+## 프로젝트 구조
+.
+├── apps/
+│ ├── user/ # 사용자 웹 앱
+│ ├── manager/ # 관리자 시스템
+│ ├── crawler/ # 크롤링 서버
+│ ├── batch/ # 배치 작업 서버
+│ └── storybook/ # UI 문서화
+├── packages/
+│ ├── ui/ # 공통 UI 컴포넌트
+│ ├── util/ # 공통 유틸리티
+│ ├── types/ # 공통 타입 정의
+│ ├── prisma-*/ # Prisma 설정
+│ └── *-config/ # 공통 설정
+└── package.json

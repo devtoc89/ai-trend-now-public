@@ -1,36 +1,74 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# User Application
 
-## Getting Started
+AI 관련 뉴스와 논문을 제공하는 Next.js 기반의 사용자 웹 애플리케이션입니다.
 
-First, run the development server:
+## 주요 기능
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
-```
+- AI 관련 컨텐츠 제공
+  - AI 논문 요약 및 해설
+  - AI 뉴스 및 트렌드
+  - AI 컬럼
+- 반응형 웹 디자인
+- 다크모드 지원
+- 마크다운 기반 컨텐츠 렌더링
+- SEO 최적화
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+## 기술 스택
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+- Node.js (>=18)
+- TypeScript
+- Next.js (App Router)
+- Prisma (DB ORM)
+- Tailwind CSS
+- Jest (테스팅)
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+## 시작하기
 
-## Learn More
+### 환경 설정
 
-To learn more about Next.js, take a look at the following resources:
+1. 필요한 환경 변수를 설정합니다:
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+env
+USER_DATABASE_URL="postgresql://username:password@localhost:5432/dbname"
+USER_PULSE_API_KEY="your_user_pulse_api_key"
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+### 설치 및 실행
+## 스크립트
 
-## Deploy on Vercel
+- `dev`: Turbopack을 사용한 개발 서버 실행 (포트: 3331)
+- `debug`: 디버그 모드로 개발 서버 실행
+- `build`: 프로덕션용 빌드
+- `start`: 프로덕션 서버 실행 (포트: 3331)
+- `lint`: 코드 린팅
+- `test`: Jest 테스트 실행
+- `remove-build`: 빌드 캐시 제거
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+## 배포
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+Cloudflare Pages를 통해 배포됩니다:
+- `pages:build`: Cloudflare Pages 빌드
+- `preview`: 로컬에서 Cloudflare Pages 프리뷰
+- `deploy-cloud`: Cloudflare Pages 배포
+
+## 주요 페이지
+- `/` - 메인 페이지
+- `/post/paper` - AI 논문 목록
+- `/post/paper/[id]` - AI 논문 상세
+- `/post/column` - AI 컬럼 목록
+- `/post/column/[id]` - AI 컬럼 상세
+
+## 프로젝트 구조
+src/
+├── app/ # Next.js 앱 라우터
+│ ├── (private)/ # 인증이 필요한 라우트
+│ └── (public)/ # 공개 라우트
+├── layer/ # 도메인 로직 및 UI 컴포넌트
+│ ├── action/ # 서버 액션
+│ ├── domain/ # 도메인 로직
+│ └── ui/ # UI 컴포넌트
+├── lib/ # 유틸리티 및 설정
+│ ├── handler/ # 에러 핸들러
+│ └── instance/ # Redis 등 인스턴스
+└── types/ # 타입 정의
+
+
