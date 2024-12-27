@@ -1,10 +1,10 @@
-import { CategoryPromptMap } from "#constants/categoryPromptMap";
-import { postUserMessageToAI } from "#layer/service/ai/ai.core";
 import type { OriginalPostMeta, OriginalPostSource } from "@prisma/client/manager/index.js";
 import type { JsonObject } from "@prisma/client/manager/runtime/library.js";
 import { PostCategoryEnum } from "@repo/types/enums/post.category.enum";
 import type { AiContent, AiContentExt } from "@repo/types/model/ai.model";
 import { parseAiJson } from "@repo/util/parser/ai-json.util";
+import { CategoryPromptMap } from "#constants/category.contant";
+import { postUserMessageToAI } from "#layer/service/ai/ai.core";
 
 export type OriginalPost = {
   originalPostMeta: Pick<OriginalPostMeta, "url" | "source" | "category" | "etc" | "orgCreatedAt" | "orgUpdatedAt">;
