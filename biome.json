@@ -36,7 +36,8 @@
       "correctness": {
         "noPrecisionLoss": "error",
         "noUnusedVariables": "error",
-        "useArrayLiterals": "off"
+        "useArrayLiterals": "off",
+        "noUnusedImports": "warn"
       },
       "style": { "noNamespace": "error", "useAsConstAssertion": "error" },
       "suspicious": {
@@ -50,6 +51,7 @@
   },
   "javascript": {
     "formatter": {
+      "enabled": true,
       "quoteStyle": "double"
     }
   }
