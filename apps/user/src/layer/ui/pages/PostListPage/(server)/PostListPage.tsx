@@ -1,9 +1,9 @@
+import { PostCategoryEnum } from "@repo/types/enums/post.category.enum";
 import { NEWS_PAGE_SIZE } from "#consts/global";
 import { getPostListAndCountActionCache } from "#layer/action/post.action";
+import NoValidUrl from "#layer/ui/components/common/(server)/InvalidUrl/InvalidUrl";
+import NoData from "#layer/ui/components/common/(server)/NoData/NoData";
 import PostListPageContent from "#layer/ui/pages/PostListPage/(server)/PostListPageContent";
-import { PostCategoryEnum } from "@repo/types/enums/post.category.enum";
-import NoValidUrl from "@repo/ui/components/ui/InvalidUrl";
-import NoData from "@repo/ui/components/ui/NoData";
 
 async function PostListPage({
   pageString,
