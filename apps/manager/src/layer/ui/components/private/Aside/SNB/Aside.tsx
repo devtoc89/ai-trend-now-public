@@ -1,5 +1,5 @@
 import Sidebar from "#layer/ui/components/private/Aside/SNB/SideBar/SideBar";
-import { GlobalLogo } from "@repo/ui/organisms";
+import GlobalLogo from "#layer/ui/components/public/Logo/GlobalLogo";
 
 function Aside() {
   return (
