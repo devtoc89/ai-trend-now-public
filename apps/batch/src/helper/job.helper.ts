@@ -11,7 +11,7 @@ async function jobWrapper(
     logger.info(`[RUN][${fn.name}] [${time}]`);
     logger.info(`[RES][${fn.name}] ${await fn(now)}`);
   } catch (e) {
-    logger.error(e);
+    logger.error((e as Error).message);
   } finally {
     logger.info(`[END][${fn.name}] [during: ${new Date().getTime() - startTime}ms]`);
   }
