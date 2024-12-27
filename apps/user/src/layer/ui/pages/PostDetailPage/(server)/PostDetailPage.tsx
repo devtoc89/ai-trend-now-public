@@ -1,6 +1,6 @@
 import { getPostItemActionCache } from "#layer/action/post.action";
+import NoData from "#layer/ui/components/common/(server)/NoData/NoData";
 import PostDetailPageContent from "#layer/ui/pages/PostDetailPage/(server)/PostDetailPageContent";
-import NoData from "@repo/ui/components/ui/NoData";
 
 async function PostDetailPage({ id }: { id: string }) {
   const post = await getPostItemActionCache(id);
