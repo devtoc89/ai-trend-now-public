@@ -10,7 +10,7 @@
   "scripts": {
     "dev": "next dev --turbopack -p 3331",
     "debug": "cross-env NODE_OPTIONS='--inspect' next dev",
-    "build": "next build",
+    "build-edge": "next build",
     "build-analyze": "ANALYZE=true next build",
     "start": "next start -p 3331",
     "lint": "next lint",
