@@ -1,6 +1,6 @@
 import type React from "react";
 
-async function NewPostLayout({ children }: { children: React.ReactNode }) {
+async function AiPostLayout({ children }: { children: React.ReactNode }) {
   return (
     <div className="w-full h-full flex">
       <div className="flex-1 flex flex-col">
@@ -14,4 +14,4 @@ async function NewPostLayout({ children }: { children: React.ReactNode }) {
   );
 }
 
-export default NewPostLayout;
+export default AiPostLayout;
