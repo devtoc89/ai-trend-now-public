@@ -1,5 +1,5 @@
 {
-  "extends": "@repo/typescript-config/packages.json",
+  "extends": "@repo/typescript-config/nodeserver.json",
   "compilerOptions": {
     "rootDir": ".",
     "outDir": "dist",
