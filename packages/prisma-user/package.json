@@ -6,7 +6,7 @@
     "pull": "prisma db pull",
     "generate": "prisma generate --no-engine",
     "studio": "prisma studio",
-    "prebuild": "prisma generate",
+    "prebuild": "prisma generate --no-engine",
     "remove-build": "rimraf ./node_modules/@prisma/client/user"
   },
   "dependencies": {
