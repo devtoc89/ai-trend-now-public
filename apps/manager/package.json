@@ -26,8 +26,6 @@
     "@prisma/client": "catalog:",
     "@repo/ui": "workspace:*",
     "@repo/util": "workspace:*",
-    "@types/jsonwebtoken": "^9.0.7",
-    "@types/jwk-to-pem": "^2.0.3",
     "argon2": "^0.41.1",
     "cross-env": "^7.0.3",
     "es-toolkit": "^1.27.0",
@@ -37,14 +35,14 @@
     "jwk-to-pem": "^2.0.7",
     "langchain": "^0.3.5",
     "lucide-react": "^0.460.0",
-    "next": "catalog:",
-    "react": "catalog:",
-    "react-dom": "catalog:",
     "react-markdown": "^9.0.1",
     "react-toastify": "^10.0.6",
     "server-only": "^0.0.1",
     "zod": "^3.24.1",
-    "styled-jsx": "5.1.6"
+    "next": "catalog:",
+    "react": "catalog:",
+    "react-dom": "catalog:",
+    "class-variance-authority": "catalog:"
   },
   "devDependencies": {
     "@biomejs/biome": "catalog:",
@@ -63,6 +61,8 @@
     "pino-pretty": "^13.0.0",
     "postcss": "catalog:",
     "tailwindcss": "catalog:",
-    "typescript": "catalog:"
+    "typescript": "catalog:",
+    "@types/jsonwebtoken": "^9.0.7",
+    "@types/jwk-to-pem": "^2.0.3"
   }
 }
