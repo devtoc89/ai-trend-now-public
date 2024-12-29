@@ -1,6 +1,4 @@
 import { registerRoutes } from "#routes/register";
-import fastifySwagger from "@fastify/swagger";
-import fastifySwaggerUi from "@fastify/swagger-ui";
 import type { TypeBoxTypeProvider } from "@fastify/type-provider-typebox";
 import { prettyConfig } from "@repo/util/logger/pino.instance";
 import Fastify, { type FastifyInstance } from "fastify";
@@ -32,7 +30,8 @@ function createFastifyInstance(): FastifyInstance {
  * @returns {Promise<void>} - A promise that resolves when the Swagger API documentation has been registered.
  */
 async function registerSwagger(server: FastifyInstance): Promise<void> {
-  await server.register(fastifySwagger, {
+  const fastifySwagger = await import("@fastify/swagger")
+  await server.register(fastifySwagger.default, {
     swagger: {
       info: {
         title: "API Documentation",
@@ -59,7 +58,8 @@ async function registerSwagger(server: FastifyInstance): Promise<void> {
  * @returns {Promise<void>} A promise that resolves when the server is ready.
  */
 async function registerSwaggerUi(server: FastifyInstance): Promise<void> {
-  await server.register(fastifySwaggerUi, {
+  const fastifySwaggerUi =  await import("@fastify/swagger-ui")
+  await server.register(fastifySwaggerUi.default, {
     routePrefix: "/documentation",
     uiConfig: {
       docExpansion: "full",
