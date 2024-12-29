@@ -30,3 +30,4 @@ catalog:
   "prisma": 6.0.1
   "lucide-react": 0.460.0
   "rimraf": 6.0.1
+  "dotenv": 16.4.7 

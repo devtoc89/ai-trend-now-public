@@ -5,12 +5,12 @@
     "prebuild": {
       "dependsOn": ["^prebuild"],
       "inputs": ["$TURBO_DEFAULT$", ".env*"],
-      "outputs": ["dist", "node_modules/@prisma/client/manager", "node_modules/@prisma/client/user"]
+      "outputs": ["dist/**", "node_modules/@prisma/client/manager", "node_modules/@prisma/client/user"]
     },
     "build": {
-      "dependsOn": ["^build"],
+      "dependsOn": ["^prebuild", "^build"],
       "inputs": ["$TURBO_DEFAULT$", ".env*"],
-      "outputs": [".next/**", "!.next/cache/**", "dist"]
+      "outputs": [".next/**", "!.next/cache/**", "dist/**"]
     },
     "lint": {
       "dependsOn": ["^lint"]
