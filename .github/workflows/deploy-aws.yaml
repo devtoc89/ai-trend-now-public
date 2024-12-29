@@ -71,7 +71,7 @@ jobs:
       - name: Build and push Docker image
         run: |
           IMAGE_URI="${{ secrets.ECR_REPOSITORY_URI }}/${{ env.SERVICE }}:latest"
-          docker build -t $IMAGE_URI ${{ env.SERVICE }}
+          docker build -t $IMAGE_URI ${{ env.SERVICE }} .
           docker push $IMAGE_URI
 
       # 6. ECS 서비스 업데이트
