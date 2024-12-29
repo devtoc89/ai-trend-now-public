@@ -41,6 +41,6 @@ jobs:
             USER_PULSE_API_KEY
           projectName: ai-trend-news  # Cloudflare Pages 프로젝트 이름
           directory: ./apps/user/.vercel/output/static  # 빌드된 정적 파일이 저장된 디렉토리
-        env: |
+        env:
           USER_DATABASE_URL: ${{ secrets.USER_DATABASE_URL }}
           USER_PULSE_API_KEY: ${{ secrets.USER_PULSE_API_KEY }}
