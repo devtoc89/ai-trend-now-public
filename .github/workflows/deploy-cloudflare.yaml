@@ -1,0 +1,38 @@
+name: Deploy to Cloudflare Pages
+
+on:
+  push:
+    branches:
+      - user/deploy  # main 브랜치에 푸시할 때 트리거
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v3
+        
+      # 2. pnpm 설치
+      - name: Setup pnpm
+        run: npm install -g pnpm
+          
+      # 3. 의존성 설치
+      - name: Install dependencies
+        run: pnpm install
+
+      # 4. 프리 빌드
+      - name: prebuild project
+        run: pnpm prebuild  # Pages에 배포할 정적 파일 생성
+
+      # 5. 프리 빌드
+      - name: prebuild project
+        run: pnpm -filter user pages:build  # Pages에 배포할 정적 파일 생성
+        
+      - name: Deploy to Cloudflare Pages
+        uses: cloudflare/wrangler-action@2
+        with:
+          apiToken: ${{ secrets.CLOUDFLARE_API_TOKEN }}
+          accountId: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
+          projectName: ai-trend-news  # Cloudflare Pages 프로젝트 이름
+          directory: ./apps/user/.vercel/output/static  # 빌드된 정적 파일이 저장된 디렉토리
