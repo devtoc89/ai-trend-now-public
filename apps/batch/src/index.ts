@@ -1,6 +1,4 @@
-if (process.env.NODE_ENV !== "production") {
-  require("dotenv").config();
-}
+require("dotenv").config();
 
 import { jobRegister } from "#helper/job.helper";
 import { arxivAiPostJob } from "#jobs/arxivAiPostJob";
