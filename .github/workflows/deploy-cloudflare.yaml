@@ -13,9 +13,18 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v3
         
+      # 2. pnpm 캐시 복원
+      - name: Restore pnpm cache
+        uses: actions/cache@v3
+        with:
+          path: ~/.pnpm-store
+          key: pnpm-${{ runner.os }}-${{ hashFiles('**/pnpm-lock.yaml') }}
+          restore-keys: |
+            pnpm-${{ runner.os }}-
+            
       # 2. pnpm 설치
       - name: Setup pnpm
-        run: npm install -g pnpm
+        run: npm install -g pnpm@9.15.2
           
       # 3. 의존성 설치
       - name: Install dependencies
@@ -28,6 +37,9 @@ jobs:
       # 5. 프리 빌드
       - name: build project
         run: pnpm -filter user pages:build  # Pages에 배포할 정적 파일 생성
+        
+      - name: add wrangler
+        run: pnpm add wrangler@3.90.0 -w
         
       - name: Deploy to Cloudflare Pages
         uses: cloudflare/wrangler-action@v3
