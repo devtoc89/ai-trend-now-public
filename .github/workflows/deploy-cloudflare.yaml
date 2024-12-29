@@ -19,13 +19,15 @@ jobs:
         uses: actions/cache@v3
         with:
           path: ~/.pnpm-store
-          key: pnpm-${{ runner.os }}-${{ hashFiles('**/pnpm-lock.yaml') }}
+          key: pnpm-${{ runner.os }}-${{ hashFiles('pnpm-lock.yaml') }}
           restore-keys: |
             pnpm-${{ runner.os }}-
-            
+
       # 3. pnpm 설치
       - name: Setup pnpm
-        run: npm install -g pnpm@9.15.2
+        run: |
+          npm install -g pnpm@9.15.2
+          pnpm config set store-dir ~/.pnpm-store
           
       # 4. 의존성 설치
       - name: Install dependencies
@@ -58,12 +60,12 @@ jobs:
           accountId: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
           packageManager: "pnpm" # change npm to yarn or pnpm
           environment: production
-          secrets: |
-            NODE_ENV
-            USER_DATABASE_URL
-            USER_PULSE_API_KEY
+          # secrets: |
+          #   NODE_ENV
+          #   USER_DATABASE_URL
+          #   USER_PULSE_API_KEY
           workingDirectory: ./apps/user/  # 빌드된 정적 파일이 저장된 디렉토리
-        env:
-          NODE_ENV: production
-          USER_DATABASE_URL: ${{ secrets.USER_DATABASE_URL }}
-          USER_PULSE_API_KEY: ${{ secrets.USER_PULSE_API_KEY }}
+        # env:
+        #   NODE_ENV: production
+        #   USER_DATABASE_URL: ${{ secrets.USER_DATABASE_URL }}
+        #   USER_PULSE_API_KEY: ${{ secrets.USER_PULSE_API_KEY }}
