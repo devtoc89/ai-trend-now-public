@@ -31,25 +31,23 @@
     "pino": "^9.5.0",
     "pino-pretty": "^13.0.0",
     "tsconfig-paths": "^4.2.0",
-    "yargs-parser": "21.1.1"
+    "yargs-parser": "21.1.1",
+    "@repo/util": "workspace:*",
+    "@repo/types": "workspace:*",
+    "dotenv": "catalog:"
   },
   "devDependencies": {
     "@fastify/swagger": "^9.3.0",
     "@fastify/swagger-ui": "^5.1.0",
-    "@repo/types": "workspace:*",
     "@repo/typescript-config": "workspace:*",
-    "@repo/util": "workspace:*",
     "@types/jest": "catalog:",
     "@types/node": "catalog:",
     "@types/yargs-parser": "^21.0.3",
-    "dotenv": "^16.4.5",
     "jest": "catalog:",
     "ts-jest": "catalog:",
     "ts-node": "catalog:",
     "ts-node-dev": "catalog:",
-    "typescript": "catalog:"
-  },
-  "peerDependencies": {
+    "typescript": "catalog:",
     "rimraf": "catalog:"
   }
 }
