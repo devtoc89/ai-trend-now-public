@@ -39,7 +39,7 @@ jobs:
         with:
           path: |
             ~/.pnpm-store
-          key: ${{ steps.cache-pnpm-restore.outputs.cache-primary-key }}
+          key: pnpm-${{ runner.os }}-${{ hashFiles('pnpm-lock.yaml') }}
 
       # 5. .env 파일 생성
       - name: Create .env file
@@ -68,13 +68,13 @@ jobs:
           accountId: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
           packageManager: "pnpm" # change npm to yarn or pnpm
           environment: production
-          secrets: |
-            NODE_ENV
-            USER_DATABASE_URL
-            USER_PULSE_API_KEY
+          # secrets: |
+          #   NODE_ENV
+          #   USER_DATABASE_URL
+          #   USER_PULSE_API_KEY
           workingDirectory: ./apps/user/  # 빌드된 정적 파일이 저장된 디렉토리
           command: wrangler pages deploy --env production
         env:
-          NODE_ENV: production
-          USER_DATABASE_URL: ${{ secrets.USER_DATABASE_URL }}
-          USER_PULSE_API_KEY: ${{ secrets.USER_PULSE_API_KEY }}
+          # NODE_ENV: production
+          # USER_DATABASE_URL: ${{ secrets.USER_DATABASE_URL }}
+          # USER_PULSE_API_KEY: ${{ secrets.USER_PULSE_API_KEY }}
