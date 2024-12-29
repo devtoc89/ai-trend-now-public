@@ -31,7 +31,7 @@ jobs:
           
       # 4. 의존성 설치
       - name: Install dependencies
-        run: pnpm install
+        run: pnpm install --frozen-lockfile && pnpm prebuild
 
       - name: Save pnpm cache
         id: cache-pnpm-save
@@ -48,9 +48,9 @@ jobs:
           echo "USER_PULSE_API_KEY=${{ secrets.USER_PULSE_API_KEY }}" >> .env
         shell: bash
         
-      # 6. 프리 빌드
-      - name: prebuild project
-        run: pnpm prebuild  # Pages에 배포할 정적 파일 생성
+      # # 6. 프리 빌드
+      # - name: prebuild project
+      #   run: pnpm prebuild  # Pages에 배포할 정적 파일 생성
 
       # 7. 빌드
       - name: build project
@@ -73,7 +73,7 @@ jobs:
           #   USER_DATABASE_URL
           #   USER_PULSE_API_KEY
           workingDirectory: ./apps/user/  # 빌드된 정적 파일이 저장된 디렉토리
-          command: wrangler pages deploy --env production
+          command: pages deploy --env production
         # env:
           # NODE_ENV: production
           # USER_DATABASE_URL: ${{ secrets.USER_DATABASE_URL }}
