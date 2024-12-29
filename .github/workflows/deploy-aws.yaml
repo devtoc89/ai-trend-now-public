@@ -14,7 +14,7 @@ jobs:
     steps:
       # 1. 코드 체크아웃
       - name: Checkout code
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4
 
       # 2. .env 파일 생성
       - name: Create .env file
@@ -43,11 +43,11 @@ jobs:
       - name: Identify service
         id: service
         run: |
-          if [[ "${github.ref_name}" == "batch/deploy" ]]; then
+          if [[ "${{ github.ref_name }}" == "batch/deploy" ]]; then
             echo "SERVICE=batch" >> $GITHUB_ENV
-          elif [[ "${github.ref_name}" == "crawler/deploy" ]]; then
+          elif [[ "${{ github.ref_name }}" == "crawler/deploy" ]]; then
             echo "SERVICE=crawler" >> $GITHUB_ENV
-          elif [[ "${github.ref_name}" == "manager/deploy" ]]; then
+          elif [[ "${{ github.ref_name }}" == "manager/deploy" ]]; then
             echo "SERVICE=manager" >> $GITHUB_ENV
           else
             echo "Unknown branch. Exiting."
