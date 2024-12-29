@@ -74,14 +74,22 @@ jobs:
       #   with:
       #     path: /tmp/.buildx-cache
       #     key: ${{ runner.os }}-docker
-          
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v3
+        
       # 6. Docker 빌드 및 푸시
       - name: Build and push Docker image
-        run: |
-          IMAGE_URI="${{ secrets.ECR_REPOSITORY_URI }}/${{ env.SERVICE }}:latest"
-          docker buildx build \
-            --tag $IMAGE_URI --target ${{ env.SERVICE }} .
-          docker push $IMAGE_URI
+        uses: docker/build-push-action@v6
+        with:
+          context: .
+          push: true
+          tags: ${{ secrets.ECR_REPOSITORY_URI }}/${{ env.SERVICE }}:latest
+          target: ${{ env.SERVICE }}
+        # run: |
+        #   IMAGE_URI="${{ secrets.ECR_REPOSITORY_URI }}/${{ env.SERVICE }}:latest"
+        #   docker buildx build \
+        #     --tag $IMAGE_URI --target ${{ env.SERVICE }} .
+        #   docker push $IMAGE_URI
           
       # 7. 캐시 복원
       # - name: Save docker cache
