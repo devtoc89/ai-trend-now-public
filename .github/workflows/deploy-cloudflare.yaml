@@ -10,6 +10,7 @@ jobs:
     runs-on: ubuntu-latest
     
     steps:
+      # 1. 소스 체크아웃
       - name: Checkout repository
         uses: actions/checkout@v3
         
@@ -22,25 +23,34 @@ jobs:
           restore-keys: |
             pnpm-${{ runner.os }}-
             
-      # 2. pnpm 설치
+      # 3. pnpm 설치
       - name: Setup pnpm
         run: npm install -g pnpm@9.15.2
           
-      # 3. 의존성 설치
+      # 4. 의존성 설치
       - name: Install dependencies
         run: pnpm install
-
-      # 4. 프리 빌드
+        
+      # 5. .env 파일 생성
+      - name: Create .env file
+        run: |
+          echo "USER_DATABASE_URL=${{ secrets.USER_DATABASE_URL }}" >> .env
+          echo "USER_PULSE_API_KEY=${{ secrets.USER_PULSE_API_KEY }}" >> .env
+        shell: bash
+        
+      # 6. 프리 빌드
       - name: prebuild project
         run: pnpm prebuild  # Pages에 배포할 정적 파일 생성
 
-      # 5. 프리 빌드
+      # 7. 빌드
       - name: build project
         run: pnpm -filter user pages:build  # Pages에 배포할 정적 파일 생성
         
+      # 8. wrangler 설치치
       - name: add wrangler
         run: pnpm add wrangler@3.90.0 -w
         
+      # 9. cloudflare pages에 배포
       - name: Deploy to Cloudflare Pages
         uses: cloudflare/wrangler-action@v3
         with:
