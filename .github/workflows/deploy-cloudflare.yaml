@@ -48,7 +48,7 @@ jobs:
         
       # 8. wrangler 설치치
       - name: add wrangler
-        run: pnpm add wrangler@3.90.0 -w
+        run: pnpm add wrangler@latest -w
         
       # 9. cloudflare pages에 배포
       - name: Deploy to Cloudflare Pages
@@ -62,7 +62,6 @@ jobs:
             NODE_ENV
             USER_DATABASE_URL
             USER_PULSE_API_KEY
-          projectName: ai-trend-news  # Cloudflare Pages 프로젝트 이름
           workingDirectory: ./apps/user/  # 빌드된 정적 파일이 저장된 디렉토리
         env:
           NODE_ENV: production
