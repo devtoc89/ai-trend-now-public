@@ -67,14 +67,33 @@ jobs:
       - name: Login to Amazon ECR
         uses: aws-actions/amazon-ecr-login@v2
 
-      # 5. Docker 빌드 및 푸시
+      # 5. 캐시 복원
+      - name: Restore docker cache
+        id: cache-docker-restore
+        uses: actions/cache@v4
+        with:
+          path: /tmp/.buildx-cache
+          key: ${{ runner.os }}-docker
+          
+      # 6. Docker 빌드 및 푸시
       - name: Build and push Docker image
         run: |
-          IMAGE_URI="${{ secrets.ECR_REPOSITORY_URI }}"
-          docker build --tag ${{ env.SERVICE }}:latest --target ${{ env.SERVICE }} .
+          IMAGE_URI="${{ secrets.ECR_REPOSITORY_URI }}/${{ env.SERVICE }}:latest"
+          docker buildx build \
+            --cache-from=type=local,src=/tmp/.buildx-cache \
+            --cache-to=type=local,dest=/tmp/.buildx-cache \
+            --tag $IMAGE_URI --target ${{ env.SERVICE }} .
           docker push $IMAGE_URI
-
-      # 6. ECS 서비스 업데이트
+          
+      # 7. 캐시 복원
+      - name: Save docker cache
+        id: cache-docker-save
+        uses: actions/cache/save@v4
+        with:
+          path: /tmp/.buildx-cache
+          key: ${{ runner.os }}-docker
+      
+      # 8. ECS 서비스 업데이트
       - name: Deploy to Amazon ECS
         run: |
           aws ecs update-service \
