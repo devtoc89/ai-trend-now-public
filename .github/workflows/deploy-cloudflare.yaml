@@ -67,7 +67,7 @@ jobs:
           apiToken: ${{ secrets.CLOUDFLARE_API_TOKEN }}
           accountId: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
           packageManager: "pnpm" # change npm to yarn or pnpm
-          environment: production
+          # environment: production
           # secrets: |
           #   NODE_ENV
           #   USER_DATABASE_URL
