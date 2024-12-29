@@ -59,10 +59,12 @@ jobs:
           packageManager: "pnpm" # change npm to yarn or pnpm
           environment: production
           secrets: |
+            NODE_ENV
             USER_DATABASE_URL
             USER_PULSE_API_KEY
           projectName: ai-trend-news  # Cloudflare Pages 프로젝트 이름
-          directory: ./apps/user/.vercel/output/static  # 빌드된 정적 파일이 저장된 디렉토리
+          workingDirectory: ./apps/user/  # 빌드된 정적 파일이 저장된 디렉토리
         env:
+          NODE_ENV: production
           USER_DATABASE_URL: ${{ secrets.USER_DATABASE_URL }}
           USER_PULSE_API_KEY: ${{ secrets.USER_PULSE_API_KEY }}
