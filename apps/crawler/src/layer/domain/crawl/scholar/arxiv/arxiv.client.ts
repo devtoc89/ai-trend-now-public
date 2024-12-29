@@ -6,7 +6,7 @@ import type { CrawlArxivSearchParamsDTO } from "@repo/types/dto/crawl/arxiv/arxi
 import type { ResponseTypeDTO } from "@repo/types/dto/response/response.dto";
 
 const urlForm = ({ from, to }: CrawlArxivSearchParamsDTO) =>
-  `http://export.arxiv.org/api/query?search_query=all:Artificial+Intelligence+AND+submittedDate:[${from}+TO+${to}]&start=0&max_results=100&sortBy=submittedDate&sortOrder=descending`;
+  `http://export.arxiv.org/api/query?search_query=all:Artificial+Intelligence+AND+submittedDate:[${from}+TO+${to}]&start=0&max_results=400&sortBy=submittedDate&sortOrder=descending`;
 
 export async function fetchArxiv(searchParam: CrawlArxivSearchParamsDTO): Promise<ResponseTypeDTO<string>> {
   return await serviceWrapper(fetchArxiv.name, async () => {
