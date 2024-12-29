@@ -30,7 +30,7 @@ jobs:
         run: pnpm -filter user pages:build  # Pages에 배포할 정적 파일 생성
         
       - name: Deploy to Cloudflare Pages
-        uses: cloudflare/wrangler-action@2
+        uses: cloudflare/wrangler-action@3
         with:
           apiToken: ${{ secrets.CLOUDFLARE_API_TOKEN }}
           accountId: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
