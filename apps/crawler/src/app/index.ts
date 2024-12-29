@@ -1,6 +1,4 @@
-if (process.env.NODE_ENV !== "production") {
-  require("dotenv").config();
-}
+require("dotenv").config();
 
 import getServerInstance from "#app/server";
 import parser from "yargs-parser";
@@ -13,7 +11,7 @@ const start = async () => {
   const port = args.p || args.port || Number(process.env.PORT ?? 0) || 8000;
   const server = await getServerInstance();
   try {
-    server.listen({ port });
+    server.listen({ port, host: '0.0.0.0' });
     console.log(server.printRoutes());
     server.log.info("server is listening");
   } catch (err) {
