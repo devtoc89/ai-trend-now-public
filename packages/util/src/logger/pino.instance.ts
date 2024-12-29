@@ -18,13 +18,16 @@ const instance: {
   },
 };
 
-if (typeof process !== "undefined" && process.versions?.node) {
+if (typeof process !== "undefined" && process.versions?.node ) {
   // Node.js 환경
   const pino = require("pino");
-  const pretty = require("pino-pretty");
-  instance.logger = pino(
-    process.env.NODE_ENV !== "production" ? pretty(prettyConfig) : undefined, // 프로덕션 환경에서는 기본 JSON 포맷
-  );
+  if(process.env.NODE_ENV !== "production") {
+    const pretty = require("pino-pretty");
+    instance.logger = pino(pretty(prettyConfig))
+  } else {
+    // 프로덕션 환경에서는 기본 JSON 포맷
+    instance.logger = pino()
+  }
 }
 
 instance.logger.info("Logger initialized for the current environment.");
