@@ -70,8 +70,8 @@ jobs:
       # 5. Docker 빌드 및 푸시
       - name: Build and push Docker image
         run: |
-          IMAGE_URI="${{ secrets.ECR_REPOSITORY_URI }}/${{ env.SERVICE }}:latest"
-          docker build -t $IMAGE_URI ${{ env.SERVICE }} .
+          IMAGE_URI="${{ secrets.ECR_REPOSITORY_URI }}"
+          docker build --tag ${{ env.SERVICE }}:latest --target ${{ env.SERVICE }} .
           docker push $IMAGE_URI
 
       # 6. ECS 서비스 업데이트
