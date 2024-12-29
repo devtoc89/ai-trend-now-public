@@ -63,6 +63,7 @@
     "tailwindcss": "catalog:",
     "typescript": "catalog:",
     "@types/jsonwebtoken": "^9.0.7",
-    "@types/jwk-to-pem": "^2.0.3"
+    "@types/jwk-to-pem": "^2.0.3",
+    "wrangler": "3.99.0"
   }
 }
