@@ -39,7 +39,7 @@ jobs:
           secrets: |
             USER_DATABASE_URL
             USER_PULSE_API_KEY
-          env:
+          env: |
             USER_DATABASE_URL: ${{ secrets.USER_DATABASE_URL }}
             USER_PULSE_API_KEY: ${{ secrets.USER_PULSE_API_KEY }}
           projectName: ai-trend-news  # Cloudflare Pages 프로젝트 이름
