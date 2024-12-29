@@ -16,12 +16,12 @@ jobs:
         
       # 2. pnpm 캐시 복원
       - name: Restore pnpm cache
-        uses: actions/cache@v3
+        id: cache-pnpm-restore
+        uses: actions/cache@v4
         with:
           path: ~/.pnpm-store
           key: pnpm-${{ runner.os }}-${{ hashFiles('pnpm-lock.yaml') }}
-          restore-keys: |
-            pnpm-${{ runner.os }}-
+
 
       # 3. pnpm 설치
       - name: Setup pnpm
@@ -32,7 +32,15 @@ jobs:
       # 4. 의존성 설치
       - name: Install dependencies
         run: pnpm install
-        
+
+      - name: Save pnpm cache
+        id: cache-pnpm-save
+        uses: actions/cache/save@v4
+        with:
+          path: |
+            ~/.pnpm-store
+          key: ${{ steps.cache-pnpm-restore.outputs.cache-primary-key }}
+
       # 5. .env 파일 생성
       - name: Create .env file
         run: |
@@ -46,7 +54,7 @@ jobs:
 
       # 7. 빌드
       - name: build project
-        run: pnpm -filter user pages:build  # Pages에 배포할 정적 파일 생성
+        run: NODE_ENV=production pnpm -filter user pages:build  # Pages에 배포할 정적 파일 생성
         
       # 8. wrangler 설치치
       - name: add wrangler
@@ -60,12 +68,13 @@ jobs:
           accountId: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
           packageManager: "pnpm" # change npm to yarn or pnpm
           environment: production
-          # secrets: |
-          #   NODE_ENV
-          #   USER_DATABASE_URL
-          #   USER_PULSE_API_KEY
+          secrets: |
+            NODE_ENV
+            USER_DATABASE_URL
+            USER_PULSE_API_KEY
           workingDirectory: ./apps/user/  # 빌드된 정적 파일이 저장된 디렉토리
-        # env:
-        #   NODE_ENV: production
-        #   USER_DATABASE_URL: ${{ secrets.USER_DATABASE_URL }}
-        #   USER_PULSE_API_KEY: ${{ secrets.USER_PULSE_API_KEY }}
+          command: wrangler pages deploy --env production
+        env:
+          NODE_ENV: production
+          USER_DATABASE_URL: ${{ secrets.USER_DATABASE_URL }}
+          USER_PULSE_API_KEY: ${{ secrets.USER_PULSE_API_KEY }}
