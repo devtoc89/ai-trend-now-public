@@ -80,8 +80,6 @@ jobs:
         run: |
           IMAGE_URI="${{ secrets.ECR_REPOSITORY_URI }}/${{ env.SERVICE }}:latest"
           docker buildx build \
-            --cache-to=type=registry,ref=$IMAGE_URI \
-            --cache-from=type=registry,ref=$IMAGE_URI \
             --tag $IMAGE_URI --target ${{ env.SERVICE }} .
           docker push $IMAGE_URI
           
