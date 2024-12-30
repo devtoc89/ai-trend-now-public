@@ -69,6 +69,7 @@ pnpm --filter batch dev
 자세한 스크립트 설정은 turbo.json 참고
 
 ## 프로젝트 구조
+```markdown
 .
 ├── apps/
 │ ├── user/ # 사용자 웹 앱
@@ -83,3 +84,4 @@ pnpm --filter batch dev
 │ ├── prisma-*/ # Prisma 설정
 │ └── *-config/ # 공통 설정
 └── package.json
+```
