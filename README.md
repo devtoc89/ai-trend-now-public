@@ -15,11 +15,11 @@ AI 관련 뉴스와 논문을 수집, 가공하여 제공하는 모노레포 기
 
 ### Apps
 
-- **user**: 사용자용 웹 애플리케이션 (Next.js)
-- **manager**: 관리자 시스템 (Next.js)
-- **crawler**: 크롤링 서버 (Fastify)
-- **batch**: 배치 작업 서버 (Node.js)
-- **storybook**: UI 컴포넌트 문서화
+- **user**: 사용자용 웹 애플리케이션 (Next.js) / Cloudflare pages에 edge환경으로 제공 서비스
+- **manager**: 관리자 시스템 (Next.js) / AWS ECS을 통한 서비스 제공
+- **crawler**: 크롤링 서버 (Fastify) / AWS ECS을 통한 서비스 제공
+- **batch**: 배치 작업 서버 (Node.js) / AWS ECS을 통한 서비스 제공
+- **storybook**: UI 컴포넌트 문서화 / 현재 개발중 로컬로만 확인
 
 ### Packages
 
@@ -33,11 +33,11 @@ AI 관련 뉴스와 논문을 수집, 가공하여 제공하는 모노레포 기
 
 ## 기술 스택
 
-- **언어/런타임**: TypeScript, Node.js (>=18)
+- **언어/런타임**: TypeScript, Node.js (>=18), edge runtime(cloudflare pages)
 - **프레임워크**: Next.js (App Router), Fastify, node-cron
 - **DB**: PostgreSQL, Redis
 - **ORM**: Prisma
-- **AI**: LangChain, Google Gemini
+- **AI**: LangChain, LangSmith, Google Gemini
 - **스타일링**: Tailwind CSS, Shadcn UI
 - **패키지 관리**: pnpm workspace
 - **빌드 도구**: Turborepo
