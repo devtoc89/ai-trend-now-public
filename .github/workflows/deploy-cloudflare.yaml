@@ -1,0 +1,111 @@
+name: Deploy to Cloudflare Pages
+
+on:
+  push:
+    branches:
+      - user/deploy  # main 브랜치에 푸시할 때 트리거
+
+## TODO: 동시성 처리로 10초정도 배포 처리 개선이 가능해 보이므로 도입 검토
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    
+    steps:
+      # 1. 소스 체크아웃
+      - name: Checkout repository
+        uses: actions/checkout@v4
+        
+      # 2. 캐시 복원
+      # 2.1 pnpm
+      - name: Restore pnpm cache
+        id: cache-pnpm-restore
+        uses: actions/cache/restore@v4
+        with:
+          path: ~/.pnpm-store
+          key: pnpm-${{ runner.os }}-${{ hashFiles('pnpm-lock.yaml') }}
+          restore-keys: |
+            pnpm-${{ runner.os }}-
+
+      # 3. pnpm 설치
+      - name: Setup pnpm
+        run: |
+          npm install -g pnpm@9.15.4
+          pnpm config set store-dir ~/.pnpm-store
+
+      # 8. 캐싱
+      # 8.1 pnpm (변경된 경우에만 저장)
+      - name: Save pnpm cache
+        if: steps.cache-pnpm-restore.outputs.cache-hit != 'true' # 캐시가 없을 때만 저장
+        uses: actions/cache/save@v4
+        with:
+          path: ~/.pnpm-store
+          key: pnpm-${{ runner.os }}-${{ hashFiles('pnpm-lock.yaml') }}
+          
+      # 4. 의존성 설치
+      - name: Install dependencies
+        run: pnpm install --frozen-lockfile
+
+      # 5.1. .env 파일 생성
+      - name: Create .env file
+        run: |
+          echo "USER_DATABASE_URL = \"${{ secrets.USER_DATABASE_URL }}\"" >> .env
+          echo "USER_PULSE_API_KEY = \"${{ secrets.USER_PULSE_API_KEY }}\"" >> .env
+        shell: bash
+        
+      # 5.2. .toml 파일 생성
+      - name: add toml file
+        run: |
+          echo "" >> ./apps/user/wrangler.toml
+          echo "[vars]" >> ./apps/user/wrangler.toml
+          cat .env >> ./apps/user/wrangler.toml
+          echo "NODE_ENV = \"production\"" >> ./apps/user/wrangler.toml
+        shell: bash
+          # echo "" >> ./apps/user/wrangler.toml
+          # echo "[env.production.vars]" >> ./apps/user/wrangler.toml
+          # cat .env >> ./apps/user/wrangler.toml
+        
+      # 6. 프리 빌드
+      - name: prebuild project
+        run: pnpm prebuild  # Pages에 배포할 정적 파일 생성
+
+      # 7. 빌드
+      - name: build project
+        run: NODE_ENV=production pnpm -filter user pages:build  # Pages에 배포할 정적 파일 생성
+
+
+          
+      # # 8.2 next
+      # - name: Save next cache
+      #   id: cache-next-save
+      #   uses: actions/cache/save@v4
+      #   with:
+      #     path: ./apps/user/.next
+      #     key: next-${{ runner.os }}
+          
+      # # 8.2 vercel
+      # - name: Save vercel cache
+      #   id: cache-vercel-save
+      #   uses: actions/cache/save@v4
+      #   with:
+      #     path: ./apps/user/.vercel
+      #     key: vercel-${{ runner.os }}
+        
+      # 9. cloudflare pages에 배포
+      - name: Deploy to Cloudflare Pages
+        uses: cloudflare/wrangler-action@v3
+        with:
+          apiToken: ${{ secrets.CLOUDFLARE_API_TOKEN }}
+          accountId: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
+          packageManager: "pnpm" # change npm to yarn or pnpm
+          # environment: production
+          # secrets: |
+          #   NODE_ENV
+          #   USER_DATABASE_URL
+          #   USER_PULSE_API_KEY
+          workingDirectory: ./apps/user/  # 빌드된 정적 파일이 저장된 디렉토리
+          command: pages deploy
+        # env:
+        #   NODE_ENV: production
+        #   USER_DATABASE_URL: ${{ secrets.USER_DATABASE_URL }}
+        #   USER_PULSE_API_KEY: ${{ secrets.USER_PULSE_API_KEY }}

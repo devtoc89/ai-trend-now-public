@@ -1,0 +1,10 @@
+{
+  "extends": "@repo/typescript-config/nextjs.app.json",
+  "compilerOptions": {
+    "rootDir": ".",
+    "outDir": "dist",
+    "baseUrl": "."
+  },
+  "include": ["src/**/*.ts", "src/**/*.tsx", "tailwind.config.ts"],
+  "exclude": ["dist", "node_modules", "**/*.d.ts"]
+}

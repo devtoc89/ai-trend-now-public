@@ -1,0 +1,53 @@
+{
+  "name": "crawler",
+  "version": "1.0.0",
+  "private": "true",
+  "imports": {
+    "#app/*": ["./dist/src/app/*.js"],
+    "#lib/*": ["./dist/src/lib/*.js"],
+    "#layer/*": ["./dist/src/layer/*.js"],
+    "#routes/*": ["./dist/src/routes/*.js"]
+  },
+  "scripts": {
+    "dev": "ts-node-dev -r tsconfig-paths/register src/app/index.ts",
+    "build": "rimraf dist && tsc -p tsconfig.json",
+    "start": "node dist/src/app/index.js",
+    "test": "jest",
+    "remove-build": "rimraf dist"
+  },
+  "dependencies": {
+    "@fastify/autoload": "^6.0.0",
+    "@fastify/sensible": "^6.0.0",
+    "@fastify/type-provider-typebox": "^5.0.1",
+    "@paralleldrive/cuid2": "^2.2.2",
+    "@prisma/client": "catalog:",
+    "axios": "^1.7.8",
+    "cheerio": "^1.0.0",
+    "fast-xml-parser": "^4.5.0",
+    "fastify": "^5.1.0",
+    "fastify-cli": "^7.0.1",
+    "fastify-plugin": "^5.0.0",
+    "module-alias": "^2.2.3",
+    "pino": "^9.5.0",
+    "pino-pretty": "^13.0.0",
+    "tsconfig-paths": "^4.2.0",
+    "yargs-parser": "21.1.1",
+    "@repo/util": "workspace:*",
+    "@repo/types": "workspace:*",
+    "dotenv": "catalog:"
+  },
+  "devDependencies": {
+    "@fastify/swagger": "^9.3.0",
+    "@fastify/swagger-ui": "^5.1.0",
+    "@repo/typescript-config": "workspace:*",
+    "@types/jest": "catalog:",
+    "@types/node": "catalog:",
+    "@types/yargs-parser": "^21.0.3",
+    "jest": "catalog:",
+    "ts-jest": "catalog:",
+    "ts-node": "catalog:",
+    "ts-node-dev": "catalog:",
+    "typescript": "catalog:",
+    "rimraf": "catalog:"
+  }
+}

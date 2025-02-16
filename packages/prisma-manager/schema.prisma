@@ -1,0 +1,120 @@
+generator client {
+  provider = "prisma-client-js"
+  output   = "./node_modules/@prisma/client/manager"
+}
+
+datasource db {
+  provider  = "postgresql"
+  url       = env("MANAGER_DATABASE_URL")
+  directUrl = env("MANAGER_DIRECT_URL")
+}
+
+// TODO: DB 자원 획득 시, 이관 필요.
+model User {
+  sub            String   @id @db.VarChar(64)
+  name           String   @db.VarChar(200)
+  email          String   @unique @db.VarChar(200)
+  hashedPassword String   @db.VarChar(128)
+  confirmed      Boolean  @default(false)
+  createdAt      DateTime @default(now())
+  updatedAt      DateTime @updatedAt
+
+  @@index([email])
+}
+
+model OriginalPostAndAiPostRelation {
+  id               String           @id @db.VarChar(25)
+  aiPostId         String           @db.VarChar(25)
+  postId           String           @db.VarChar(200)
+  createdAt        DateTime         @default(now())
+  updatedAt        DateTime         @updatedAt
+  originalPostBase OriginalPostBase @relation(fields: [postId], references: [id], onDelete: Cascade)
+  aiPost           AiPost           @relation(fields: [aiPostId], references: [id], onDelete: Cascade)
+
+  @@unique([aiPostId, postId])
+}
+
+model AiPost {
+  id          String   @id @db.VarChar(25)
+  title       String   @db.VarChar(200)
+  content     String
+  summary     String
+  category    String   @default("column")
+  metadata    Json?
+  isPublished Boolean  @default(false)
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+
+  originalPostAndAiPostRelation OriginalPostAndAiPostRelation[]
+}
+
+model OriginalPostStatus {
+  id          String    @id @db.VarChar(25)
+  postId      String    @unique @db.VarChar(200)
+  autoFlg     Boolean   @default(false) @db.Boolean
+  autoAt      DateTime?
+  selectedFlg Boolean   @default(false) @db.Boolean
+  selectedAt  DateTime?
+  deletedFlg  Boolean   @default(false) @db.Boolean
+  DeletedAt   DateTime?
+  createdAt   DateTime  @default(now())
+  updatedAt   DateTime  @updatedAt
+
+  originalPostBase OriginalPostBase @relation(fields: [postId], references: [id], onDelete: Cascade)
+}
+
+model OriginalPostSource {
+  id               String           @id @db.VarChar(25)
+  postId           String           @unique @db.VarChar(200)
+  title            String           @db.VarChar(300)
+  content          String
+  createdAt        DateTime         @default(now())
+  updatedAt        DateTime         @updatedAt
+  originalPostBase OriginalPostBase @relation(fields: [postId], references: [id], onDelete: Cascade)
+
+  @@index([postId])
+}
+
+model OriginalPostMeta {
+  id           String    @id @db.VarChar(25)
+  postId       String    @unique @db.VarChar(200)
+  source       String    @db.VarChar(250)
+  category     String    @db.VarChar(50)
+  url          String    @db.VarChar(200)
+  orgCreatedAt DateTime?
+  orgUpdatedAt DateTime?
+  etc          Json?
+  createdAt    DateTime  @default(now())
+  updatedAt    DateTime  @updatedAt
+
+  originalPostBase OriginalPostBase @relation(fields: [postId], references: [id], onDelete: Cascade)
+
+  @@index([category, orgUpdatedAt(sort: Asc)])
+}
+
+model OriginalPostBase {
+  id        String   @id @db.VarChar(200)
+  crawlId   String   @db.VarChar(200)
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  crawlBase CrawlBase @relation(fields: [crawlId], references: [id], onDelete: Cascade)
+
+  originalPostSource            OriginalPostSource?
+  originalPostMeta              OriginalPostMeta?
+  originalPostStatus            OriginalPostStatus?
+  originalPostAndAiPostRelation OriginalPostAndAiPostRelation[]
+
+  @@index(fields: [createdAt(sort: Desc)])
+}
+
+model CrawlBase {
+  id        String   @id @db.VarChar(200)
+  crawlTime Int
+  count     Int      @default(0)
+  status    String   @db.VarChar(50)
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  originalPostBase OriginalPostBase[]
+}

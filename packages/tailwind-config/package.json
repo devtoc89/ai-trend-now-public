@@ -1,0 +1,15 @@
+{
+  "name": "@repo/tailwind-config",
+  "version": "0.0.0",
+  "private": true,
+  "license": "MIT",
+  "publishConfig": {
+    "access": "public"
+  },
+  "dependencies": {
+    "tailwindcss": "catalog:"
+  },
+  "peerDependencies": {
+    "@repo/typescript-config": "workspace:"
+  }
+}

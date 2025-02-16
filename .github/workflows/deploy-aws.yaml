@@ -1,0 +1,110 @@
+name: Deploy Service
+
+on:
+  push:
+    branches:
+      - batch/deploy
+      - crawler/deploy
+      - manager/deploy
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+      # 1. 코드 체크아웃
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      # 2. .env 파일 생성
+      - name: Create .env file
+        run: |
+          echo "GEMINI_API_KEY=${{ secrets.GEMINI_API_KEY }}" > .env
+          echo "GEMINI_API_KEY2=${{ secrets.GEMINI_API_KEY2 }}" >> .env
+          echo "LANGCHAIN_TRACING_V2=${{ vars.LANGCHAIN_TRACING_V2 }}" >> .env
+          echo "LANGCHAIN_ENDPOINT=${{ vars.LANGCHAIN_ENDPOINT }}" >> .env
+          echo "LANGCHAIN_PROJECT=${{ vars.LANGCHAIN_PROJECT }}" >> .env
+          echo "LANGCHAIN_API_KEY=${{ secrets.LANGCHAIN_API_KEY }}" >> .env
+          echo "MANAGER_DATABASE_URL=${{ secrets.MANAGER_DATABASE_URL }}" >> .env
+          echo "MANAGER_DIRECT_URL=${{ secrets.MANAGER_DIRECT_URL }}" >> .env
+          echo "USER_DATABASE_URL=${{ secrets.USER_DATABASE_URL }}" >> .env
+          echo "USER_PULSE_API_KEY=${{ secrets.USER_PULSE_API_KEY }}" >> .env
+          echo "COGNITO_REGION=${{ secrets.COGNITO_REGION }}" >> .env
+          echo "COGNITO_USER_POOL_ID=${{ secrets.COGNITO_USER_POOL_ID }}" >> .env
+          echo "COGNITO_CLIENT_ID=${{ secrets.COGNITO_CLIENT_ID }}" >> .env
+          echo "COGNITO_CLIENT_SECRET=${{ secrets.COGNITO_CLIENT_SECRET }}" >> .env
+          echo "REDIS_URL=${{ vars.REDIS_URL }}" >> .env
+          echo "BATCH_KEY=${{ secrets.BATCH_KEY }}" >> .env
+          echo "MANAGER_SERVER_URL=${{ vars.MANAGER_SERVER_URL }}" >> .env
+          echo "CRAWLER_SERVER_URL=${{ vars.CRAWLER_SERVER_URL }}" >> .env
+        shell: bash
+        
+      # 3. 서비스 식별
+      - name: Identify service
+        id: service
+        run: |
+          if [[ "${{ github.ref_name }}" == "batch/deploy" ]]; then
+            echo "SERVICE=batch" >> $GITHUB_ENV
+          elif [[ "${{ github.ref_name }}" == "crawler/deploy" ]]; then
+            echo "SERVICE=crawler" >> $GITHUB_ENV
+          elif [[ "${{ github.ref_name }}" == "manager/deploy" ]]; then
+            echo "SERVICE=manager" >> $GITHUB_ENV
+          else
+            echo "Unknown branch. Exiting."
+            exit 1
+          fi
+        shell: bash
+        
+      # 3. AWS CLI 설정
+      - name: Configure AWS Credentials
+        uses: aws-actions/configure-aws-credentials@v4
+        with:
+          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          aws-region: ${{ secrets.AWS_REGION }}
+
+      # 4. Docker 로그인
+      - name: Login to Amazon ECR
+        uses: aws-actions/amazon-ecr-login@v2
+
+      # 5. 캐시 복원
+      # - name: Restore docker cache
+      #   id: cache-docker-restore
+      #   uses: actions/cache@v4
+      #   with:
+      #     path: /tmp/.buildx-cache
+      #     key: ${{ runner.os }}-docker
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v3
+        
+      # 6. Docker 빌드 및 푸시
+      - name: Build and push Docker image
+        uses: docker/build-push-action@v6
+        with:
+          context: .
+          push: true
+          tags: ${{ secrets.ECR_REPOSITORY_URI }}/${{ env.SERVICE }}:latest
+          target: ${{ env.SERVICE }}
+          cache-from: type=gha # 여기서 gha 는 Guthub Actions 용 캐시를 의미합니다.
+          cache-to: type=gha,mode=max
+        # run: |
+        #   IMAGE_URI="${{ secrets.ECR_REPOSITORY_URI }}/${{ env.SERVICE }}:latest"
+        #   docker buildx build \
+        #     --tag $IMAGE_URI --target ${{ env.SERVICE }} .
+        #   docker push $IMAGE_URI
+          
+      # 7. 캐시 복원
+      # - name: Save docker cache
+      #   id: cache-docker-save
+      #   uses: actions/cache/save@v4
+      #   with:
+      #     path: /tmp/.buildx-cache
+      #     key: ${{ runner.os }}-docker
+      
+      # 8. ECS 서비스 업데이트
+      - name: Deploy to Amazon ECS
+        run: |
+          aws ecs update-service \
+            --cluster ${{ secrets.ECS_CLUSTER_NAME }} \
+            --service ${{ secrets.ECS_SERVICE_NAME_PREFIX }}-${{ env.SERVICE }}-service \
+            --force-new-deployment

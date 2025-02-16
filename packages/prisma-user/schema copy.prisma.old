@@ -1,0 +1,48 @@
+generator client {
+  provider = "prisma-client-js"
+  output   = "./node_modules/@prisma/client/user"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("USER_DATABASE_URL")
+}
+
+model PostMeta {
+  id        String   @id @default(cuid()) @db.VarChar(25)
+  postId    String   @unique @db.VarChar(25)
+  category  String   @default("column")
+  metadata  Json?
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  postBase PostBase @relation(fields: [postId], references: [id], onDelete: Cascade)
+
+  @@index([postId])
+  @@index([category])
+}
+
+model PostDetail {
+  id        String   @id @db.VarChar(25)
+  postId    String   @unique @db.VarChar(25)
+  title     String   @db.VarChar(200)
+  content   String
+  summary   String
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  postBase PostBase @relation(fields: [postId], references: [id], onDelete: Cascade)
+
+  @@index([postId])
+}
+
+model PostBase {
+  id        String   @id @db.VarChar(25)
+  aiPostId  String?  @unique @db.VarChar(25)
+  isDeleted Boolean  @default(false)
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  postDetail PostDetail?
+  postMeta   PostMeta?
+}

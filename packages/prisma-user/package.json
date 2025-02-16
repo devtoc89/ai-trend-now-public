@@ -1,0 +1,19 @@
+{
+  "name": "@repo/prisma-user",
+  "version": "1.0.0",
+  "scripts": {
+    "push": "prisma db push",
+    "pull": "prisma db pull",
+    "generate": "prisma generate --no-engine",
+    "studio": "prisma studio",
+    "prebuild": "prisma generate --no-engine",
+    "remove-build": "rimraf ./node_modules/@prisma/client/user"
+  },
+  "dependencies": {
+    "@prisma/client": "catalog:"
+  },
+  "devDependencies": {
+    "prisma": "catalog:"
+  },
+  "type": "module"
+}

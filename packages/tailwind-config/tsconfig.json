@@ -1,0 +1,12 @@
+{
+  "extends": "@repo/typescript-config/nodeserver.json",
+  "compilerOptions": {
+    "rootDir": ".",
+    "outDir": "dist",
+    "esModuleInterop": true,
+    "module": "esnext",
+    "moduleResolution": "bundler"
+  },
+  "include": ["src/**/*.ts", "src/**/*.tsx", "tailwind.config.ts"],
+  "exclude": ["node_modules", "dist"]
+}

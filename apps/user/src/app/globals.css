@@ -1,0 +1,74 @@
+@import "@repo/ui/globals.css";
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  --background: #ffffff;
+  --foreground: #171717;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --background: #0a0a0a;
+    --foreground: #ededed;
+  }
+}
+
+@layer base {
+  html {
+    font-family: "Pretendard", sans-serif;
+  }
+}
+
+body {
+  color: var(--foreground);
+  background: var(--background);
+  font-size: 16px;
+}
+
+p {
+  font-size: 1rem;
+}
+
+h1 {
+  font-size: 1.5rem;
+  font-weight: 700;
+}
+
+h2 {
+  font-size: 1.25rem;
+  font-weight: 600;
+}
+
+h3 {
+  font-size: 1.125rem;
+  font-weight: 600;
+}
+
+h4 {
+  font-size: 1rem;
+  font-weight: 500;
+}
+.markdown-container {
+  h1,
+  h2,
+  h3,
+  p,
+  blockquote {
+    margin-top: .25rem;
+    white-space: pre-wrap;
+  }
+  h1,
+  h2,
+  h3 {
+    margin-top: 1rem;
+  }
+  blockquote > p {
+    margin-block: -1rem;
+  }
+  a {
+    text-decoration: underline;
+  }
+}

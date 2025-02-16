@@ -1,0 +1,50 @@
+{
+  "name": "@repo/util",
+  "version": "0.0.0",
+  "private": true,
+  "exports": {
+    ".": {
+      "types": "./dist/src/index.d.ts",
+      "require": "./dist/src/index.js",
+      "import": "./dist/src/index.js",
+      "default": "./src/index.ts"
+    },
+    "./*": {
+      "types": "./dist/src/*.d.ts",
+      "require": "./dist/src/*.js",
+      "import": "./dist/src/*.js",
+      "default": "./src/*"
+    },
+    "./**/*": {
+      "types": "./dist/src/**/*.d.ts",
+      "require": "./dist/src/**/*.js",
+      "import": "./dist/src/**/*.js",
+      "default": "./src/**/*"
+    }
+  },
+  "files": [
+    "dist/",
+    "package.json"
+  ],
+  "scripts": {
+    "prebuild": "rimraf dist && tsc -p tsconfig.json",
+    "dev": "tsc -p tsconfig.json --watch",
+    "dev-watch": "tsc -p tsconfig.json --watch",
+    "remove-build": "rimraf dist"
+  },
+  "dependencies": {
+    "clsx": "catalog:",
+    "dayjs": "^1.11.13",
+    "json5": "^2.2.3",
+    "pino": "^9.5.0",
+    "pino-pretty": "^13.0.0",
+    "tailwind-merge": "catalog:"
+  },
+  "peerDependencies": {
+    "@repo/typescript-config": "workspace:*",
+    "rimraf": "catalog:"
+  },
+  "devDependencies": {
+    "@types/node": "^22.10.1"
+  }
+}

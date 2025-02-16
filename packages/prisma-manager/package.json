@@ -1,0 +1,19 @@
+{
+  "name": "@repo/prisma-manager",
+  "version": "1.0.0",
+  "scripts": {
+    "push": "prisma db push",
+    "pull": "prisma db pull",
+    "generate": "prisma generate",
+    "studio": "prisma studio",
+    "prebuild": "prisma generate",
+    "remove-build": "rimraf ./node_modules/@prisma/client/manager"
+  },
+  "dependencies": {
+    "@prisma/client": "catalog:"
+  },
+  "devDependencies": {
+    "prisma": "catalog:"
+  },
+  "type": "module"
+}

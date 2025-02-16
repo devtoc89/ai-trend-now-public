@@ -1,0 +1,19 @@
+{
+  "extends": "@repo/typescript-config/nodeserver.json",
+  "compilerOptions": {
+    "declarationMap": true,
+    "composite": true,
+    "baseUrl": "./src",
+    "paths": {
+      "#app/*": ["./app/*"],
+      "#lib/*": ["./lib/*"],
+      "#layer/*": ["./layer/*"],
+      "#routes/*": ["./routes/*"]
+    },
+    "outDir": "./dist",
+    "rootDir": "."
+  },
+
+  "include": ["src/**/*.ts"],
+  "exclude": ["dist", "**/*.d.ts"]
+}

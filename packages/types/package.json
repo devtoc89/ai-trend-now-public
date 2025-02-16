@@ -1,0 +1,41 @@
+{
+  "name": "@repo/types",
+  "version": "0.0.0",
+  "private": true,
+  "exports": {
+    ".": {
+      "types": "./dist/src/index.d.ts",
+      "require": "./dist/src/index.js",
+      "import": "./dist/src/index.js",
+      "default": "./src/index.ts"
+    },
+    "./*": {
+      "types": "./dist/src/*.d.ts",
+      "require": "./dist/src/*.js",
+      "import": "./dist/src/*.js",
+      "default": "./src/*"
+    },
+    "./**/*": {
+      "types": "./dist/src/**/*.d.ts",
+      "require": "./dist/src/**/*.js",
+      "import": "./dist/src/**/*.js",
+      "default": "./src/**/*"
+    }
+  },
+  "files": [
+    "dist/",
+    "package.json"
+  ],
+  "scripts": {
+    "prebuild": "rimraf dist && tsc -p tsconfig.json",
+    "dev": "tsc -p tsconfig.json --watch",
+    "dev-watch": "tsc -p tsconfig.json --watch",
+    "remove-build": "rimraf dist"
+  },
+  "devDependencies": {
+    "@repo/typescript-config": "workspace:*"
+  },
+  "peerDependencies": {
+    "rimraf": "catalog:"
+  }
+}
